@@ -1,10 +1,12 @@
 # DEVELOPMENT ROADMAP — GeoStrom AI
 
-**Phase:** 3 (Vertical Slice) · **Status:** Complete.
-Full results in [PHASE_3_VERTICAL_SLICE.md](PHASE_3_VERTICAL_SLICE.md). The first complete,
-real, end-to-end path (Phase 2 predictions → PostgreSQL/PostGIS → FastAPI → generated contract →
-Next.js/Leaflet map) is built and verified: 154/154 tests pass, zero Phase 2 regression. Phase 4
-has not started.
+**Phase:** 5 (Classification Label Analysis) · **Status:** Complete.
+Full results in [PHASE_5_CLASSIFICATION_LABEL_ANALYSIS.md](PHASE_5_CLASSIFICATION_LABEL_ANALYSIS.md).
+Phases 0-5 are complete: Phase 3's vertical slice (Phase 2 predictions → PostgreSQL/PostGIS →
+FastAPI → generated contract → Next.js/Leaflet map); Phase 4's real satellite fusion pipeline
+(12 storms / 627 fused samples, see [PHASE_4_SATELLITE_PIPELINE.md](PHASE_4_SATELLITE_PIPELINE.md));
+and Phase 5's evidence-driven `scene_taxonomy_v1` classification taxonomy plus non-deep-learning
+baseline (test macro-F1 0.559). CNN classification training ("Phase 6") has not started.
 
 ---
 
@@ -201,19 +203,42 @@ data (1980–2015); see docs/PHASE_4_SATELLITE_PIPELINE.md for the exact resume 
 
 ---
 
-### P5 — Classification
+### P5 — Classification — ✅ **LABEL ANALYSIS + BASELINE COMPLETE** (CNN training NOT started)
 **Depends on:** P4
 
-1. **Label-analysis notebook — the blocking gate.** Choose Tier A / B / C; apply the pre-declared
-   class-merge rule; write the class list to config
-2. Baseline: class prior + LightGBM on IR scalars
-3. CNN: ResNet-18 (then EfficientNet-B0) with class weighting, label smoothing, the physics-aware
-   augmentation policy (ML_ARCHITECTURE §5.4)
-4. Metrics: macro-F1, per-class recall, confusion matrix, quadratic-weighted κ, category MAE
-5. Batch inference → `classifications` table
+> **Numbering note.** This roadmap originally bundled the label-analysis gate, the
+> LightGBM/statistical baseline, AND CNN training into one "P5". The actual Phase 5 work
+> session scoped itself to items 1-2 only (label analysis + non-deep-learning baseline),
+> explicitly deferring items 3-5 (CNN, batch inference) to a separate, not-yet-started
+> "Phase 6" — this section's item numbers are kept as originally written (not silently
+> renumbered); ✅/⏳ markers below show what is actually done.
 
-**Exit:** the class list is data-derived and documented; macro-F1 clears the class-prior baseline;
-no class has zero recall without an explicit, documented justification.
+1. ✅ **Label-analysis gate — done, evidence-driven, real data.** Selected `scene_taxonomy_v1`
+   (Tier B, ADT Scene labels, grounded in the ADT algorithm's own EyeScene/CloudScene code
+   tables — not the invented Tier C wording): CDO (+IrrCDO), CurvedBand, Eye (+LargeEye),
+   Shear. `Land` and `EmbCenter` excluded with explicit, documented reasons (not merged, not
+   silently dropped). The pre-declared ~200-sample merge rule was inapplicable at the
+   current 627-sample scale and was replaced with an explicit storm-level support test —
+   see the annotation in `docs/ML_ARCHITECTURE.md` §5.1 and
+   `docs/PHASE_5_CLASSIFICATION_LABEL_ANALYSIS.md`.
+2. ✅ **Baseline: statistical image features + Logistic Regression / LightGBM — done, real
+   data.** Test macro-F1 0.559 (logistic regression) vs. 0.079 majority-class floor. NOT yet
+   the "class prior + LightGBM" wording literally — logistic regression edged out LightGBM
+   on this small (353-train-sample) dataset; both are reported honestly in
+   `ml/reports/phase5_baseline_results.json`.
+3. ⏳ CNN (ResNet-18, EfficientNet-B0) — **not started**, deferred to "Phase 6" per the
+   explicit scope of the Phase 5 work session (no deep learning permitted that phase).
+4. ⏳ Full metric suite incl. quadratic-weighted κ / category MAE — macro-F1, per-class
+   precision/recall, confusion matrix ARE done for the baseline (§Exit below); κ/MAE assume
+   an ordinal target and were not computed (`scene_taxonomy_v1` is nominal, not ordinal).
+5. ⏳ Batch inference → `classifications` table — not started (no backend/DB work permitted
+   in the Phase 5 work session).
+
+**Exit (partial — see numbering note above):** the class list is data-derived and documented
+(✅); macro-F1 clears the class-prior/majority baseline (✅, 0.559 vs 0.079); no class has
+zero recall without documented justification (✅ — `Eye`'s zero test-split recall is
+extensively documented as a dataset-size limitation, not silently accepted). CNN-specific
+exit criteria remain open for "Phase 6".
 
 ---
 

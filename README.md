@@ -2,7 +2,22 @@
 
 **AI/ML-based identification, classification, and prediction of tropical cyclone patterns from multi-source satellite and best-track data.**
 
-> **Status: Phase 4 — Satellite Data Pipeline. PIPELINE COMPLETE; MVP-scale processing PARTIAL.**
+> **Status: Phase 5 — Classification Label Analysis. COMPLETE.**
+> Audited the real 627-sample Phase 4 dataset at both sample- and storm-level (12 storms
+> total) and selected `scene_taxonomy_v1`: **CDO** (+IrrCDO), **CurvedBand**, **Eye**
+> (+LargeEye), **Shear** — grounded in the ADT algorithm's own EyeScene/CloudScene code
+> tables (`ml/scripts/verify_adt.py`, Phase 1), not an invented axis. `Land` (89 samples,
+> not a genuine storm-pattern class) and `EmbCenter` (17 samples/5 storms, 1 in test) are
+> excluded with explicit reasons, never silently dropped — 521/627 samples remain.
+> Non-deep-learning baselines (majority-class, logistic regression, LightGBM) trained on
+> deterministic image statistics from the canonical Zarr store, evaluated on the frozen
+> storm-level split: best test **macro-F1 = 0.559** (logistic regression) vs. 0.079
+> majority-class floor. `Eye` has zero test-split samples — a real, documented dataset
+> limitation (only 3 test storms), not hidden. 10 adversarial leakage tests pass. See
+> [docs/PHASE_5_CLASSIFICATION_LABEL_ANALYSIS.md](docs/PHASE_5_CLASSIFICATION_LABEL_ANALYSIS.md).
+> No CNN/deep learning trained this phase — that is Phase 6.
+
+> **Phase 4 — Satellite Data Pipeline. PIPELINE COMPLETE; MVP-scale processing PARTIAL.**
 > The full HURSAT-B1 → IRWIN QC → dedup → IBTrACS/ADT-HURSAT fusion → Zarr + Parquet pipeline is
 > implemented and verified end-to-end on real data at two scales. First, against the Phase 1
 > verification sample (195 frames/3 storms), reproducing Phase 1's own numbers exactly
@@ -109,6 +124,7 @@ run on free-tier CPU hosting.
 | [docs/PHASE_2_FORECASTING_BASELINES.md](docs/PHASE_2_FORECASTING_BASELINES.md) | IBTrACS-only baseline models, frozen split, benchmark results |
 | [docs/PHASE_3_VERTICAL_SLICE.md](docs/PHASE_3_VERTICAL_SLICE.md) | Database, API, ingestion, and frontend — the first working end-to-end slice |
 | [docs/PHASE_4_SATELLITE_PIPELINE.md](docs/PHASE_4_SATELLITE_PIPELINE.md) | HURSAT-B1/ADT-HURSAT fusion pipeline, QC gate, Zarr/Parquet dataset |
+| [docs/PHASE_5_CLASSIFICATION_LABEL_ANALYSIS.md](docs/PHASE_5_CLASSIFICATION_LABEL_ANALYSIS.md) | Scene-label audit, `scene_taxonomy_v1`, classification dataset, non-deep-learning baselines |
 
 ## Recommended Stack (summary)
 

@@ -1,0 +1,66 @@
+{
+  "label_version": "scene_taxonomy_v1",
+  "generated_utc": "2026-09-04T09:10:58+00:00",
+  "source_dataset_version": "satellite_v1",
+  "source": "ml/manifests/satellite_dataset_v1_manifest.json (Phase 4, unmodified)",
+  "taxonomy_mapping": {
+    "CDO": "CDO",
+    "IrrCDO": "CDO",
+    "CurvedBand": "CurvedBand",
+    "Shear": "Shear",
+    "Eye": "Eye",
+    "LargeEye": "Eye",
+    "EmbCenter": null,
+    "Land": null
+  },
+  "exclusion_reasons": {
+    "EmbCenter": "insufficient_label_support",
+    "Land": "land_contaminated"
+  },
+  "final_classes": [
+    "CDO",
+    "CurvedBand",
+    "Eye",
+    "Shear"
+  ],
+  "split_summary": {
+    "samples_by_split": {
+      "train": 353,
+      "val": 88,
+      "test": 80
+    },
+    "storms_by_split": {
+      "test": 3,
+      "train": 7,
+      "val": 2
+    },
+    "classes_by_split": {
+      "test": [
+        "CDO",
+        "CurvedBand",
+        "Shear"
+      ],
+      "train": [
+        "CDO",
+        "CurvedBand",
+        "Eye",
+        "Shear"
+      ],
+      "val": [
+        "CDO",
+        "CurvedBand",
+        "Eye",
+        "Shear"
+      ]
+    },
+    "total_included": 521,
+    "total_excluded": 106,
+    "excluded_by_reason": {
+      "land_contaminated": 89,
+      "insufficient_label_support": 17
+    }
+  },
+  "index_path_relative_to_data_root": "processed/classification/scene_taxonomy_v1/classification_index.parquet",
+  "total_rows": 627,
+  "note": "original_scene is preserved verbatim on every row; no Phase 4 artifact was modified."
+}

@@ -1,0 +1,799 @@
+{
+  "label_version": "scene_taxonomy_v1",
+  "final_classes": [
+    "CDO",
+    "CurvedBand",
+    "Eye",
+    "Shear"
+  ],
+  "class_weights_train_only": {
+    "CDO": 0.6128472222222222,
+    "CurvedBand": 0.8737623762376238,
+    "Eye": 1.521551724137931,
+    "Shear": 1.765
+  },
+  "split_sizes": {
+    "train": {
+      "n_samples": 353,
+      "n_storms": 7
+    },
+    "val": {
+      "n_samples": 88,
+      "n_storms": 2
+    },
+    "test": {
+      "n_samples": 80,
+      "n_storms": 3
+    }
+  },
+  "note_on_val_selection": "No hyperparameter search was performed in this phase (fixed, documented baseline configurations only), so there is no selection decision that could leak from val or test. The val split's own metrics are reported for completeness and to surface its own small-sample limitations, not used to choose between models.",
+  "models": {
+    "majority_class": {
+      "train": {
+        "n_samples": 353,
+        "n_classes": 4,
+        "labels": [
+          "CDO",
+          "CurvedBand",
+          "Eye",
+          "Shear"
+        ],
+        "classes_absent_from_this_split": [],
+        "accuracy": 0.40793201133144474,
+        "balanced_accuracy": 0.25,
+        "macro_precision": 0.10198300283286119,
+        "macro_recall": 0.25,
+        "macro_f1": 0.1448692152917505,
+        "weighted_precision": 0.16640852586891797,
+        "weighted_recall": 0.40793201133144474,
+        "weighted_f1": 0.23638716149588754,
+        "per_class": {
+          "CDO": {
+            "precision": 0.40793201133144474,
+            "recall": 1.0,
+            "f1": 0.579476861167002,
+            "support": 144
+          },
+          "CurvedBand": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 101
+          },
+          "Eye": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 58
+          },
+          "Shear": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 50
+          }
+        },
+        "confusion_matrix": [
+          [
+            144,
+            0,
+            0,
+            0
+          ],
+          [
+            101,
+            0,
+            0,
+            0
+          ],
+          [
+            58,
+            0,
+            0,
+            0
+          ],
+          [
+            50,
+            0,
+            0,
+            0
+          ]
+        ],
+        "confusion_matrix_labels": [
+          "CDO",
+          "CurvedBand",
+          "Eye",
+          "Shear"
+        ],
+        "macro_f1_over_present_classes_only": 0.1448692152917505,
+        "classes_present_in_this_split": [
+          "CDO",
+          "CurvedBand",
+          "Eye",
+          "Shear"
+        ]
+      },
+      "val": {
+        "n_samples": 88,
+        "n_classes": 4,
+        "labels": [
+          "CDO",
+          "CurvedBand",
+          "Eye",
+          "Shear"
+        ],
+        "classes_absent_from_this_split": [],
+        "accuracy": 0.32954545454545453,
+        "balanced_accuracy": 0.25,
+        "macro_precision": 0.08238636363636363,
+        "macro_recall": 0.25,
+        "macro_f1": 0.12393162393162394,
+        "weighted_precision": 0.10860020661157024,
+        "weighted_recall": 0.32954545454545453,
+        "weighted_f1": 0.16336441336441337,
+        "per_class": {
+          "CDO": {
+            "precision": 0.32954545454545453,
+            "recall": 1.0,
+            "f1": 0.49572649572649574,
+            "support": 29
+          },
+          "CurvedBand": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 19
+          },
+          "Eye": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 38
+          },
+          "Shear": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 2
+          }
+        },
+        "confusion_matrix": [
+          [
+            29,
+            0,
+            0,
+            0
+          ],
+          [
+            19,
+            0,
+            0,
+            0
+          ],
+          [
+            38,
+            0,
+            0,
+            0
+          ],
+          [
+            2,
+            0,
+            0,
+            0
+          ]
+        ],
+        "confusion_matrix_labels": [
+          "CDO",
+          "CurvedBand",
+          "Eye",
+          "Shear"
+        ],
+        "macro_f1_over_present_classes_only": 0.12393162393162394,
+        "classes_present_in_this_split": [
+          "CDO",
+          "CurvedBand",
+          "Eye",
+          "Shear"
+        ]
+      },
+      "test": {
+        "n_samples": 80,
+        "n_classes": 4,
+        "labels": [
+          "CDO",
+          "CurvedBand",
+          "Eye",
+          "Shear"
+        ],
+        "classes_absent_from_this_split": [
+          "Eye"
+        ],
+        "accuracy": 0.1875,
+        "balanced_accuracy": 0.3333333333333333,
+        "macro_precision": 0.046875,
+        "macro_recall": 0.25,
+        "macro_f1": 0.07894736842105263,
+        "weighted_precision": 0.03515625,
+        "weighted_recall": 0.1875,
+        "weighted_f1": 0.05921052631578947,
+        "per_class": {
+          "CDO": {
+            "precision": 0.1875,
+            "recall": 1.0,
+            "f1": 0.3157894736842105,
+            "support": 15
+          },
+          "CurvedBand": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 34
+          },
+          "Eye": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 0
+          },
+          "Shear": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 31
+          }
+        },
+        "confusion_matrix": [
+          [
+            15,
+            0,
+            0,
+            0
+          ],
+          [
+            34,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            31,
+            0,
+            0,
+            0
+          ]
+        ],
+        "confusion_matrix_labels": [
+          "CDO",
+          "CurvedBand",
+          "Eye",
+          "Shear"
+        ],
+        "macro_f1_over_present_classes_only": 0.10526315789473684,
+        "classes_present_in_this_split": [
+          "CDO",
+          "CurvedBand",
+          "Shear"
+        ]
+      }
+    },
+    "logistic_regression": {
+      "train": {
+        "n_samples": 353,
+        "n_classes": 4,
+        "labels": [
+          "CDO",
+          "CurvedBand",
+          "Eye",
+          "Shear"
+        ],
+        "classes_absent_from_this_split": [],
+        "accuracy": 0.7507082152974505,
+        "balanced_accuracy": 0.8015981705929214,
+        "macro_precision": 0.7579255903212789,
+        "macro_recall": 0.8015981705929214,
+        "macro_f1": 0.7694449288279213,
+        "weighted_precision": 0.7693673534585389,
+        "weighted_recall": 0.7507082152974505,
+        "weighted_f1": 0.750026711987762,
+        "per_class": {
+          "CDO": {
+            "precision": 0.7981651376146789,
+            "recall": 0.6041666666666666,
+            "f1": 0.6877470355731226,
+            "support": 144
+          },
+          "CurvedBand": {
+            "precision": 0.7961165048543689,
+            "recall": 0.8118811881188119,
+            "f1": 0.803921568627451,
+            "support": 101
+          },
+          "Eye": {
+            "precision": 0.5465116279069767,
+            "recall": 0.8103448275862069,
+            "f1": 0.6527777777777778,
+            "support": 58
+          },
+          "Shear": {
+            "precision": 0.8909090909090909,
+            "recall": 0.98,
+            "f1": 0.9333333333333333,
+            "support": 50
+          }
+        },
+        "confusion_matrix": [
+          [
+            87,
+            20,
+            37,
+            0
+          ],
+          [
+            11,
+            82,
+            2,
+            6
+          ],
+          [
+            11,
+            0,
+            47,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            49
+          ]
+        ],
+        "confusion_matrix_labels": [
+          "CDO",
+          "CurvedBand",
+          "Eye",
+          "Shear"
+        ],
+        "macro_f1_over_present_classes_only": 0.7694449288279213,
+        "classes_present_in_this_split": [
+          "CDO",
+          "CurvedBand",
+          "Eye",
+          "Shear"
+        ]
+      },
+      "val": {
+        "n_samples": 88,
+        "n_classes": 4,
+        "labels": [
+          "CDO",
+          "CurvedBand",
+          "Eye",
+          "Shear"
+        ],
+        "classes_absent_from_this_split": [],
+        "accuracy": 0.625,
+        "balanced_accuracy": 0.49682395644283117,
+        "macro_precision": 0.5131605613821756,
+        "macro_recall": 0.49682395644283117,
+        "macro_f1": 0.49412393162393164,
+        "weighted_precision": 0.6586136098789998,
+        "weighted_recall": 0.625,
+        "weighted_f1": 0.6258984071484072,
+        "per_class": {
+          "CDO": {
+            "precision": 0.4883720930232558,
+            "recall": 0.7241379310344828,
+            "f1": 0.5833333333333334,
+            "support": 29
+          },
+          "CurvedBand": {
+            "precision": 0.8235294117647058,
+            "recall": 0.7368421052631579,
+            "f1": 0.7777777777777778,
+            "support": 19
+          },
+          "Eye": {
+            "precision": 0.7407407407407407,
+            "recall": 0.5263157894736842,
+            "f1": 0.6153846153846154,
+            "support": 38
+          },
+          "Shear": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 2
+          }
+        },
+        "confusion_matrix": [
+          [
+            21,
+            1,
+            7,
+            0
+          ],
+          [
+            4,
+            14,
+            0,
+            1
+          ],
+          [
+            18,
+            0,
+            20,
+            0
+          ],
+          [
+            0,
+            2,
+            0,
+            0
+          ]
+        ],
+        "confusion_matrix_labels": [
+          "CDO",
+          "CurvedBand",
+          "Eye",
+          "Shear"
+        ],
+        "macro_f1_over_present_classes_only": 0.49412393162393164,
+        "classes_present_in_this_split": [
+          "CDO",
+          "CurvedBand",
+          "Eye",
+          "Shear"
+        ]
+      },
+      "test": {
+        "n_samples": 80,
+        "n_classes": 4,
+        "labels": [
+          "CDO",
+          "CurvedBand",
+          "Eye",
+          "Shear"
+        ],
+        "classes_absent_from_this_split": [
+          "Eye"
+        ],
+        "accuracy": 0.7625,
+        "balanced_accuracy": 0.7335230866540163,
+        "macro_precision": 0.5728170478170478,
+        "macro_recall": 0.5501423149905122,
+        "macro_f1": 0.5594390906844576,
+        "weighted_precision": 0.7952312889812889,
+        "weighted_recall": 0.7625,
+        "weighted_f1": 0.7756517173214726,
+        "per_class": {
+          "CDO": {
+            "precision": 0.6,
+            "recall": 0.6,
+            "f1": 0.6,
+            "support": 15
+          },
+          "CurvedBand": {
+            "precision": 0.7297297297297297,
+            "recall": 0.7941176470588235,
+            "f1": 0.7605633802816901,
+            "support": 34
+          },
+          "Eye": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 0
+          },
+          "Shear": {
+            "precision": 0.9615384615384616,
+            "recall": 0.8064516129032258,
+            "f1": 0.8771929824561403,
+            "support": 31
+          }
+        },
+        "confusion_matrix": [
+          [
+            9,
+            4,
+            2,
+            0
+          ],
+          [
+            6,
+            27,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            6,
+            0,
+            25
+          ]
+        ],
+        "confusion_matrix_labels": [
+          "CDO",
+          "CurvedBand",
+          "Eye",
+          "Shear"
+        ],
+        "macro_f1_over_present_classes_only": 0.7459187875792769,
+        "classes_present_in_this_split": [
+          "CDO",
+          "CurvedBand",
+          "Shear"
+        ]
+      }
+    },
+    "lightgbm": {
+      "train": {
+        "n_samples": 353,
+        "n_classes": 4,
+        "labels": [
+          "CDO",
+          "CurvedBand",
+          "Eye",
+          "Shear"
+        ],
+        "classes_absent_from_this_split": [],
+        "accuracy": 1.0,
+        "balanced_accuracy": 1.0,
+        "macro_precision": 1.0,
+        "macro_recall": 1.0,
+        "macro_f1": 1.0,
+        "weighted_precision": 1.0,
+        "weighted_recall": 1.0,
+        "weighted_f1": 1.0,
+        "per_class": {
+          "CDO": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 144
+          },
+          "CurvedBand": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 101
+          },
+          "Eye": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 58
+          },
+          "Shear": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 50
+          }
+        },
+        "confusion_matrix": [
+          [
+            144,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            101,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            58,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            50
+          ]
+        ],
+        "confusion_matrix_labels": [
+          "CDO",
+          "CurvedBand",
+          "Eye",
+          "Shear"
+        ],
+        "macro_f1_over_present_classes_only": 1.0,
+        "classes_present_in_this_split": [
+          "CDO",
+          "CurvedBand",
+          "Eye",
+          "Shear"
+        ]
+      },
+      "val": {
+        "n_samples": 88,
+        "n_classes": 4,
+        "labels": [
+          "CDO",
+          "CurvedBand",
+          "Eye",
+          "Shear"
+        ],
+        "classes_absent_from_this_split": [],
+        "accuracy": 0.6477272727272727,
+        "balanced_accuracy": 0.5267695099818512,
+        "macro_precision": 0.5480392156862746,
+        "macro_recall": 0.5267695099818512,
+        "macro_f1": 0.508764367816092,
+        "weighted_precision": 0.7039661319073084,
+        "weighted_recall": 0.6477272727272727,
+        "weighted_f1": 0.632373301985371,
+        "per_class": {
+          "CDO": {
+            "precision": 0.5098039215686274,
+            "recall": 0.896551724137931,
+            "f1": 0.65,
+            "support": 29
+          },
+          "CurvedBand": {
+            "precision": 0.8823529411764706,
+            "recall": 0.7894736842105263,
+            "f1": 0.8333333333333334,
+            "support": 19
+          },
+          "Eye": {
+            "precision": 0.8,
+            "recall": 0.42105263157894735,
+            "f1": 0.5517241379310345,
+            "support": 38
+          },
+          "Shear": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 2
+          }
+        },
+        "confusion_matrix": [
+          [
+            26,
+            0,
+            3,
+            0
+          ],
+          [
+            3,
+            15,
+            1,
+            0
+          ],
+          [
+            22,
+            0,
+            16,
+            0
+          ],
+          [
+            0,
+            2,
+            0,
+            0
+          ]
+        ],
+        "confusion_matrix_labels": [
+          "CDO",
+          "CurvedBand",
+          "Eye",
+          "Shear"
+        ],
+        "macro_f1_over_present_classes_only": 0.508764367816092,
+        "classes_present_in_this_split": [
+          "CDO",
+          "CurvedBand",
+          "Eye",
+          "Shear"
+        ]
+      },
+      "test": {
+        "n_samples": 80,
+        "n_classes": 4,
+        "labels": [
+          "CDO",
+          "CurvedBand",
+          "Eye",
+          "Shear"
+        ],
+        "classes_absent_from_this_split": [
+          "Eye"
+        ],
+        "accuracy": 0.7125,
+        "balanced_accuracy": 0.7268184693232133,
+        "macro_precision": 0.5450603318250378,
+        "macro_recall": 0.5451138519924099,
+        "macro_f1": 0.5405510585305107,
+        "weighted_precision": 0.7277055052790348,
+        "weighted_recall": 0.7125,
+        "weighted_f1": 0.7135390722291407,
+        "per_class": {
+          "CDO": {
+            "precision": 0.7058823529411765,
+            "recall": 0.8,
+            "f1": 0.75,
+            "support": 15
+          },
+          "CurvedBand": {
+            "precision": 0.6410256410256411,
+            "recall": 0.7352941176470589,
+            "f1": 0.684931506849315,
+            "support": 34
+          },
+          "Eye": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 0
+          },
+          "Shear": {
+            "precision": 0.8333333333333334,
+            "recall": 0.6451612903225806,
+            "f1": 0.7272727272727273,
+            "support": 31
+          }
+        },
+        "confusion_matrix": [
+          [
+            12,
+            3,
+            0,
+            0
+          ],
+          [
+            5,
+            25,
+            0,
+            4
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            11,
+            0,
+            20
+          ]
+        ],
+        "confusion_matrix_labels": [
+          "CDO",
+          "CurvedBand",
+          "Eye",
+          "Shear"
+        ],
+        "macro_f1_over_present_classes_only": 0.7207347447073476,
+        "classes_present_in_this_split": [
+          "CDO",
+          "CurvedBand",
+          "Shear"
+        ]
+      }
+    }
+  },
+  "primary_metric": "macro_f1",
+  "best_model_by_test_macro_f1": "logistic_regression"
+}

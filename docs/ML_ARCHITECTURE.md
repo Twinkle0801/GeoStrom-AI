@@ -154,6 +154,22 @@ not require a code change.
 with its ordinal neighbour or dropped, and the merge is recorded in the dataset manifest. Deciding
 this rule *before* seeing the results prevents post-hoc class engineering to flatter the metrics.
 
+> **Update (Phase 5).** This ~200-sample rule assumed the full-archive scale (~14,500 estimated
+> fused frames). Phase 5 ran the actual label-analysis gate against the real, current 627-sample
+> dataset (Phase 4's 12-storm subset -- the full archive is not yet processed, see
+> `docs/PHASE_4_SATELLITE_PIPELINE.md`), where every class has fewer than 200 samples (the
+> largest, CDO, has 177-188). The literal 200-sample threshold was therefore inapplicable at this
+> scale -- applying it verbatim would have merged or dropped every class, including the
+> best-represented one (`CurvedBand`, present in 12/12 storms). Phase 5 substituted an explicit,
+> documented **storm-level** support test (`MIN_STORMS_FOR_GENERALIZATION = 4`, plus a dedicated
+> check for zero-support-in-a-split) as the merge/exclusion criterion instead -- the underlying
+> intent (don't trust a class you can't demonstrate generalises) is preserved; only the concrete
+> threshold changed, and the change is fully documented, not silent. See
+> `docs/PHASE_5_CLASSIFICATION_LABEL_ANALYSIS.md` for the resulting `scene_taxonomy_v1`: CDO
+> (+IrrCDO), CurvedBand, Eye (+LargeEye), Shear -- with `Land` and `EmbCenter` excluded (exact
+> reasons in that document, §7). This taxonomy should be re-validated against the ~200-sample rule
+> once the archive is processed at larger scale.
+
 ### 5.2 Specification
 
 | Aspect | Choice | Why |

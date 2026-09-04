@@ -1,0 +1,391 @@
+{
+  "total_samples": 627,
+  "total_storms": 12,
+  "total_seasons": 9,
+  "class_counts": {
+    "CDO": 177,
+    "CurvedBand": 154,
+    "Land": 89,
+    "Shear": 83,
+    "Eye": 82,
+    "EmbCenter": 17,
+    "LargeEye": 14,
+    "IrrCDO": 11
+  },
+  "class_percentages": {
+    "CDO": 28.23,
+    "CurvedBand": 24.56,
+    "Land": 14.19,
+    "Shear": 13.24,
+    "Eye": 13.08,
+    "EmbCenter": 2.71,
+    "LargeEye": 2.23,
+    "IrrCDO": 1.75
+  },
+  "class_counts_by_split": {
+    "CDO": {
+      "test": 12,
+      "train": 136,
+      "val": 29
+    },
+    "CurvedBand": {
+      "test": 34,
+      "train": 101,
+      "val": 19
+    },
+    "EmbCenter": {
+      "test": 1,
+      "train": 10,
+      "val": 6
+    },
+    "Eye": {
+      "test": 0,
+      "train": 48,
+      "val": 34
+    },
+    "IrrCDO": {
+      "test": 3,
+      "train": 8,
+      "val": 0
+    },
+    "Land": {
+      "test": 14,
+      "train": 41,
+      "val": 34
+    },
+    "LargeEye": {
+      "test": 0,
+      "train": 10,
+      "val": 4
+    },
+    "Shear": {
+      "test": 31,
+      "train": 50,
+      "val": 2
+    }
+  },
+  "class_counts_by_storm": {
+    "CDO": {
+      "1980265N15283": 10,
+      "1988264N13328": 39,
+      "1989243N12339": 35,
+      "1995222N24265": 7,
+      "2002265N10315": 45,
+      "2005236N23285": 20,
+      "2005261N21290": 9,
+      "2010267N14285": 3,
+      "2015193N35285": 1,
+      "2015313N22289": 8
+    },
+    "CurvedBand": {
+      "1980265N15283": 11,
+      "1984220N37292": 7,
+      "1988221N30270": 1,
+      "1988264N13328": 9,
+      "1989243N12339": 29,
+      "1995222N24265": 9,
+      "2002265N10315": 35,
+      "2005236N23285": 10,
+      "2005261N21290": 9,
+      "2010267N14285": 7,
+      "2015193N35285": 12,
+      "2015313N22289": 15
+    },
+    "EmbCenter": {
+      "1988264N13328": 7,
+      "1989243N12339": 3,
+      "2005236N23285": 3,
+      "2005261N21290": 3,
+      "2010267N14285": 1
+    },
+    "Eye": {
+      "1988264N13328": 27,
+      "1989243N12339": 14,
+      "2002265N10315": 7,
+      "2005236N23285": 8,
+      "2005261N21290": 26
+    },
+    "IrrCDO": {
+      "1980265N15283": 1,
+      "1984220N37292": 1,
+      "1988264N13328": 3,
+      "2002265N10315": 3,
+      "2010267N14285": 2,
+      "2015193N35285": 1
+    },
+    "Land": {
+      "1980265N15283": 18,
+      "1988221N30270": 13,
+      "1995222N24265": 2,
+      "2002265N10315": 8,
+      "2005236N23285": 16,
+      "2005261N21290": 18,
+      "2010267N14285": 14
+    },
+    "LargeEye": {
+      "1988264N13328": 1,
+      "1989243N12339": 9,
+      "2005236N23285": 4
+    },
+    "Shear": {
+      "1980265N15283": 3,
+      "1984220N37292": 11,
+      "1988221N30270": 9,
+      "1988264N13328": 1,
+      "1989243N12339": 20,
+      "1995222N24265": 1,
+      "2002265N10315": 5,
+      "2005261N21290": 2,
+      "2015193N35285": 15,
+      "2015313N22289": 16
+    }
+  },
+  "class_counts_by_season": {
+    "CDO": {
+      "1980": 10,
+      "1988": 39,
+      "1989": 35,
+      "1995": 7,
+      "2002": 45,
+      "2005": 29,
+      "2010": 3,
+      "2015": 9
+    },
+    "CurvedBand": {
+      "1980": 11,
+      "1984": 7,
+      "1988": 10,
+      "1989": 29,
+      "1995": 9,
+      "2002": 35,
+      "2005": 19,
+      "2010": 7,
+      "2015": 27
+    },
+    "EmbCenter": {
+      "1988": 7,
+      "1989": 3,
+      "2005": 6,
+      "2010": 1
+    },
+    "Eye": {
+      "1988": 27,
+      "1989": 14,
+      "2002": 7,
+      "2005": 34
+    },
+    "IrrCDO": {
+      "1980": 1,
+      "1984": 1,
+      "1988": 3,
+      "2002": 3,
+      "2010": 2,
+      "2015": 1
+    },
+    "Land": {
+      "1980": 18,
+      "1988": 13,
+      "1995": 2,
+      "2002": 8,
+      "2005": 34,
+      "2010": 14
+    },
+    "LargeEye": {
+      "1988": 1,
+      "1989": 9,
+      "2005": 4
+    },
+    "Shear": {
+      "1980": 3,
+      "1984": 11,
+      "1988": 10,
+      "1989": 20,
+      "1995": 1,
+      "2002": 5,
+      "2005": 2,
+      "2015": 31
+    }
+  },
+  "unique_storms_per_class": {
+    "CDO": 10,
+    "CurvedBand": 12,
+    "EmbCenter": 5,
+    "Eye": 5,
+    "IrrCDO": 6,
+    "Land": 7,
+    "LargeEye": 3,
+    "Shear": 10
+  },
+  "pct_storms_per_class": {
+    "CDO": 83.33,
+    "CurvedBand": 100.0,
+    "EmbCenter": 41.67,
+    "Eye": 41.67,
+    "IrrCDO": 50.0,
+    "Land": 58.33,
+    "LargeEye": 25.0,
+    "Shear": 83.33
+  },
+  "storms_per_class_by_split": {
+    "CDO": {
+      "test": 3,
+      "train": 5,
+      "val": 2
+    },
+    "CurvedBand": {
+      "test": 3,
+      "train": 7,
+      "val": 2
+    },
+    "EmbCenter": {
+      "test": 1,
+      "train": 2,
+      "val": 2
+    },
+    "Eye": {
+      "test": 0,
+      "train": 3,
+      "val": 2
+    },
+    "IrrCDO": {
+      "test": 2,
+      "train": 4,
+      "val": 0
+    },
+    "Land": {
+      "test": 1,
+      "train": 4,
+      "val": 2
+    },
+    "LargeEye": {
+      "test": 0,
+      "train": 2,
+      "val": 1
+    },
+    "Shear": {
+      "test": 2,
+      "train": 7,
+      "val": 1
+    }
+  },
+  "temporal_distribution_by_class": {
+    "CDO": {
+      "seasons_present": [
+        1980,
+        1988,
+        1989,
+        1995,
+        2002,
+        2005,
+        2010,
+        2015
+      ],
+      "n_seasons": 8,
+      "first_timestamp": "1980-09-20 12:00:00",
+      "last_timestamp": "2015-11-11 09:00:00"
+    },
+    "CurvedBand": {
+      "seasons_present": [
+        1980,
+        1984,
+        1988,
+        1989,
+        1995,
+        2002,
+        2005,
+        2010,
+        2015
+      ],
+      "n_seasons": 9,
+      "first_timestamp": "1980-09-20 21:00:00",
+      "last_timestamp": "2015-11-11 18:00:00"
+    },
+    "EmbCenter": {
+      "seasons_present": [
+        1988,
+        1989,
+        2005,
+        2010
+      ],
+      "n_seasons": 4,
+      "first_timestamp": "1988-09-21 09:00:00",
+      "last_timestamp": "2010-09-24 15:00:00"
+    },
+    "Eye": {
+      "seasons_present": [
+        1988,
+        1989,
+        2002,
+        2005
+      ],
+      "n_seasons": 4,
+      "first_timestamp": "1988-09-22 15:00:00",
+      "last_timestamp": "2005-09-24 00:00:00"
+    },
+    "IrrCDO": {
+      "seasons_present": [
+        1980,
+        1984,
+        1988,
+        2002,
+        2010,
+        2015
+      ],
+      "n_seasons": 6,
+      "first_timestamp": "1980-09-23 18:00:00",
+      "last_timestamp": "2015-07-13 12:00:00"
+    },
+    "Land": {
+      "seasons_present": [
+        1980,
+        1988,
+        1995,
+        2002,
+        2005,
+        2010
+      ],
+      "n_seasons": 6,
+      "first_timestamp": "1980-09-21 21:00:00",
+      "last_timestamp": "2010-09-26 18:00:00"
+    },
+    "LargeEye": {
+      "seasons_present": [
+        1988,
+        1989,
+        2005
+      ],
+      "n_seasons": 3,
+      "first_timestamp": "1988-09-28 18:00:00",
+      "last_timestamp": "2005-08-29 03:00:00"
+    },
+    "Shear": {
+      "seasons_present": [
+        1980,
+        1984,
+        1988,
+        1989,
+        1995,
+        2002,
+        2005,
+        2015
+      ],
+      "n_seasons": 8,
+      "first_timestamp": "1980-09-21 06:00:00",
+      "last_timestamp": "2015-11-13 12:00:00"
+    }
+  },
+  "missing_labels": 0,
+  "duplicate_sample_id_label_pairs": 0,
+  "classes_present_in_only_one_split": [],
+  "classes_with_zero_test_samples": [
+    "Eye",
+    "LargeEye"
+  ],
+  "classes_with_zero_val_samples": [
+    "IrrCDO"
+  ],
+  "min_storms_for_generalization_threshold": 4,
+  "classes_below_generalization_storm_threshold": [
+    "LargeEye"
+  ]
+}
