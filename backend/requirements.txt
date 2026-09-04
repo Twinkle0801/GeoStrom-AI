@@ -1,0 +1,17 @@
+# Phase 3 (Vertical Slice) backend — exact environment used to build and run it.
+# ml/requirements.txt (Phase 2) stays fully separate: the backend never
+# imports torch/xarray/netCDF4/lightgbm, and ml/ never imports FastAPI.
+
+fastapi==0.119.0
+uvicorn[standard]==0.51.0
+sqlalchemy==2.0.51
+alembic==1.18.5
+pydantic==2.13.5
+pydantic-settings==2.15.0
+geoalchemy2==0.20.0
+shapely==2.1.2
+psycopg2-binary==2.9.12
+httpx==0.28.1
+pytest==9.1.1
+pandas==2.3.3
+pyarrow==24.0.0

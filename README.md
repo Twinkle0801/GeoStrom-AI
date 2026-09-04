@@ -2,14 +2,21 @@
 
 **AI/ML-based identification, classification, and prediction of tropical cyclone patterns from multi-source satellite and best-track data.**
 
-> **Status: Phase 2 — Forecasting Baselines. COMPLETE.**
-> North Atlantic locked as the MVP basin. IBTrACS-only Persistence/Ridge/LightGBM (intensity) and
-> Persistence/CLIPER-style/LightGBM (track) baselines are trained and evaluated on a frozen,
-> storm-level, leak-tested split — see
-> [docs/PHASE_2_FORECASTING_BASELINES.md](docs/PHASE_2_FORECASTING_BASELINES.md). Headline (24h)
-> result: LightGBM beats persistence on intensity by 19.8%; CLIPER-style Ridge beats persistence
-> on track by 11.4% (and edges out LightGBM on track — reported honestly, not adjusted). No deep
-> model, frontend, backend, database, or Gemini integration has been built. 80/80 tests pass.
+> **Status: Phase 3 — Vertical Slice. COMPLETE.**
+> The first full, real, end-to-end path is built and verified: Phase 2 baseline predictions →
+> PostgreSQL/PostGIS → read-only FastAPI → generated OpenAPI contract → Next.js + Leaflet map,
+> with observed and predicted tracks visually distinct. 41,568 predictions / 2,084 observations /
+> 88 storms ingested idempotently from the real Phase 2 artifact; 154/154 tests pass (61 backend +
+> 80 Phase 2 regression + 13 frontend). See
+> [docs/PHASE_3_VERTICAL_SLICE.md](docs/PHASE_3_VERTICAL_SLICE.md). This is an integration proof,
+> not the final product UI — no CNN/GRU/LSTM, no Gemini, no auth, no live data.
+
+> **Phase 2 — Forecasting Baselines. COMPLETE.** North Atlantic locked as the MVP basin.
+> IBTrACS-only Persistence/Ridge/LightGBM (intensity) and Persistence/CLIPER-style/LightGBM (track)
+> baselines, trained and evaluated on a frozen, storm-level, leak-tested split — see
+> [docs/PHASE_2_FORECASTING_BASELINES.md](docs/PHASE_2_FORECASTING_BASELINES.md). Headline (24h):
+> LightGBM beats persistence on intensity by 19.8%; CLIPER-style Ridge beats persistence on track
+> by 11.4% (and edges out LightGBM on track — reported honestly, not adjusted).
 
 > **Phase 1 — Foundation & Dataset Verification. COMPLETE.** The multi-source fusion premise
 > (IBTrACS ↔ HURSAT-B1 ↔ ADT-HURSAT) was verified against real, small samples of official
@@ -82,6 +89,9 @@ run on free-tier CPU hosting.
 | [docs/API_ARCHITECTURE.md](docs/API_ARCHITECTURE.md) | FastAPI endpoint design, contracts, Gemini grounding architecture |
 | [docs/UI_UX_ARCHITECTURE.md](docs/UI_UX_ARCHITECTURE.md) | Design language, frontend tech evaluation, page architecture |
 | [docs/DEVELOPMENT_ROADMAP.md](docs/DEVELOPMENT_ROADMAP.md) | Phase plan, dependencies, risk register, MVP scope guard |
+| [docs/PHASE_1_DATASET_VERIFICATION.md](docs/PHASE_1_DATASET_VERIFICATION.md) | Dataset verification against real IBTrACS/HURSAT/ADT samples |
+| [docs/PHASE_2_FORECASTING_BASELINES.md](docs/PHASE_2_FORECASTING_BASELINES.md) | IBTrACS-only baseline models, frozen split, benchmark results |
+| [docs/PHASE_3_VERTICAL_SLICE.md](docs/PHASE_3_VERTICAL_SLICE.md) | Database, API, ingestion, and frontend — the first working end-to-end slice |
 
 ## Recommended Stack (summary)
 

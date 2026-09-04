@@ -1,6 +1,9 @@
 # ─── Secrets ────────────────────────────────────────────────────────────────
 .env
 .env.local
+infra/docker/.env
+backend/.env
+frontend/.env.local
 *.key
 *credentials*
 *secret*
@@ -55,11 +58,12 @@ env/
 .mypy_cache/
 .ruff_cache/
 
-# ─── Node / Next.js (future phases) ─────────────────────────────────────────
+# ─── Node / Next.js ──────────────────────────────────────────────────────────
 node_modules/
 .next/
 out/
 .vercel/
+*.tsbuildinfo
 
 # ─── OS / editor ────────────────────────────────────────────────────────────
 Thumbs.db

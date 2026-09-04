@@ -1,0 +1,35 @@
+# Local development database for GeoStrom AI — PostgreSQL + PostGIS.
+#
+# Per docs/SYSTEM_ARCHITECTURE.md §7.1: PostgreSQL + PostGIS is the serving
+# store. This compose file is the "reproducible local Postgres+PostGIS setup"
+# the Phase 3 task calls for — no Kubernetes, no Redis, no Celery.
+#
+# Ports are deliberately non-default (5434, not 5432/5433) because this
+# workstation already runs other Postgres containers on the standard ports.
+#
+# Usage:
+#   docker compose -f infra/docker/docker-compose.yml up -d
+#   docker compose -f infra/docker/docker-compose.yml down        # stop, keep data
+#   docker compose -f infra/docker/docker-compose.yml down -v     # stop, wipe data
+
+services:
+  db:
+    image: postgis/postgis:16-3.4
+    container_name: geostrom_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-geostrom}
+      POSTGRES_USER: ${POSTGRES_USER:-geostrom}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in infra/docker/.env - see .env.example}
+    ports:
+      - "${POSTGRES_PORT:-5434}:5432"
+    volumes:
+      - geostrom_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U geostrom -d geostrom"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  geostrom_pgdata:

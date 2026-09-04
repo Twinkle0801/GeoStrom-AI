@@ -1,9 +1,10 @@
 # DEVELOPMENT ROADMAP — GeoStrom AI
 
-**Phase:** 2 (Forecasting Baselines) · **Status:** Complete.
-Full results in [PHASE_2_FORECASTING_BASELINES.md](PHASE_2_FORECASTING_BASELINES.md).
-North Atlantic is now locked as the MVP basin (explicit project decision, superseding the
-Phase 1 recommendation-pending-signoff). Phase 3 has not started.
+**Phase:** 3 (Vertical Slice) · **Status:** Complete.
+Full results in [PHASE_3_VERTICAL_SLICE.md](PHASE_3_VERTICAL_SLICE.md). The first complete,
+real, end-to-end path (Phase 2 predictions → PostgreSQL/PostGIS → FastAPI → generated contract →
+Next.js/Leaflet map) is built and verified: 154/154 tests pass, zero Phase 2 regression. Phase 4
+has not started.
 
 ---
 
@@ -124,19 +125,37 @@ Phase 2 task specified verbatim. Full results: `docs/PHASE_2_FORECASTING_BASELIN
 
 ---
 
-### P3 — Vertical Slice (thin end-to-end)
+### P3 — Vertical Slice (thin end-to-end) ✅ COMPLETE
 **Depends on:** P2
 
-1. Batch inference writes P2 predictions to Postgres with `model_version`
-2. Minimal FastAPI: `/cyclones`, `/cyclones/{sid}/observations`, `/tracks/{sid}`, `/prediction/{sid}`, `/health`, `/meta`
-3. Export `contracts/openapi.json`; generate frontend types
-4. Minimal Next.js page: pick a storm → Leaflet map → observed track + predicted track + actual future
-5. Deploy all three tiers once, early, to a real environment
+1. ✅ Ingestion script writes P2 predictions to Postgres/PostGIS with `model_version` — long-form
+   `predictions` table, idempotent upsert (verified: two consecutive runs produce identical row
+   counts and model IDs). 41,568 predictions / 2,084 observations / 88 storms.
+2. ✅ Minimal FastAPI, real routes (named per API_ARCHITECTURE.md's `/cyclones` resource, not the
+   sketch's literal names): `/api/v1/cyclones`, `/api/v1/cyclones/{sid}`,
+   `/api/v1/cyclones/{sid}/observations`, `/api/v1/tracks/{sid}`, `/api/v1/prediction/{sid}`,
+   `/health`, `/api/v1/meta` — all read-only, zero ML imports in the request path (verified by
+   import inspection).
+3. ✅ Exported `contracts/openapi.json` from the live app; generated `frontend/lib/api-types.ts` via
+   `openapi-typescript`; the whole frontend type-checks cleanly against it (`tsc --noEmit`, 0 errors).
+4. ✅ Minimal Next.js page (`/predict/[sid]`): pick a storm → Leaflet map → observed track (solid
+   teal) + predicted track (dashed, per-model colour), verified end-to-end against the real backend
+   and real database (server-rendered HTML captured and inspected, not assumed).
+5. ⏳ **Not done — scope-cut, documented, not silently dropped.** "Deploy to a real environment"
+   (Vercel/Render/managed Postgres) was not performed in this session; the vertical slice runs
+   against a local Docker Postgres+PostGIS and local `uvicorn`/`next dev` processes only. Promoting
+   this to a real deployed URL is the natural first task of a later integration phase (P10) and
+   requires no architecture change — the same Docker image and `DATABASE_URL`-driven config already
+   supports it.
 
-**Exit:** a deployed URL where a stranger can select a storm and see a real forecast against ground
-truth. **Ugly is acceptable. Working is mandatory.**
+**Exit:** 154/154 tests pass (61 backend + 80 Phase 2 regression + 13 frontend), zero Phase 2
+regression. The local vertical slice is real and runnable end-to-end; the deployed-URL portion of
+the original exit criterion is deferred, not met. Full detail:
+[PHASE_3_VERTICAL_SLICE.md](PHASE_3_VERTICAL_SLICE.md).
 
-> Deploying in P3 rather than P11 means deployment problems surface when there is time to solve them.
+> Building the ingestion/API/frontend seam in P3 rather than P11 still paid off: the schema,
+> contract-generation workflow, and observed/predicted map distinction are now proven against real
+> data, long before any deployment-specific problem would need solving on top of them.
 
 ---
 
