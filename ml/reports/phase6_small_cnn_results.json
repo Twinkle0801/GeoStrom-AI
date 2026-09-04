@@ -1,0 +1,414 @@
+{
+  "model": "small_cnn",
+  "label_version": "scene_taxonomy_v1",
+  "final_classes": [
+    "CDO",
+    "CurvedBand",
+    "Eye",
+    "Shear"
+  ],
+  "config": {
+    "model_name": "small_cnn",
+    "seed": 42,
+    "batch_size": 16,
+    "num_epochs": 40,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "optimizer": "adamw",
+    "scheduler": "cosine",
+    "early_stopping_metric": "val_macro_f1",
+    "early_stopping_patience": 8,
+    "early_stopping_min_delta": 0.0,
+    "checkpoint_metric": "val_macro_f1",
+    "num_workers": 0,
+    "device": "auto",
+    "label_smoothing": 0.05,
+    "class_weighted_loss": true,
+    "resnet_freeze_until_layer": "layer4"
+  },
+  "device": "cuda",
+  "n_trainable_parameters": 60836,
+  "n_total_parameters": 60836,
+  "normalization": {
+    "train_mean_k": 273.1753234863281,
+    "train_std_k": 23.797245025634766
+  },
+  "split_sizes": {
+    "train": 353,
+    "val": 88,
+    "test": 80
+  },
+  "training_history": [
+    {
+      "epoch": 0,
+      "train_loss": 1.3340714818695112,
+      "val_loss": 1.271932601928711,
+      "train_macro_f1": 0.2877362123778662,
+      "val_macro_f1": 0.1532258064516129
+    },
+    {
+      "epoch": 1,
+      "train_loss": 1.2688103036232103,
+      "val_loss": 1.3972234617580066,
+      "train_macro_f1": 0.4178682836771072,
+      "val_macro_f1": 0.15661938534278957
+    },
+    {
+      "epoch": 2,
+      "train_loss": 1.2204102129166254,
+      "val_loss": 1.8275237300179221,
+      "train_macro_f1": 0.44614687545309556,
+      "val_macro_f1": 0.0825242718446602
+    },
+    {
+      "epoch": 3,
+      "train_loss": 1.1944343283899108,
+      "val_loss": 1.6307525526393543,
+      "train_macro_f1": 0.4603781635031635,
+      "val_macro_f1": 0.07
+    },
+    {
+      "epoch": 4,
+      "train_loss": 1.1647163298582557,
+      "val_loss": 1.7398637749932029,
+      "train_macro_f1": 0.4666465999159942,
+      "val_macro_f1": 0.08653846153846154
+    },
+    {
+      "epoch": 5,
+      "train_loss": 1.1764165385924386,
+      "val_loss": 1.5450789820064197,
+      "train_macro_f1": 0.4951086353819951,
+      "val_macro_f1": 0.11439024390243901
+    },
+    {
+      "epoch": 6,
+      "train_loss": 1.1598618098088769,
+      "val_loss": 1.5291888171976262,
+      "train_macro_f1": 0.5153544309179117,
+      "val_macro_f1": 0.17481962481962482
+    },
+    {
+      "epoch": 7,
+      "train_loss": 1.162880660454207,
+      "val_loss": 1.7474632479927756,
+      "train_macro_f1": 0.4703510575793185,
+      "val_macro_f1": 0.07766990291262135
+    },
+    {
+      "epoch": 8,
+      "train_loss": 1.1349909764849093,
+      "val_loss": 1.8926892497322776,
+      "train_macro_f1": 0.4953375630259871,
+      "val_macro_f1": 0.0825242718446602
+    },
+    {
+      "epoch": 9,
+      "train_loss": 1.1536714270837585,
+      "val_loss": 1.7059648362073032,
+      "train_macro_f1": 0.5040361309238441,
+      "val_macro_f1": 0.1282169117647059
+    },
+    {
+      "epoch": 10,
+      "train_loss": 1.133536555949419,
+      "val_loss": 1.3291063525459983,
+      "train_macro_f1": 0.5111835774932842,
+      "val_macro_f1": 0.2698106443994602
+    },
+    {
+      "epoch": 11,
+      "train_loss": 1.12343924072579,
+      "val_loss": 2.128954128785567,
+      "train_macro_f1": 0.47226518643025805,
+      "val_macro_f1": 0.08095238095238096
+    },
+    {
+      "epoch": 12,
+      "train_loss": 1.1240428662502733,
+      "val_loss": 1.775409373370084,
+      "train_macro_f1": 0.471956417476329,
+      "val_macro_f1": 0.08228008088978767
+    },
+    {
+      "epoch": 13,
+      "train_loss": 1.099745426232011,
+      "val_loss": 1.507853475483981,
+      "train_macro_f1": 0.506423773681113,
+      "val_macro_f1": 0.11854432830042586
+    },
+    {
+      "epoch": 14,
+      "train_loss": 1.1011052644961954,
+      "val_loss": 1.6726057854565708,
+      "train_macro_f1": 0.49979534465795555,
+      "val_macro_f1": 0.10136217948717949
+    },
+    {
+      "epoch": 15,
+      "train_loss": 1.1021242374738958,
+      "val_loss": 1.714322718706998,
+      "train_macro_f1": 0.551317605683561,
+      "val_macro_f1": 0.09684684684684684
+    },
+    {
+      "epoch": 16,
+      "train_loss": 1.102923313213813,
+      "val_loss": 1.8649280938235195,
+      "train_macro_f1": 0.48323850105570354,
+      "val_macro_f1": 0.09134615384615384
+    },
+    {
+      "epoch": 17,
+      "train_loss": 1.07359596892727,
+      "val_loss": 1.3865713314576582,
+      "train_macro_f1": 0.5340539735024855,
+      "val_macro_f1": 0.2630517373858106
+    },
+    {
+      "epoch": 18,
+      "train_loss": 1.06602859564611,
+      "val_loss": 2.092118165709756,
+      "train_macro_f1": 0.5258698391128122,
+      "val_macro_f1": 0.10697115384615384
+    }
+  ],
+  "best_epoch": 10,
+  "best_val_macro_f1": 0.2698106443994602,
+  "stopped_early": true,
+  "wall_clock_seconds": 335.70154094696045,
+  "final_train_metrics": {
+    "n_samples": 353,
+    "n_classes": 4,
+    "labels": [
+      "CDO",
+      "CurvedBand",
+      "Eye",
+      "Shear"
+    ],
+    "classes_absent_from_this_split": [],
+    "accuracy": 0.40226628895184136,
+    "balanced_accuracy": 0.5099375260801943,
+    "macro_precision": 0.46898316599115697,
+    "macro_recall": 0.5099375260801943,
+    "macro_f1": 0.41990751191498843,
+    "weighted_precision": 0.47782717250391954,
+    "weighted_recall": 0.40226628895184136,
+    "weighted_f1": 0.3753483927931203,
+    "per_class": {
+      "CDO": {
+        "precision": 0.453125,
+        "recall": 0.2013888888888889,
+        "f1": 0.27884615384615385,
+        "support": 144
+      },
+      "CurvedBand": {
+        "precision": 0.5869565217391305,
+        "recall": 0.26732673267326734,
+        "f1": 0.3673469387755102,
+        "support": 101
+      },
+      "Eye": {
+        "precision": 0.29347826086956524,
+        "recall": 0.9310344827586207,
+        "f1": 0.4462809917355372,
+        "support": 58
+      },
+      "Shear": {
+        "precision": 0.5423728813559322,
+        "recall": 0.64,
+        "f1": 0.5871559633027523,
+        "support": 50
+      }
+    },
+    "confusion_matrix": [
+      [
+        29,
+        11,
+        100,
+        4
+      ],
+      [
+        28,
+        27,
+        23,
+        23
+      ],
+      [
+        4,
+        0,
+        54,
+        0
+      ],
+      [
+        3,
+        8,
+        7,
+        32
+      ]
+    ],
+    "confusion_matrix_labels": [
+      "CDO",
+      "CurvedBand",
+      "Eye",
+      "Shear"
+    ]
+  },
+  "final_val_metrics": {
+    "n_samples": 88,
+    "n_classes": 4,
+    "labels": [
+      "CDO",
+      "CurvedBand",
+      "Eye",
+      "Shear"
+    ],
+    "classes_absent_from_this_split": [],
+    "accuracy": 0.3522727272727273,
+    "balanced_accuracy": 0.2921960072595281,
+    "macro_precision": 0.3229323308270676,
+    "macro_recall": 0.2921960072595281,
+    "macro_f1": 0.2698106443994602,
+    "weighted_precision": 0.46883116883116877,
+    "weighted_recall": 0.3522727272727273,
+    "weighted_f1": 0.35512274184149184,
+    "per_class": {
+      "CDO": {
+        "precision": 0.3142857142857143,
+        "recall": 0.3793103448275862,
+        "f1": 0.34375,
+        "support": 29
+      },
+      "CurvedBand": {
+        "precision": 0.2631578947368421,
+        "recall": 0.5263157894736842,
+        "f1": 0.3508771929824561,
+        "support": 19
+      },
+      "Eye": {
+        "precision": 0.7142857142857143,
+        "recall": 0.2631578947368421,
+        "f1": 0.38461538461538464,
+        "support": 38
+      },
+      "Shear": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 2
+      }
+    },
+    "confusion_matrix": [
+      [
+        11,
+        16,
+        2,
+        0
+      ],
+      [
+        6,
+        10,
+        2,
+        1
+      ],
+      [
+        18,
+        10,
+        10,
+        0
+      ],
+      [
+        0,
+        2,
+        0,
+        0
+      ]
+    ],
+    "confusion_matrix_labels": [
+      "CDO",
+      "CurvedBand",
+      "Eye",
+      "Shear"
+    ]
+  },
+  "test_metrics": {
+    "n_samples": 80,
+    "n_classes": 4,
+    "labels": [
+      "CDO",
+      "CurvedBand",
+      "Eye",
+      "Shear"
+    ],
+    "classes_absent_from_this_split": [
+      "Eye"
+    ],
+    "accuracy": 0.5,
+    "balanced_accuracy": 0.44364326375711577,
+    "macro_precision": 0.42407649558679306,
+    "macro_recall": 0.33273244781783684,
+    "macro_f1": 0.3556818181818182,
+    "weighted_precision": 0.5895390650539392,
+    "weighted_recall": 0.5,
+    "weighted_f1": 0.5173863636363636,
+    "per_class": {
+      "CDO": {
+        "precision": 0.42857142857142855,
+        "recall": 0.2,
+        "f1": 0.2727272727272727,
+        "support": 15
+      },
+      "CurvedBand": {
+        "precision": 0.4782608695652174,
+        "recall": 0.6470588235294118,
+        "f1": 0.55,
+        "support": 34
+      },
+      "Eye": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0
+      },
+      "Shear": {
+        "precision": 0.7894736842105263,
+        "recall": 0.4838709677419355,
+        "f1": 0.6,
+        "support": 31
+      }
+    },
+    "confusion_matrix": [
+      [
+        3,
+        9,
+        3,
+        0
+      ],
+      [
+        3,
+        22,
+        5,
+        4
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        15,
+        0,
+        15
+      ]
+    ],
+    "confusion_matrix_labels": [
+      "CDO",
+      "CurvedBand",
+      "Eye",
+      "Shear"
+    ]
+  },
+  "checkpoint_path_relative_to_data_root": "processed/classification/scene_taxonomy_v1/checkpoints/small_cnn_best.pt"
+}

@@ -1,0 +1,16 @@
+# Phase 6 (Deep-Learning Cyclone Pattern Classification) — additional
+# dependencies on top of ml/requirements.txt and ml/requirements-satellite.txt.
+# Pinned to the versions actually verified working in this environment (same
+# convention as the other ml/requirements*.txt files).
+#
+# torch/torchvision are CUDA-build wheels (cu121) for this workstation's
+# RTX 4050 (6 GB VRAM). Install with the matching index:
+#   pip install -r ml/requirements-deep-learning.txt --index-url https://download.pytorch.org/whl/cu121
+# A CPU-only install (any environment without a compatible NVIDIA GPU) works
+# with the same package/version pins from the default PyPI index instead;
+# ml/geostrom_ml/classification/deep/training.py::resolve_device() falls back
+# to "cpu" automatically when CUDA is unavailable.
+
+torch==2.5.1
+torchvision==0.20.1
+scipy==1.17.1

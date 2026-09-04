@@ -1,12 +1,16 @@
 # DEVELOPMENT ROADMAP — GeoStrom AI
 
-**Phase:** 5 (Classification Label Analysis) · **Status:** Complete.
-Full results in [PHASE_5_CLASSIFICATION_LABEL_ANALYSIS.md](PHASE_5_CLASSIFICATION_LABEL_ANALYSIS.md).
-Phases 0-5 are complete: Phase 3's vertical slice (Phase 2 predictions → PostgreSQL/PostGIS →
+**Phase:** 6 (Deep-Learning Cyclone Pattern Classification) · **Status:** Complete, baseline retained.
+Full results in [PHASE_6_DEEP_LEARNING_CLASSIFICATION.md](PHASE_6_DEEP_LEARNING_CLASSIFICATION.md).
+Phases 0-6 are complete: Phase 3's vertical slice (Phase 2 predictions → PostgreSQL/PostGIS →
 FastAPI → generated contract → Next.js/Leaflet map); Phase 4's real satellite fusion pipeline
 (12 storms / 627 fused samples, see [PHASE_4_SATELLITE_PIPELINE.md](PHASE_4_SATELLITE_PIPELINE.md));
-and Phase 5's evidence-driven `scene_taxonomy_v1` classification taxonomy plus non-deep-learning
-baseline (test macro-F1 0.559). CNN classification training ("Phase 6") has not started.
+Phase 5's evidence-driven `scene_taxonomy_v1` classification taxonomy plus non-deep-learning
+baseline (test macro-F1 0.559); and Phase 6's CNN training (small CNN + ResNet-18, both evaluated,
+neither beating the Phase 5 baseline at the current 353-image scale — the baseline ships, per the
+roadmap's own "ship the honest winner" principle). This "Phase 6" is the informal CNN-training
+item deferred from Phase 5's numbering note, distinct from the P0–P12 sequence's **P6 (Detection)**
+below, which has not started.
 
 ---
 
@@ -226,19 +230,27 @@ data (1980–2015); see docs/PHASE_4_SATELLITE_PIPELINE.md for the exact resume 
    the "class prior + LightGBM" wording literally — logistic regression edged out LightGBM
    on this small (353-train-sample) dataset; both are reported honestly in
    `ml/reports/phase5_baseline_results.json`.
-3. ⏳ CNN (ResNet-18, EfficientNet-B0) — **not started**, deferred to "Phase 6" per the
-   explicit scope of the Phase 5 work session (no deep learning permitted that phase).
+3. ✅ **CNN (small from-scratch net, ResNet-18) — done in "Phase 6."** Both trained and evaluated
+   on the frozen split; test macro-F1 0.370 (ResNet-18) and 0.356 (small CNN), **neither beats**
+   the 0.559 logistic-regression baseline at this sample size (353 train images). Root cause
+   (overfitting / small val-test per-class support) analysed, not just reported; baseline ships.
+   Two real bugs (NaN-bleed from augmenting before invalid-pixel fill; a reproducibility bug from
+   seeding after model construction) were found and fixed during development — both are documented
+   in the Phase 6 doc, not silently corrected.
+   See [PHASE_6_DEEP_LEARNING_CLASSIFICATION.md](PHASE_6_DEEP_LEARNING_CLASSIFICATION.md).
 4. ⏳ Full metric suite incl. quadratic-weighted κ / category MAE — macro-F1, per-class
    precision/recall, confusion matrix ARE done for the baseline (§Exit below); κ/MAE assume
    an ordinal target and were not computed (`scene_taxonomy_v1` is nominal, not ordinal).
 5. ⏳ Batch inference → `classifications` table — not started (no backend/DB work permitted
    in the Phase 5 work session).
 
-**Exit (partial — see numbering note above):** the class list is data-derived and documented
+**Exit (see numbering note above):** the class list is data-derived and documented
 (✅); macro-F1 clears the class-prior/majority baseline (✅, 0.559 vs 0.079); no class has
 zero recall without documented justification (✅ — `Eye`'s zero test-split recall is
 extensively documented as a dataset-size limitation, not silently accepted). CNN-specific
-exit criteria remain open for "Phase 6".
+work is now done (✅, "Phase 6") — the pre-declared bar (test macro-F1 > 0.559) was **not**
+cleared by either CNN, an honestly-reported negative result, not a gap; the logistic-regression
+baseline remains the shipped classification model until more labelled imagery is available.
 
 ---
 

@@ -205,6 +205,17 @@ zero recall, and the rare classes here are the intense storms — the ones that 
 | Small translation (±10 px) | ✅ | ✅ | Simulates centre-fix uncertainty — physically realistic |
 | Scale jitter (±10%) | ✅ | ✅ | Simulates parallax and storm-size variation |
 | Brightness/contrast jitter | ⚠️ small | ❌ | Brightness temperature is a **physical quantity**. Shifting it changes the implied cloud-top height. Effectively fabricating physics |
+
+> **Update (Phase 6).** This table's classification-column guidance was followed exactly, and
+> independently re-derived with the same physical reasoning before this table was consulted a
+> second time: rotation accepted (Phase 6 used a more conservative ±15°, inside this table's ±30°
+> ceiling), flips rejected for the identical chirality-inversion reason stated here,
+> brightness/contrast jitter rejected as fabricated physics. One documented scope reduction: Phase
+> 6 implemented rotation only, not this table's also-permitted small translation/scale jitter --
+> a deliberate simplification given the 353-image training set (fewer simultaneous augmentation
+> axes to reason about at this scale), not a rejection of those transforms on physical grounds.
+> Full implementation and reasoning: `ml/geostrom_ml/classification/deep/augmentation.py`,
+> `docs/PHASE_6_DEEP_LEARNING_CLASSIFICATION.md` §5.
 | Cutout / random erasing | ✅ | ✅ small | Robustness to missing scan lines, which genuinely occur |
 
 **This table is a deliberate correction of the default "throw the standard augmentation pipeline at

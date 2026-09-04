@@ -15,7 +15,21 @@
 > majority-class floor. `Eye` has zero test-split samples — a real, documented dataset
 > limitation (only 3 test storms), not hidden. 10 adversarial leakage tests pass. See
 > [docs/PHASE_5_CLASSIFICATION_LABEL_ANALYSIS.md](docs/PHASE_5_CLASSIFICATION_LABEL_ANALYSIS.md).
-> No CNN/deep learning trained this phase — that is Phase 6.
+
+> **Phase 6 — Deep-Learning Cyclone Pattern Classification. COMPLETE — baseline retained.**
+> Trained and evaluated a from-scratch small CNN and a grayscale-adapted, ImageNet-pretrained,
+> mostly-frozen ResNet-18 (per `docs/ML_ARCHITECTURE.md`'s pre-existing recommendation) on the
+> frozen `scene_taxonomy_v1` taxonomy and split. **Neither beats the Phase 5 logistic-regression
+> baseline** (test macro-F1 0.559): small CNN scored 0.356, ResNet-18 scored 0.370 — both
+> honestly reported, not suppressed. Root cause: real overfitting (train macro-F1 reaches
+> 0.99–1.0) and validation-selection instability at only 7 train / 2 val / 3 test storms, not an
+> implementation defect. Two real bugs were found and fixed while developing this phase: invalid
+> pixels (stored as NaN in the canonical Zarr) bleeding into neighboring pixels when augmentation
+> ran before the fill step, and model weights being randomly initialized before the seed was set
+> (breaking reproducibility). Both fixed, tested, and documented. **Recommendation: ship the
+> Phase 5 baseline**; the CNN path needs more labelled imagery, not more tuning, to be
+> reconsidered. See
+> [docs/PHASE_6_DEEP_LEARNING_CLASSIFICATION.md](docs/PHASE_6_DEEP_LEARNING_CLASSIFICATION.md).
 
 > **Phase 4 — Satellite Data Pipeline. PIPELINE COMPLETE; MVP-scale processing PARTIAL.**
 > The full HURSAT-B1 → IRWIN QC → dedup → IBTrACS/ADT-HURSAT fusion → Zarr + Parquet pipeline is
@@ -125,6 +139,7 @@ run on free-tier CPU hosting.
 | [docs/PHASE_3_VERTICAL_SLICE.md](docs/PHASE_3_VERTICAL_SLICE.md) | Database, API, ingestion, and frontend — the first working end-to-end slice |
 | [docs/PHASE_4_SATELLITE_PIPELINE.md](docs/PHASE_4_SATELLITE_PIPELINE.md) | HURSAT-B1/ADT-HURSAT fusion pipeline, QC gate, Zarr/Parquet dataset |
 | [docs/PHASE_5_CLASSIFICATION_LABEL_ANALYSIS.md](docs/PHASE_5_CLASSIFICATION_LABEL_ANALYSIS.md) | Scene-label audit, `scene_taxonomy_v1`, classification dataset, non-deep-learning baselines |
+| [docs/PHASE_6_DEEP_LEARNING_CLASSIFICATION.md](docs/PHASE_6_DEEP_LEARNING_CLASSIFICATION.md) | CNN + transfer-learning training/evaluation, overfitting analysis, comparison against the Phase 5 baseline |
 
 ## Recommended Stack (summary)
 

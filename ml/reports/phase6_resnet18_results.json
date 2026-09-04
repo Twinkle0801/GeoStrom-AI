@@ -1,0 +1,365 @@
+{
+  "model": "resnet18",
+  "label_version": "scene_taxonomy_v1",
+  "final_classes": [
+    "CDO",
+    "CurvedBand",
+    "Eye",
+    "Shear"
+  ],
+  "config": {
+    "model_name": "resnet18",
+    "seed": 42,
+    "batch_size": 16,
+    "num_epochs": 25,
+    "learning_rate": 0.0003,
+    "weight_decay": 0.0001,
+    "optimizer": "adamw",
+    "scheduler": "cosine",
+    "early_stopping_metric": "val_macro_f1",
+    "early_stopping_patience": 8,
+    "early_stopping_min_delta": 0.0,
+    "checkpoint_metric": "val_macro_f1",
+    "num_workers": 0,
+    "device": "auto",
+    "label_smoothing": 0.05,
+    "class_weighted_loss": true,
+    "resnet_freeze_until_layer": "layer4"
+  },
+  "device": "cuda",
+  "n_trainable_parameters": 8395780,
+  "n_total_parameters": 11172292,
+  "normalization": {
+    "train_mean_k": 273.1753234863281,
+    "train_std_k": 23.797245025634766
+  },
+  "split_sizes": {
+    "train": 353,
+    "val": 88,
+    "test": 80
+  },
+  "training_history": [
+    {
+      "epoch": 0,
+      "train_loss": 1.1047803692034217,
+      "val_loss": 1.1032125462185254,
+      "train_macro_f1": 0.5338777511359131,
+      "val_macro_f1": 0.44430490830962904
+    },
+    {
+      "epoch": 1,
+      "train_loss": 0.4286327135799289,
+      "val_loss": 1.2606771967627786,
+      "train_macro_f1": 0.911192541947494,
+      "val_macro_f1": 0.36645476616406847
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.3187332045255234,
+      "val_loss": 0.9808983965353533,
+      "train_macro_f1": 0.9936538361912657,
+      "val_macro_f1": 0.4110982391102873
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.3041267800263575,
+      "val_loss": 0.8193582377650521,
+      "train_macro_f1": 0.9937098844672657,
+      "val_macro_f1": 0.5756418485237484
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.2944484486458322,
+      "val_loss": 0.9259409606456757,
+      "train_macro_f1": 0.9936538361912657,
+      "val_macro_f1": 0.4795747290942548
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.27366912398730053,
+      "val_loss": 0.9367554648356005,
+      "train_macro_f1": 0.9978973927670312,
+      "val_macro_f1": 0.4678519843180411
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.28386882445629863,
+      "val_loss": 0.9246001243591309,
+      "train_macro_f1": 0.9924043442406525,
+      "val_macro_f1": 0.4665001135589371
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.26757911075613655,
+      "val_loss": 0.9212140901522203,
+      "train_macro_f1": 0.9966536723358748,
+      "val_macro_f1": 0.5091630591630592
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.2593014054528039,
+      "val_loss": 0.8821923055432059,
+      "train_macro_f1": 1.0,
+      "val_macro_f1": 0.5151289682539683
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.2661000750220193,
+      "val_loss": 0.9985398297960107,
+      "train_macro_f1": 0.9969610350534075,
+      "val_macro_f1": 0.46620689655172415
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.26306117357680886,
+      "val_loss": 0.8839511708779768,
+      "train_macro_f1": 0.9966194667687205,
+      "val_macro_f1": 0.460609243697479
+    },
+    {
+      "epoch": 11,
+      "train_loss": 0.27048065169337115,
+      "val_loss": 0.8080754686485637,
+      "train_macro_f1": 0.993204255434559,
+      "val_macro_f1": 0.5212371854613235
+    }
+  ],
+  "best_epoch": 3,
+  "best_val_macro_f1": 0.5756418485237484,
+  "stopped_early": true,
+  "wall_clock_seconds": 200.0588140487671,
+  "final_train_metrics": {
+    "n_samples": 353,
+    "n_classes": 4,
+    "labels": [
+      "CDO",
+      "CurvedBand",
+      "Eye",
+      "Shear"
+    ],
+    "classes_absent_from_this_split": [],
+    "accuracy": 0.9971671388101983,
+    "balanced_accuracy": 0.9982638888888888,
+    "macro_precision": 0.9975490196078431,
+    "macro_recall": 0.9982638888888888,
+    "macro_f1": 0.9978973927670312,
+    "weighted_precision": 0.9971949119591179,
+    "weighted_recall": 0.9971671388101983,
+    "weighted_f1": 0.9971691810025736,
+    "per_class": {
+      "CDO": {
+        "precision": 1.0,
+        "recall": 0.9930555555555556,
+        "f1": 0.9965156794425087,
+        "support": 144
+      },
+      "CurvedBand": {
+        "precision": 0.9901960784313726,
+        "recall": 1.0,
+        "f1": 0.9950738916256158,
+        "support": 101
+      },
+      "Eye": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 58
+      },
+      "Shear": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 50
+      }
+    },
+    "confusion_matrix": [
+      [
+        143,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        101,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        58,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        50
+      ]
+    ],
+    "confusion_matrix_labels": [
+      "CDO",
+      "CurvedBand",
+      "Eye",
+      "Shear"
+    ]
+  },
+  "final_val_metrics": {
+    "n_samples": 88,
+    "n_classes": 4,
+    "labels": [
+      "CDO",
+      "CurvedBand",
+      "Eye",
+      "Shear"
+    ],
+    "classes_absent_from_this_split": [],
+    "accuracy": 0.75,
+    "balanced_accuracy": 0.5605716878402904,
+    "macro_precision": 0.6029277739804055,
+    "macro_recall": 0.5605716878402904,
+    "macro_f1": 0.5756418485237484,
+    "weighted_precision": 0.8164354584809129,
+    "weighted_recall": 0.75,
+    "weighted_f1": 0.7755543237250554,
+    "per_class": {
+      "CDO": {
+        "precision": 0.9523809523809523,
+        "recall": 0.6896551724137931,
+        "f1": 0.8,
+        "support": 29
+      },
+      "CurvedBand": {
+        "precision": 0.5909090909090909,
+        "recall": 0.6842105263157895,
+        "f1": 0.6341463414634146,
+        "support": 19
+      },
+      "Eye": {
+        "precision": 0.868421052631579,
+        "recall": 0.868421052631579,
+        "f1": 0.868421052631579,
+        "support": 38
+      },
+      "Shear": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 2
+      }
+    },
+    "confusion_matrix": [
+      [
+        20,
+        4,
+        5,
+        0
+      ],
+      [
+        0,
+        13,
+        0,
+        6
+      ],
+      [
+        1,
+        3,
+        33,
+        1
+      ],
+      [
+        0,
+        2,
+        0,
+        0
+      ]
+    ],
+    "confusion_matrix_labels": [
+      "CDO",
+      "CurvedBand",
+      "Eye",
+      "Shear"
+    ]
+  },
+  "test_metrics": {
+    "n_samples": 80,
+    "n_classes": 4,
+    "labels": [
+      "CDO",
+      "CurvedBand",
+      "Eye",
+      "Shear"
+    ],
+    "classes_absent_from_this_split": [
+      "Eye"
+    ],
+    "accuracy": 0.5375,
+    "balanced_accuracy": 0.48357579590976174,
+    "macro_precision": 0.4235036119711042,
+    "macro_recall": 0.3626818469323213,
+    "macro_f1": 0.3698976982097187,
+    "weighted_precision": 0.5755482456140351,
+    "weighted_recall": 0.5375,
+    "weighted_f1": 0.5267173913043479,
+    "per_class": {
+      "CDO": {
+        "precision": 0.5,
+        "recall": 0.26666666666666666,
+        "f1": 0.34782608695652173,
+        "support": 15
+      },
+      "CurvedBand": {
+        "precision": 0.5098039215686274,
+        "recall": 0.7647058823529411,
+        "f1": 0.611764705882353,
+        "support": 34
+      },
+      "Eye": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0
+      },
+      "Shear": {
+        "precision": 0.6842105263157895,
+        "recall": 0.41935483870967744,
+        "f1": 0.52,
+        "support": 31
+      }
+    },
+    "confusion_matrix": [
+      [
+        4,
+        9,
+        1,
+        1
+      ],
+      [
+        2,
+        26,
+        1,
+        5
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        2,
+        16,
+        0,
+        13
+      ]
+    ],
+    "confusion_matrix_labels": [
+      "CDO",
+      "CurvedBand",
+      "Eye",
+      "Shear"
+    ]
+  },
+  "checkpoint_path_relative_to_data_root": "processed/classification/scene_taxonomy_v1/checkpoints/resnet18_best.pt"
+}
