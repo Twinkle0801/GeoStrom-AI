@@ -1,0 +1,308 @@
+{
+  "hypothesis": "HURSAT-B1 v06 filenames embed the IBTrACS SID",
+  "ibtracs_files": [
+    "ibtracs.NA.list.v04r01.csv",
+    "ibtracs.NI.list.v04r01.csv"
+  ],
+  "ibtracs_storms_loaded": 4152,
+  "ibtracs_basins_loaded": {
+    "NA": 2292,
+    "NI": 1768,
+    "WP": 86,
+    "EP": 6
+  },
+  "seasons": {
+    "1985": {
+      "hursat_archives": 114,
+      "hursat_sids_wellformed": 114,
+      "hursat_sids_malformed": [],
+      "hursat_duplicate_sids": [],
+      "hursat_sids_resolving_to_loaded_ibtracs": 19,
+      "coverage_by_basin": {
+        "NA": {
+          "ibtracs_storms": 14,
+          "with_hursat_archive": 13,
+          "pct_with_hursat": 92.86,
+          "missing_sids": [
+            "1985224N18279"
+          ]
+        },
+        "NI": {
+          "ibtracs_storms": 15,
+          "with_hursat_archive": 4,
+          "pct_with_hursat": 26.67,
+          "missing_sids": [
+            "1985142N16089",
+            "1985213N20088",
+            "1985217N30075",
+            "1985218N21088",
+            "1985226N19088",
+            "1985262N18090",
+            "1985266N25077",
+            "1985274N14084",
+            "1985279N20072",
+            "1985287N13093"
+          ]
+        }
+      },
+      "name_agreement": {
+        "agree": 12,
+        "mismatch": 0,
+        "unnamed_either_side": 7,
+        "examples": []
+      },
+      "archive_bytes": {
+        "n": 114,
+        "total_gb": 0.743,
+        "mean_mb": 6.52,
+        "min_mb": 0.5,
+        "max_mb": 17.81
+      }
+    },
+    "1990": {
+      "hursat_archives": 120,
+      "hursat_sids_wellformed": 120,
+      "hursat_sids_malformed": [],
+      "hursat_duplicate_sids": [],
+      "hursat_sids_resolving_to_loaded_ibtracs": 28,
+      "coverage_by_basin": {
+        "NA": {
+          "ibtracs_storms": 16,
+          "with_hursat_archive": 16,
+          "pct_with_hursat": 100.0,
+          "missing_sids": []
+        },
+        "NI": {
+          "ibtracs_storms": 11,
+          "with_hursat_archive": 11,
+          "pct_with_hursat": 100.0,
+          "missing_sids": []
+        }
+      },
+      "name_agreement": {
+        "agree": 15,
+        "mismatch": 0,
+        "unnamed_either_side": 13,
+        "examples": []
+      },
+      "archive_bytes": {
+        "n": 120,
+        "total_gb": 0.835,
+        "mean_mb": 6.96,
+        "min_mb": 0.13,
+        "max_mb": 23.58
+      }
+    },
+    "1995": {
+      "hursat_archives": 97,
+      "hursat_sids_wellformed": 97,
+      "hursat_sids_malformed": [],
+      "hursat_duplicate_sids": [],
+      "hursat_sids_resolving_to_loaded_ibtracs": 27,
+      "coverage_by_basin": {
+        "NA": {
+          "ibtracs_storms": 21,
+          "with_hursat_archive": 20,
+          "pct_with_hursat": 95.24,
+          "missing_sids": [
+            "1995241N11333"
+          ]
+        },
+        "NI": {
+          "ibtracs_storms": 7,
+          "with_hursat_archive": 4,
+          "pct_with_hursat": 57.14,
+          "missing_sids": [
+            "1995126N11081",
+            "1995128N15082",
+            "1995269N21088"
+          ]
+        }
+      },
+      "name_agreement": {
+        "agree": 20,
+        "mismatch": 0,
+        "unnamed_either_side": 7,
+        "examples": []
+      },
+      "archive_bytes": {
+        "n": 97,
+        "total_gb": 1.245,
+        "mean_mb": 12.83,
+        "min_mb": 0.46,
+        "max_mb": 41.78
+      }
+    },
+    "2000": {
+      "hursat_archives": 112,
+      "hursat_sids_wellformed": 112,
+      "hursat_sids_malformed": [],
+      "hursat_duplicate_sids": [],
+      "hursat_sids_resolving_to_loaded_ibtracs": 21,
+      "coverage_by_basin": {
+        "NA": {
+          "ibtracs_storms": 19,
+          "with_hursat_archive": 18,
+          "pct_with_hursat": 94.74,
+          "missing_sids": [
+            "2000175N09340"
+          ]
+        },
+        "NI": {
+          "ibtracs_storms": 6,
+          "with_hursat_archive": 3,
+          "pct_with_hursat": 50.0,
+          "missing_sids": [
+            "2000236N17084",
+            "2000299N13093",
+            "2000331N09092"
+          ]
+        }
+      },
+      "name_agreement": {
+        "agree": 14,
+        "mismatch": 0,
+        "unnamed_either_side": 7,
+        "examples": []
+      },
+      "archive_bytes": {
+        "n": 112,
+        "total_gb": 2.038,
+        "mean_mb": 18.19,
+        "min_mb": 0.27,
+        "max_mb": 69.73
+      }
+    },
+    "2005": {
+      "hursat_archives": 113,
+      "hursat_sids_wellformed": 113,
+      "hursat_sids_malformed": [],
+      "hursat_duplicate_sids": [],
+      "hursat_sids_resolving_to_loaded_ibtracs": 41,
+      "coverage_by_basin": {
+        "NA": {
+          "ibtracs_storms": 31,
+          "with_hursat_archive": 30,
+          "pct_with_hursat": 96.77,
+          "missing_sids": [
+            "2005281N26303"
+          ]
+        },
+        "NI": {
+          "ibtracs_storms": 14,
+          "with_hursat_archive": 9,
+          "pct_with_hursat": 64.29,
+          "missing_sids": [
+            "2005172N22069",
+            "2005210N21088",
+            "2005255N20088",
+            "2005257N20069",
+            "2005260N20091"
+          ]
+        }
+      },
+      "name_agreement": {
+        "agree": 31,
+        "mismatch": 0,
+        "unnamed_either_side": 10,
+        "examples": []
+      },
+      "archive_bytes": {
+        "n": 113,
+        "total_gb": 3.267,
+        "mean_mb": 28.91,
+        "min_mb": 4.28,
+        "max_mb": 87.73
+      }
+    },
+    "2010": {
+      "hursat_archives": 89,
+      "hursat_sids_wellformed": 89,
+      "hursat_sids_malformed": [],
+      "hursat_duplicate_sids": [],
+      "hursat_sids_resolving_to_loaded_ibtracs": 26,
+      "coverage_by_basin": {
+        "NA": {
+          "ibtracs_storms": 20,
+          "with_hursat_archive": 19,
+          "pct_with_hursat": 95.0,
+          "missing_sids": [
+            "2010188N21269"
+          ]
+        },
+        "NI": {
+          "ibtracs_storms": 7,
+          "with_hursat_archive": 5,
+          "pct_with_hursat": 71.43,
+          "missing_sids": [
+            "2010280N17085",
+            "2010341N14082"
+          ]
+        }
+      },
+      "name_agreement": {
+        "agree": 23,
+        "mismatch": 1,
+        "unnamed_either_side": 2,
+        "examples": [
+          {
+            "sid": "2010247N15266",
+            "hursat": "ELEVEN",
+            "ibtracs": "HERMINE"
+          }
+        ]
+      },
+      "archive_bytes": {
+        "n": 89,
+        "total_gb": 3.783,
+        "mean_mb": 42.51,
+        "min_mb": 2.99,
+        "max_mb": 110.3
+      }
+    },
+    "2015": {
+      "hursat_archives": 100,
+      "hursat_sids_wellformed": 100,
+      "hursat_sids_malformed": [],
+      "hursat_duplicate_sids": [],
+      "hursat_sids_resolving_to_loaded_ibtracs": 20,
+      "coverage_by_basin": {
+        "NA": {
+          "ibtracs_storms": 12,
+          "with_hursat_archive": 12,
+          "pct_with_hursat": 100.0,
+          "missing_sids": []
+        },
+        "NI": {
+          "ibtracs_storms": 12,
+          "with_hursat_archive": 8,
+          "pct_with_hursat": 66.67,
+          "missing_sids": [
+            "2015171N18086",
+            "2015216N23081",
+            "2015259N20084",
+            "2015312N11084"
+          ]
+        }
+      },
+      "name_agreement": {
+        "agree": 15,
+        "mismatch": 0,
+        "unnamed_either_side": 5,
+        "examples": []
+      },
+      "archive_bytes": {
+        "n": 100,
+        "total_gb": 4.958,
+        "mean_mb": 49.58,
+        "min_mb": 3.94,
+        "max_mb": 207.1
+      }
+    }
+  },
+  "overall": {
+    "total_hursat_archives_scanned": 745,
+    "total_wellformed_sids": 745,
+    "pct_wellformed": 100.0
+  }
+}

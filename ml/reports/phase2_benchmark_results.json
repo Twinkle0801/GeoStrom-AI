@@ -1,0 +1,754 @@
+[
+  {
+    "model_name": "intensity_persistence_v1",
+    "model_version": "v1",
+    "task": "intensity",
+    "dataset_version": "v1",
+    "split_version": "v1",
+    "feature_version": "v1",
+    "forecast_horizon_h": 6,
+    "sample_count": 1732,
+    "metrics": {
+      "n": 1732,
+      "mae_kt": 3.2101616628175518,
+      "rmse_kt": 5.0545522892997745,
+      "bias_kt": 0.1674364896073903
+    },
+    "timestamp_utc": "2026-09-02T14:42:15+00:00",
+    "config": {
+      "name": "intensity_persistence_v1",
+      "horizons_h": [
+        6,
+        12,
+        18,
+        24
+      ]
+    }
+  },
+  {
+    "model_name": "intensity_persistence_v1",
+    "model_version": "v1",
+    "task": "intensity",
+    "dataset_version": "v1",
+    "split_version": "v1",
+    "feature_version": "v1",
+    "forecast_horizon_h": 12,
+    "sample_count": 1732,
+    "metrics": {
+      "n": 1732,
+      "mae_kt": 6.094110854503464,
+      "rmse_kt": 8.811438870318398,
+      "bias_kt": 0.49942263279445726
+    },
+    "timestamp_utc": "2026-09-02T14:42:15+00:00",
+    "config": {
+      "name": "intensity_persistence_v1",
+      "horizons_h": [
+        6,
+        12,
+        18,
+        24
+      ]
+    }
+  },
+  {
+    "model_name": "intensity_persistence_v1",
+    "model_version": "v1",
+    "task": "intensity",
+    "dataset_version": "v1",
+    "split_version": "v1",
+    "feature_version": "v1",
+    "forecast_horizon_h": 18,
+    "sample_count": 1732,
+    "metrics": {
+      "n": 1732,
+      "mae_kt": 8.530600461893764,
+      "rmse_kt": 12.038837268248233,
+      "bias_kt": 1.0825635103926097
+    },
+    "timestamp_utc": "2026-09-02T14:42:15+00:00",
+    "config": {
+      "name": "intensity_persistence_v1",
+      "horizons_h": [
+        6,
+        12,
+        18,
+        24
+      ]
+    }
+  },
+  {
+    "model_name": "intensity_persistence_v1",
+    "model_version": "v1",
+    "task": "intensity",
+    "dataset_version": "v1",
+    "split_version": "v1",
+    "feature_version": "v1",
+    "forecast_horizon_h": 24,
+    "sample_count": 1732,
+    "metrics": {
+      "n": 1732,
+      "mae_kt": 10.640877598152425,
+      "rmse_kt": 14.865641524047257,
+      "bias_kt": 1.8533487297921478
+    },
+    "timestamp_utc": "2026-09-02T14:42:15+00:00",
+    "config": {
+      "name": "intensity_persistence_v1",
+      "horizons_h": [
+        6,
+        12,
+        18,
+        24
+      ]
+    }
+  },
+  {
+    "model_name": "intensity_ridge_v1",
+    "model_version": "v1",
+    "task": "intensity",
+    "dataset_version": "v1",
+    "split_version": "v1",
+    "feature_version": "v1",
+    "forecast_horizon_h": 6,
+    "sample_count": 1732,
+    "metrics": {
+      "n": 1732,
+      "mae_kt": 3.0804834280874283,
+      "rmse_kt": 4.199106164602708,
+      "bias_kt": 0.43673243062434325
+    },
+    "timestamp_utc": "2026-09-02T14:42:15+00:00",
+    "config": {
+      "name": "intensity_ridge_v1",
+      "horizons_h": [
+        6,
+        12,
+        18,
+        24
+      ],
+      "alpha": 1.0,
+      "random_state": 42
+    }
+  },
+  {
+    "model_name": "intensity_ridge_v1",
+    "model_version": "v1",
+    "task": "intensity",
+    "dataset_version": "v1",
+    "split_version": "v1",
+    "feature_version": "v1",
+    "forecast_horizon_h": 12,
+    "sample_count": 1732,
+    "metrics": {
+      "n": 1732,
+      "mae_kt": 5.491665506786178,
+      "rmse_kt": 7.457627470364878,
+      "bias_kt": 0.9221583868929797
+    },
+    "timestamp_utc": "2026-09-02T14:42:15+00:00",
+    "config": {
+      "name": "intensity_ridge_v1",
+      "horizons_h": [
+        6,
+        12,
+        18,
+        24
+      ],
+      "alpha": 1.0,
+      "random_state": 42
+    }
+  },
+  {
+    "model_name": "intensity_ridge_v1",
+    "model_version": "v1",
+    "task": "intensity",
+    "dataset_version": "v1",
+    "split_version": "v1",
+    "feature_version": "v1",
+    "forecast_horizon_h": 18,
+    "sample_count": 1732,
+    "metrics": {
+      "n": 1732,
+      "mae_kt": 7.706534571736696,
+      "rmse_kt": 10.351739339432923,
+      "bias_kt": 1.4887469530685498
+    },
+    "timestamp_utc": "2026-09-02T14:42:15+00:00",
+    "config": {
+      "name": "intensity_ridge_v1",
+      "horizons_h": [
+        6,
+        12,
+        18,
+        24
+      ],
+      "alpha": 1.0,
+      "random_state": 42
+    }
+  },
+  {
+    "model_name": "intensity_ridge_v1",
+    "model_version": "v1",
+    "task": "intensity",
+    "dataset_version": "v1",
+    "split_version": "v1",
+    "feature_version": "v1",
+    "forecast_horizon_h": 24,
+    "sample_count": 1732,
+    "metrics": {
+      "n": 1732,
+      "mae_kt": 9.590772881305337,
+      "rmse_kt": 12.782421610015112,
+      "bias_kt": 2.031114157068653
+    },
+    "timestamp_utc": "2026-09-02T14:42:15+00:00",
+    "config": {
+      "name": "intensity_ridge_v1",
+      "horizons_h": [
+        6,
+        12,
+        18,
+        24
+      ],
+      "alpha": 1.0,
+      "random_state": 42
+    }
+  },
+  {
+    "model_name": "intensity_lightgbm_v1",
+    "model_version": "v1",
+    "task": "intensity",
+    "dataset_version": "v1",
+    "split_version": "v1",
+    "feature_version": "v1",
+    "forecast_horizon_h": 6,
+    "sample_count": 1732,
+    "metrics": {
+      "n": 1732,
+      "mae_kt": 2.880895693669965,
+      "rmse_kt": 3.9323576351792764,
+      "bias_kt": 0.2490715714493477
+    },
+    "timestamp_utc": "2026-09-02T14:42:19+00:00",
+    "config": {
+      "name": "intensity_lightgbm_v1",
+      "horizons_h": [
+        6,
+        12,
+        18,
+        24
+      ],
+      "random_state": 42,
+      "n_estimators": 300
+    }
+  },
+  {
+    "model_name": "intensity_lightgbm_v1",
+    "model_version": "v1",
+    "task": "intensity",
+    "dataset_version": "v1",
+    "split_version": "v1",
+    "feature_version": "v1",
+    "forecast_horizon_h": 12,
+    "sample_count": 1732,
+    "metrics": {
+      "n": 1732,
+      "mae_kt": 4.97256540490126,
+      "rmse_kt": 6.925093926011493,
+      "bias_kt": 0.5480440796650041
+    },
+    "timestamp_utc": "2026-09-02T14:42:19+00:00",
+    "config": {
+      "name": "intensity_lightgbm_v1",
+      "horizons_h": [
+        6,
+        12,
+        18,
+        24
+      ],
+      "random_state": 42,
+      "n_estimators": 300
+    }
+  },
+  {
+    "model_name": "intensity_lightgbm_v1",
+    "model_version": "v1",
+    "task": "intensity",
+    "dataset_version": "v1",
+    "split_version": "v1",
+    "feature_version": "v1",
+    "forecast_horizon_h": 18,
+    "sample_count": 1732,
+    "metrics": {
+      "n": 1732,
+      "mae_kt": 6.822854640743967,
+      "rmse_kt": 9.511667613591724,
+      "bias_kt": 0.8940873667905856
+    },
+    "timestamp_utc": "2026-09-02T14:42:19+00:00",
+    "config": {
+      "name": "intensity_lightgbm_v1",
+      "horizons_h": [
+        6,
+        12,
+        18,
+        24
+      ],
+      "random_state": 42,
+      "n_estimators": 300
+    }
+  },
+  {
+    "model_name": "intensity_lightgbm_v1",
+    "model_version": "v1",
+    "task": "intensity",
+    "dataset_version": "v1",
+    "split_version": "v1",
+    "feature_version": "v1",
+    "forecast_horizon_h": 24,
+    "sample_count": 1732,
+    "metrics": {
+      "n": 1732,
+      "mae_kt": 8.535242906682745,
+      "rmse_kt": 11.840298169137036,
+      "bias_kt": 1.126559597478687
+    },
+    "timestamp_utc": "2026-09-02T14:42:19+00:00",
+    "config": {
+      "name": "intensity_lightgbm_v1",
+      "horizons_h": [
+        6,
+        12,
+        18,
+        24
+      ],
+      "random_state": 42,
+      "n_estimators": 300
+    }
+  },
+  {
+    "model_name": "track_persistence_v1",
+    "model_version": "v1",
+    "task": "track",
+    "dataset_version": "v1",
+    "split_version": "v1",
+    "feature_version": "v1",
+    "forecast_horizon_h": 6,
+    "sample_count": 1732,
+    "metrics": {
+      "n": 1732,
+      "mean_lat_error_deg": -0.015324276043165216,
+      "mean_lon_error_deg": -0.05185714551971708,
+      "mean_track_error_km": 30.54221939420201,
+      "median_track_error_km": 23.437319009255305,
+      "p90_track_error_km": 62.019729109110315,
+      "max_track_error_km": 397.8691644279511,
+      "rmse_track_error_km": 41.845771924490336,
+      "mean_along_track_km": -5.525048721047046,
+      "mean_cross_track_km": -2.224914256930846,
+      "mean_abs_along_track_km": 19.691618187213553,
+      "mean_abs_cross_track_km": 18.888618561411093
+    },
+    "timestamp_utc": "2026-09-02T14:42:19+00:00",
+    "config": {
+      "name": "track_persistence_v1",
+      "horizons_h": [
+        6,
+        12,
+        18,
+        24
+      ]
+    }
+  },
+  {
+    "model_name": "track_persistence_v1",
+    "model_version": "v1",
+    "task": "track",
+    "dataset_version": "v1",
+    "split_version": "v1",
+    "feature_version": "v1",
+    "forecast_horizon_h": 12,
+    "sample_count": 1732,
+    "metrics": {
+      "n": 1732,
+      "mean_lat_error_deg": -0.06208315174615135,
+      "mean_lon_error_deg": -0.1470564447137776,
+      "mean_track_error_km": 80.61019308976172,
+      "median_track_error_km": 61.57671627486094,
+      "p90_track_error_km": 163.55351533512578,
+      "max_track_error_km": 836.4881922025828,
+      "rmse_track_error_km": 107.73640757130268,
+      "mean_along_track_km": -16.707231943850758,
+      "mean_cross_track_km": -6.759056150952342,
+      "mean_abs_along_track_km": 52.237071339279304,
+      "mean_abs_cross_track_km": 50.41813656718762
+    },
+    "timestamp_utc": "2026-09-02T14:42:19+00:00",
+    "config": {
+      "name": "track_persistence_v1",
+      "horizons_h": [
+        6,
+        12,
+        18,
+        24
+      ]
+    }
+  },
+  {
+    "model_name": "track_persistence_v1",
+    "model_version": "v1",
+    "task": "track",
+    "dataset_version": "v1",
+    "split_version": "v1",
+    "feature_version": "v1",
+    "forecast_horizon_h": 18,
+    "sample_count": 1732,
+    "metrics": {
+      "n": 1732,
+      "mean_lat_error_deg": -0.13745242557875403,
+      "mean_lon_error_deg": -0.28256806439028276,
+      "mean_track_error_km": 146.67196145792136,
+      "median_track_error_km": 114.0087552762401,
+      "p90_track_error_km": 288.1025235409104,
+      "max_track_error_km": 1233.9395551620498,
+      "rmse_track_error_km": 193.22736916668183,
+      "mean_along_track_km": -34.15605456811393,
+      "mean_cross_track_km": -15.023813515957665,
+      "mean_abs_along_track_km": 95.2794965898892,
+      "mean_abs_cross_track_km": 92.02302733291951
+    },
+    "timestamp_utc": "2026-09-02T14:42:19+00:00",
+    "config": {
+      "name": "track_persistence_v1",
+      "horizons_h": [
+        6,
+        12,
+        18,
+        24
+      ]
+    }
+  },
+  {
+    "model_name": "track_persistence_v1",
+    "model_version": "v1",
+    "task": "track",
+    "dataset_version": "v1",
+    "split_version": "v1",
+    "feature_version": "v1",
+    "forecast_horizon_h": 24,
+    "sample_count": 1732,
+    "metrics": {
+      "n": 1732,
+      "mean_lat_error_deg": -0.2409853898643416,
+      "mean_lon_error_deg": -0.46268985868158236,
+      "mean_track_error_km": 226.24332766372007,
+      "median_track_error_km": 176.02995620308963,
+      "p90_track_error_km": 446.0441712140895,
+      "max_track_error_km": 1642.7236574180538,
+      "rmse_track_error_km": 293.35896150392887,
+      "mean_along_track_km": -57.544174012320546,
+      "mean_cross_track_km": -28.037185866843018,
+      "mean_abs_along_track_km": 148.1335587227761,
+      "mean_abs_cross_track_km": 141.5933956921405
+    },
+    "timestamp_utc": "2026-09-02T14:42:19+00:00",
+    "config": {
+      "name": "track_persistence_v1",
+      "horizons_h": [
+        6,
+        12,
+        18,
+        24
+      ]
+    }
+  },
+  {
+    "model_name": "track_cliper_v1",
+    "model_version": "v1",
+    "task": "track",
+    "dataset_version": "v1",
+    "split_version": "v1",
+    "feature_version": "v1",
+    "forecast_horizon_h": 6,
+    "sample_count": 1732,
+    "metrics": {
+      "n": 1732,
+      "mean_lat_error_deg": 0.008100359728132242,
+      "mean_lon_error_deg": -0.0037969966249590892,
+      "mean_track_error_km": 29.975273399291464,
+      "median_track_error_km": 22.701010096894226,
+      "p90_track_error_km": 60.112381399253806,
+      "max_track_error_km": 313.6401772887357,
+      "rmse_track_error_km": 39.97135627527707,
+      "mean_along_track_km": -6.248814090531222,
+      "mean_cross_track_km": 0.9286458290704783,
+      "mean_abs_along_track_km": 19.96831385972158,
+      "mean_abs_cross_track_km": 18.146045145001438
+    },
+    "timestamp_utc": "2026-09-02T14:42:19+00:00",
+    "config": {
+      "name": "track_cliper_v1",
+      "horizons_h": [
+        6,
+        12,
+        18,
+        24
+      ],
+      "alpha": 1.0,
+      "random_state": 42
+    }
+  },
+  {
+    "model_name": "track_cliper_v1",
+    "model_version": "v1",
+    "task": "track",
+    "dataset_version": "v1",
+    "split_version": "v1",
+    "feature_version": "v1",
+    "forecast_horizon_h": 12,
+    "sample_count": 1732,
+    "metrics": {
+      "n": 1732,
+      "mean_lat_error_deg": 0.0193089467354308,
+      "mean_lon_error_deg": -0.013642362860649578,
+      "mean_track_error_km": 75.46256164278648,
+      "median_track_error_km": 57.83060673715444,
+      "p90_track_error_km": 148.45543104597527,
+      "max_track_error_km": 652.0240758423932,
+      "rmse_track_error_km": 99.34781790136918,
+      "mean_along_track_km": -20.56827093250842,
+      "mean_cross_track_km": 3.2971077635873014,
+      "mean_abs_along_track_km": 50.70608014542566,
+      "mean_abs_cross_track_km": 45.37449232917009
+    },
+    "timestamp_utc": "2026-09-02T14:42:19+00:00",
+    "config": {
+      "name": "track_cliper_v1",
+      "horizons_h": [
+        6,
+        12,
+        18,
+        24
+      ],
+      "alpha": 1.0,
+      "random_state": 42
+    }
+  },
+  {
+    "model_name": "track_cliper_v1",
+    "model_version": "v1",
+    "task": "track",
+    "dataset_version": "v1",
+    "split_version": "v1",
+    "feature_version": "v1",
+    "forecast_horizon_h": 18,
+    "sample_count": 1732,
+    "metrics": {
+      "n": 1732,
+      "mean_lat_error_deg": 0.035458775837638054,
+      "mean_lon_error_deg": -0.027487674032363605,
+      "mean_track_error_km": 133.28956351686162,
+      "median_track_error_km": 102.11878872458715,
+      "p90_track_error_km": 259.8550367975812,
+      "max_track_error_km": 1027.6249035715216,
+      "rmse_track_error_km": 173.3600502871315,
+      "mean_along_track_km": -42.416072587543326,
+      "mean_cross_track_km": 6.060715819943848,
+      "mean_abs_along_track_km": 90.05134301871841,
+      "mean_abs_cross_track_km": 79.75071195341792
+    },
+    "timestamp_utc": "2026-09-02T14:42:19+00:00",
+    "config": {
+      "name": "track_cliper_v1",
+      "horizons_h": [
+        6,
+        12,
+        18,
+        24
+      ],
+      "alpha": 1.0,
+      "random_state": 42
+    }
+  },
+  {
+    "model_name": "track_cliper_v1",
+    "model_version": "v1",
+    "task": "track",
+    "dataset_version": "v1",
+    "split_version": "v1",
+    "feature_version": "v1",
+    "forecast_horizon_h": 24,
+    "sample_count": 1732,
+    "metrics": {
+      "n": 1732,
+      "mean_lat_error_deg": 0.05891931861936697,
+      "mean_lon_error_deg": -0.04521793729472971,
+      "mean_track_error_km": 200.44494033935555,
+      "median_track_error_km": 153.90400088793746,
+      "p90_track_error_km": 393.59115653998595,
+      "max_track_error_km": 1305.7176569522978,
+      "rmse_track_error_km": 257.1629176869192,
+      "mean_along_track_km": -70.38868662758634,
+      "mean_cross_track_km": 8.413006255621493,
+      "mean_abs_along_track_km": 135.74720516259404,
+      "mean_abs_cross_track_km": 119.49364924894397
+    },
+    "timestamp_utc": "2026-09-02T14:42:19+00:00",
+    "config": {
+      "name": "track_cliper_v1",
+      "horizons_h": [
+        6,
+        12,
+        18,
+        24
+      ],
+      "alpha": 1.0,
+      "random_state": 42
+    }
+  },
+  {
+    "model_name": "track_lightgbm_v1",
+    "model_version": "v1",
+    "task": "track",
+    "dataset_version": "v1",
+    "split_version": "v1",
+    "feature_version": "v1",
+    "forecast_horizon_h": 6,
+    "sample_count": 1732,
+    "metrics": {
+      "n": 1732,
+      "mean_lat_error_deg": 0.013644235601506427,
+      "mean_lon_error_deg": 0.0018514501642262757,
+      "mean_track_error_km": 30.72672198738852,
+      "median_track_error_km": 23.826177712659117,
+      "p90_track_error_km": 59.1582542738868,
+      "max_track_error_km": 279.81750732800907,
+      "rmse_track_error_km": 40.369376713665865,
+      "mean_along_track_km": -7.6579198262464585,
+      "mean_cross_track_km": 0.7976243414588501,
+      "mean_abs_along_track_km": 20.359055139474247,
+      "mean_abs_cross_track_km": 18.575323536996397
+    },
+    "timestamp_utc": "2026-09-02T14:42:25+00:00",
+    "config": {
+      "name": "track_lightgbm_v1",
+      "horizons_h": [
+        6,
+        12,
+        18,
+        24
+      ],
+      "random_state": 42,
+      "n_estimators": 300
+    }
+  },
+  {
+    "model_name": "track_lightgbm_v1",
+    "model_version": "v1",
+    "task": "track",
+    "dataset_version": "v1",
+    "split_version": "v1",
+    "feature_version": "v1",
+    "forecast_horizon_h": 12,
+    "sample_count": 1732,
+    "metrics": {
+      "n": 1732,
+      "mean_lat_error_deg": 0.020259828559635235,
+      "mean_lon_error_deg": 0.015467168746772793,
+      "mean_track_error_km": 76.51001940784835,
+      "median_track_error_km": 59.11658451355049,
+      "p90_track_error_km": 149.7435450580167,
+      "max_track_error_km": 647.5285325300675,
+      "rmse_track_error_km": 99.03810168870912,
+      "mean_along_track_km": -23.587250203584492,
+      "mean_cross_track_km": 2.97575929790452,
+      "mean_abs_along_track_km": 51.32695303221851,
+      "mean_abs_cross_track_km": 45.89994505694913
+    },
+    "timestamp_utc": "2026-09-02T14:42:25+00:00",
+    "config": {
+      "name": "track_lightgbm_v1",
+      "horizons_h": [
+        6,
+        12,
+        18,
+        24
+      ],
+      "random_state": 42,
+      "n_estimators": 300
+    }
+  },
+  {
+    "model_name": "track_lightgbm_v1",
+    "model_version": "v1",
+    "task": "track",
+    "dataset_version": "v1",
+    "split_version": "v1",
+    "feature_version": "v1",
+    "forecast_horizon_h": 18,
+    "sample_count": 1732,
+    "metrics": {
+      "n": 1732,
+      "mean_lat_error_deg": 0.04877125529303274,
+      "mean_lon_error_deg": 0.011529986044870148,
+      "mean_track_error_km": 134.9424263665248,
+      "median_track_error_km": 104.4946697662478,
+      "p90_track_error_km": 261.97539200101704,
+      "max_track_error_km": 1162.8119365986715,
+      "rmse_track_error_km": 173.24538350156814,
+      "mean_along_track_km": -46.00924762371737,
+      "mean_cross_track_km": 2.6938121485297053,
+      "mean_abs_along_track_km": 89.90445581072765,
+      "mean_abs_cross_track_km": 81.89089698932035
+    },
+    "timestamp_utc": "2026-09-02T14:42:25+00:00",
+    "config": {
+      "name": "track_lightgbm_v1",
+      "horizons_h": [
+        6,
+        12,
+        18,
+        24
+      ],
+      "random_state": 42,
+      "n_estimators": 300
+    }
+  },
+  {
+    "model_name": "track_lightgbm_v1",
+    "model_version": "v1",
+    "task": "track",
+    "dataset_version": "v1",
+    "split_version": "v1",
+    "feature_version": "v1",
+    "forecast_horizon_h": 24,
+    "sample_count": 1732,
+    "metrics": {
+      "n": 1732,
+      "mean_lat_error_deg": 0.0729761708051163,
+      "mean_lon_error_deg": 0.02492979203647179,
+      "mean_track_error_km": 203.34091443573482,
+      "median_track_error_km": 158.40823404743068,
+      "p90_track_error_km": 392.5156751689464,
+      "max_track_error_km": 1437.0556877974745,
+      "rmse_track_error_km": 260.14607206239486,
+      "mean_along_track_km": -74.7356031633638,
+      "mean_cross_track_km": 3.5659122453484327,
+      "mean_abs_along_track_km": 136.16741873304122,
+      "mean_abs_cross_track_km": 123.24199798141049
+    },
+    "timestamp_utc": "2026-09-02T14:42:25+00:00",
+    "config": {
+      "name": "track_lightgbm_v1",
+      "horizons_h": [
+        6,
+        12,
+        18,
+        24
+      ],
+      "random_state": 42,
+      "n_estimators": 300
+    }
+  }
+]

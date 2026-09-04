@@ -1,0 +1,179 @@
+{
+  "sample_dir": "C:\\GeoStromData\\samples\\hursat",
+  "tolerance_minutes": 90,
+  "inventory": {
+    "n_frames": 195,
+    "n_open_errors": 0,
+    "n_filenames_parsed": 195,
+    "n_storms": 3,
+    "storms": [
+      "1995222N24265",
+      "2005236N23285",
+      "2015193N35285"
+    ],
+    "grid_sizes": "{(301, 301): 195}",
+    "projections": {
+      "Mercator": 195
+    },
+    "ibtracs_version_in_files": {
+      "v03r08": 143,
+      "v03r09": 52
+    },
+    "satellites": {
+      "GOES-10": 54,
+      "GOES-12": 52,
+      "GOES-13": 29,
+      "GOES-8": 19,
+      "GOES-7": 18,
+      "GOES-15": 12,
+      "Meteosat-10": 11
+    },
+    "channel_sets": {
+      "IRWIN,IRWVP,IRNIR,IRSPL,VSCHN,VSVAR,IRVAR": 114,
+      "IRWIN,IRWVP,IRNIR,VSCHN": 63,
+      "IRWIN,VSCHN": 12,
+      "IRWIN": 6
+    },
+    "total_uncompressed_mb": 79.67,
+    "mean_frame_mb": 0.409
+  },
+  "identity": {
+    "sid_filename_eq_attr": 195,
+    "sid_var_eq_attr": 195,
+    "n_checked": 195,
+    "filename_field1_equals_VZA_rounded": 195,
+    "note": "field1 in the filename is tested against round(VZA)"
+  },
+  "duplicate_frames": {
+    "n_unique_sid_time": 109,
+    "n_sid_time_with_multiple_frames": 86,
+    "pct_sid_time_duplicated": 78.9,
+    "max_frames_at_one_time": 2,
+    "vza_available_pct": 100.0,
+    "dedup_rule": "keep min(VZA) per (sid, htime); VZA present on all frames tested",
+    "n_frames_after_dedup": 109,
+    "n_frames_before_dedup": 195
+  },
+  "temporal_join": {
+    "n_attempted": 109,
+    "n_successful": 109,
+    "n_failed": 0,
+    "pct_matched": 100.0,
+    "failure_reasons": {},
+    "dt_minutes": {
+      "min": 0.0,
+      "max": 0.0,
+      "mean": 0.0,
+      "median": 0.0,
+      "p95": 0.0,
+      "p99": 0.0,
+      "n_exact_zero": 109,
+      "pct_exact_zero": 100.0,
+      "pct_le_30": 100.0,
+      "pct_le_90": 100.0,
+      "histogram": {
+        "0.0": 109
+      }
+    }
+  },
+  "spatial_agreement": {
+    "n": 109,
+    "mean_km": 2.02,
+    "median_km": 0.0,
+    "p95_km": 5.69,
+    "max_km": 10.65,
+    "pct_under_50km": 100.0,
+    "pct_under_25km": 100.0
+  },
+  "synoptic_alignment": {
+    "matched_frames": 109,
+    "matched_at_synoptic_hours": 56,
+    "pct_at_synoptic": 51.38,
+    "iso_hour_distribution": {
+      "0": 15,
+      "3": 14,
+      "6": 14,
+      "9": 13,
+      "12": 13,
+      "15": 12,
+      "18": 14,
+      "21": 14
+    },
+    "iflag_usa_char_distribution": {
+      "O": 56,
+      "P": 53
+    },
+    "n_synoptic_and_usa_original": 56,
+    "pct_synoptic_and_usa_original": 51.38,
+    "track_type": {
+      "main": 109
+    }
+  },
+  "negative_class": {
+    "nature_distribution_of_frames": {
+      "TS": 91,
+      "DS": 15,
+      "ET": 3
+    },
+    "n_non_tropical_frames": 18,
+    "pct_non_tropical_frames": 16.51,
+    "usa_sshs_distribution": {
+      "-4": 3,
+      "-3": 15,
+      "-1": 18,
+      "0": 40,
+      "1": 9,
+      "2": 5,
+      "3": 8,
+      "4": 6,
+      "5": 5
+    },
+    "note": "NATURE != 'TS' are Path-B negative candidates (still contain a vortex)"
+  },
+  "image_quality": {
+    "irwin_present_frames": 195,
+    "irwin_valid_pct": {
+      "mean": 99.93,
+      "min": 96.26,
+      "pct_frames_over_99_valid": 97.44
+    },
+    "n_constant_or_empty_frames": 0,
+    "irwin_kelvin_range": {
+      "min": 0.58,
+      "max": 340.97,
+      "mean_of_frame_means": 270.48
+    }
+  },
+  "structural_fields_present": {
+    "odt84": {
+      "pct_present": 66.67
+    },
+    "eye_prob": {
+      "pct_present": 66.67
+    },
+    "eye_comp": {
+      "pct_present": 66.67
+    },
+    "rad_eye": {
+      "pct_present": 100.0
+    },
+    "bt_eye": {
+      "pct_present": 66.67
+    },
+    "var_icen": {
+      "pct_present": 100.0
+    },
+    "archer_lat": {
+      "pct_present": 100.0
+    },
+    "WindSpd": {
+      "pct_present": 100.0
+    },
+    "CentPrs": {
+      "pct_present": 100.0
+    },
+    "VZA": {
+      "pct_present": 100.0
+    }
+  }
+}

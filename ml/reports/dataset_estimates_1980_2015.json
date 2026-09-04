@@ -1,0 +1,158 @@
+{
+  "DISCLAIMER": "ALL VALUES ARE ESTIMATES extrapolated from a small sample.",
+  "basin": "NA",
+  "seasons": [
+    1980,
+    2015
+  ],
+  "window": {
+    "L": 8,
+    "H": 4,
+    "required_contiguous_steps": 12
+  },
+  "measured_inputs": {
+    "hursat_storm_coverage_frac": 0.96,
+    "frames_per_synoptic_time_before_dedup": 1.7889908256880733,
+    "hursat_frames_at_synoptic_frac": 0.5138,
+    "mean_raw_frame_mb_all_channels": 0.409,
+    "compression_ratio_targz": 1.7622950819672132,
+    "mean_archive_mb_per_storm_NA": 26.3,
+    "adt_bytes_per_storm": 42000,
+    "adt_join_frac_at_90min": 1.0
+  },
+  "s1_ibtracs_raw": {
+    "rows": 29995,
+    "storms": 547,
+    "seasons": 36
+  },
+  "s2_synoptic_6h": {
+    "rows": 15134,
+    "storms": 547,
+    "pct_of_raw": 50.46
+  },
+  "s3_observed_main": {
+    "rows": 15133,
+    "storms": 547,
+    "pct_of_synoptic": 99.99,
+    "rule": "IFLAG char1 == 'O' (USA original report) AND TRACK_TYPE == 'main'"
+  },
+  "s4_with_usa_wind": {
+    "rows": 15116,
+    "storms": 547,
+    "pct_of_observed": 99.89,
+    "also_with_usa_pres": 14248,
+    "pct_with_pressure": 94.26
+  },
+  "s5_sequence_windows_ibtracs_only": {
+    "total_windows": 9398,
+    "storms_contributing": 445,
+    "storms_yielding_zero": 102,
+    "median_windows_per_contributing_storm": 17.0,
+    "windows_if_L4_H4": 11338,
+    "windows_if_L8_H4": 9398,
+    "windows_if_L12_H4": 7727
+  },
+  "s6_fused_with_imagery": {
+    "estimated_storms_with_imagery": 525,
+    "estimated_fused_frames_after_dedup": 14511,
+    "assumption": "every observed synoptic best-track row of a covered storm has a deduplicated HURSAT frame; measured join rate on the sample was 100%",
+    "estimated_frames_before_dedup": 25961
+  },
+  "s7_windows_with_imagery": {
+    "estimated_windows": 9022
+  },
+  "s8_temporal_split_by_season": {
+    "train": {
+      "seasons": [
+        1980,
+        1981,
+        1982,
+        1983,
+        1984,
+        1985,
+        1986,
+        1987,
+        1988,
+        1989,
+        1990,
+        1991,
+        1992,
+        1993,
+        1994,
+        1995,
+        1996,
+        1997,
+        1998,
+        1999,
+        2000,
+        2001,
+        2002,
+        2003,
+        2004
+      ],
+      "storms": 366,
+      "frames": 9903,
+      "windows": 6109
+    },
+    "val": {
+      "seasons": [
+        2005,
+        2006,
+        2007,
+        2008,
+        2009
+      ],
+      "storms": 86,
+      "frames": 2452,
+      "windows": 1557
+    },
+    "test": {
+      "seasons": [
+        2010,
+        2011,
+        2012,
+        2013,
+        2014,
+        2015
+      ],
+      "storms": 95,
+      "frames": 2761,
+      "windows": 1732
+    }
+  },
+  "storage_estimates_gb": {
+    "raw_hursat_targz_download": 13.8,
+    "raw_hursat_extracted": 24.3,
+    "zarr_irwin_uint8_224_synoptic_only": 0.728,
+    "zarr_irwin_uint8_224_all_3hourly": 1.417,
+    "zarr_if_float32_instead": 2.912,
+    "ibtracs_csv_raw": 0.085,
+    "adt_hursat_all_storms": 0.023,
+    "thumbnails_png_256": 0.363,
+    "TOTAL_working_set": 25.5,
+    "TOTAL_if_raw_deleted_after_conversion": 1.18
+  },
+  "label_distributions": {
+    "usa_sshs_on_usable_rows": {
+      "-4": 1589,
+      "-3": 1190,
+      "-2": 444,
+      "-1": 3576,
+      "0": 4922,
+      "1": 1869,
+      "2": 704,
+      "3": 387,
+      "4": 373,
+      "5": 62
+    },
+    "nature_on_usable_rows": {
+      "TS": 11893,
+      "ET": 1589,
+      "DS": 1183,
+      "SS": 444,
+      "MX": 7
+    },
+    "n_non_tropical_negatives_pathB": 3223,
+    "pct_non_tropical_negatives_pathB": 21.32
+  }
+}

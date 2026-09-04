@@ -1,0 +1,69 @@
+# ─── Secrets ────────────────────────────────────────────────────────────────
+.env
+.env.local
+*.key
+*credentials*
+*secret*
+
+# ─── Datasets: NEVER commit raw or processed data ───────────────────────────
+# Data lives at $DATA_ROOT, outside this repository and outside OneDrive.
+# Only manifests, checksums, and QC reports are version-controlled.
+data/
+datasets/
+raw/
+interim/
+processed/
+*.nc
+*.nc4
+*.hdf
+*.h5
+*.zarr/
+*.parquet
+*.tar
+*.tar.gz
+*.gz
+*.zip
+# ...but keep the small committed metadata
+!ml/manifests/*.json
+!ml/reports/*.json
+!ml/reports/*.md
+!ml/reports/figures/*.png
+# Phase 2 test-set predictions report artifact (~600 KB) -- used only for
+# offline plotting, small enough to commit alongside the other reports.
+!ml/reports/phase2_test_predictions.parquet
+
+# ─── Model artefacts ────────────────────────────────────────────────────────
+*.pt
+*.pth
+*.onnx
+*.pkl
+*.joblib
+checkpoints/
+runs/
+wandb/
+mlruns/
+
+# ─── Python ─────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+.mypy_cache/
+.ruff_cache/
+
+# ─── Node / Next.js (future phases) ─────────────────────────────────────────
+node_modules/
+.next/
+out/
+.vercel/
+
+# ─── OS / editor ────────────────────────────────────────────────────────────
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+.idea/

@@ -1,0 +1,113 @@
+{
+  "manifest_version": 1,
+  "project": "GeoStrom AI",
+  "phase": "Phase 1 - Foundation & Dataset Verification",
+  "generated_utc": "2026-09-02T13:42:33+00:00",
+  "data_root": "C:\\GeoStromData",
+  "data_root_note": "Data lives outside the Git repository and outside OneDrive. Only this manifest is version-controlled.",
+  "verification_status_legend": {
+    "PRESENT": "file on disk, checksum computed from actual bytes",
+    "MISSING": "declared but not downloaded",
+    "CHECKSUM_MISMATCH": "on-disk bytes differ from the recorded checksum"
+  },
+  "files": [
+    {
+      "dataset": "IBTrACS",
+      "path": "raw/ibtracs/ibtracs.NA.list.v04r01.csv",
+      "source_url": "https://www.ncei.noaa.gov/data/international-best-track-archive-for-climate-stewardship-ibtracs/v04r01/access/csv/ibtracs.NA.list.v04r01.csv",
+      "version": "v04r01",
+      "notes": "North Atlantic basin subset. 174 columns. Row 2 is a units row.",
+      "status": "PRESENT",
+      "bytes": 57143389,
+      "sha256": "ce8edf656bbce23cdd3cbd4d072a0e95110339111c2c24a5d2f8a545ccab4fcc",
+      "retrieved_utc": "2026-09-01T08:22:00+00:00"
+    },
+    {
+      "dataset": "IBTrACS",
+      "path": "raw/ibtracs/ibtracs.NI.list.v04r01.csv",
+      "source_url": "https://www.ncei.noaa.gov/data/international-best-track-archive-for-climate-stewardship-ibtracs/v04r01/access/csv/ibtracs.NI.list.v04r01.csv",
+      "version": "v04r01",
+      "notes": "North Indian basin subset, retrieved for the basin comparison.",
+      "status": "PRESENT",
+      "bytes": 27877743,
+      "sha256": "1e892624f97f5481cddf6b8e9e65be2925fa0a3336f399f5b9fd87fbb463fb78",
+      "retrieved_utc": "2026-09-01T08:23:05+00:00"
+    },
+    {
+      "dataset": "HURSAT-B1",
+      "path": "samples/hursat/HURSAT_b1_v06_1995222N24265_GABRIELLE_c20170721.tar.gz",
+      "source_url": "https://www.ncei.noaa.gov/data/hurricane-satellite-hursat-b1/archive/v06/1995/HURSAT_b1_v06_1995222N24265_GABRIELLE_c20170721.tar.gz",
+      "version": "v06",
+      "notes": "Verification sample storm (1995 season).",
+      "status": "PRESENT",
+      "bytes": 6439983,
+      "sha256": "f3489dc6514e76a278dc03b97c2e2ee28ff159ef4253b5d8e7d405e3b8f0f4da",
+      "retrieved_utc": "2026-09-01T08:28:11+00:00"
+    },
+    {
+      "dataset": "HURSAT-B1",
+      "path": "samples/hursat/HURSAT_b1_v06_2005236N23285_KATRINA_c20170721.tar.gz",
+      "source_url": "https://www.ncei.noaa.gov/data/hurricane-satellite-hursat-b1/archive/v06/2005/HURSAT_b1_v06_2005236N23285_KATRINA_c20170721.tar.gz",
+      "version": "v06",
+      "notes": "Verification sample storm (2005 season, Hurricane Katrina).",
+      "status": "PRESENT",
+      "bytes": 24442048,
+      "sha256": "4aa848ef60de25e1d051619d015530210778eeeef45f45bd9d2394603edd544d",
+      "retrieved_utc": "2026-09-01T08:29:01+00:00"
+    },
+    {
+      "dataset": "HURSAT-B1",
+      "path": "samples/hursat/HURSAT_b1_v06_2015193N35285_CLAUDETTE_c20170721.tar.gz",
+      "source_url": "https://www.ncei.noaa.gov/data/hurricane-satellite-hursat-b1/archive/v06/2015/HURSAT_b1_v06_2015193N35285_CLAUDETTE_c20170721.tar.gz",
+      "version": "v06",
+      "notes": "Verification sample storm (2015 season, end of HURSAT-B1 coverage).",
+      "status": "PRESENT",
+      "bytes": 12492943,
+      "sha256": "c5ca2f90519f0079095a013339c5d725aa0fbeb216ddfa923a355caf4c4f63b1",
+      "retrieved_utc": "2026-09-01T08:28:32+00:00"
+    }
+  ],
+  "file_groups": [
+    {
+      "dataset": "ADT-HURSAT",
+      "path": "samples/adt/",
+      "source_url": "https://www.ncei.noaa.gov/data/oceans/archive/arc0239/0307249/1.1/data/0-data",
+      "version": "ADT v9.0 over HURSAT V07b (NCEI Accession 0307249, v1.1)",
+      "status": "PRESENT",
+      "n_files": 33,
+      "bytes": 1553500,
+      "sha256_of_sorted_file_hashes": "2ce47c71c56e1b9ef1997d29d2640de26a9f20c6a50fb97717ccab68e9feabbf",
+      "file_naming": "<IBTrACS SID>.nc, one file per storm",
+      "notes": "Per-storm ADT history files. Contains the Dvorak 'Scene' field."
+    }
+  ],
+  "licensing_and_attribution": {
+    "IBTrACS": {
+      "producer": "NOAA National Centers for Environmental Information (NCEI)",
+      "citation": "Knapp, K. R., M. C. Kruk, D. H. Levinson, H. J. Diamond, and C. J. Neumann (2010): The International Best Track Archive for Climate Stewardship (IBTrACS). Bull. Amer. Meteor. Soc., 91, 363-376.",
+      "landing_page": "https://www.ncei.noaa.gov/products/international-best-track-archive",
+      "terms": "US Government work / NOAA open data. Attribution requested.",
+      "verified": "landing page and column documentation retrieved 2026-09-01"
+    },
+    "HURSAT-B1": {
+      "producer": "NOAA NCEI (Ken Knapp)",
+      "citation": "Knapp, K. R., and J. P. Kossin (2007): New global tropical cyclone data set from ISCCP B1 geostationary satellite observations. J. Appl. Remote Sens., 1, 013505.",
+      "landing_page": "https://www.ncei.noaa.gov/products/hurricane-satellite-data",
+      "terms": "US Government work / NOAA open data. Attribution requested.",
+      "verified": "landing page and archive directory retrieved 2026-09-01"
+    },
+    "ADT-HURSAT": {
+      "producer": "UW-Madison/CIMSS (Tim Olander) + NOAA NCEI; NCEI Accession 0307249",
+      "citation": "Kossin, J. P., K. R. Knapp, T. L. Olander, and C. S. Velden (2020): Global increase in major tropical cyclone exceedance probability over the past four decades. PNAS, 117(22), 11975-11980.",
+      "landing_page": "https://www.ncei.noaa.gov/products/advanced-dvorak-technique-hurricane-satellite",
+      "terms": "US Government work / NOAA open data. Attribution requested.",
+      "caveat": "NCEI states this dataset 'should not be used to determine actual storm intensities'. Use as a structural-label source and cross-check only; IBTrACS remains ground truth for intensity.",
+      "verified": "product page and data directory retrieved 2026-09-01"
+    }
+  },
+  "totals": {
+    "n_declared": 5,
+    "n_present": 5,
+    "bytes_present": 129949606
+  }
+}

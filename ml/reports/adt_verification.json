@@ -1,0 +1,160 @@
+{
+  "question": "TO-VERIFY #16: does ADT-HURSAT expose a Dvorak scene-type field?",
+  "answer": "YES",
+  "source_url": "https://www.ncei.noaa.gov/data/oceans/archive/arc0239/0307249/1.1/data/0-data",
+  "season": 2005,
+  "basin": "NA",
+  "storms_requested": 31,
+  "storms_retrieved": 31,
+  "storms_missing_from_adt": [],
+  "open_errors": [],
+  "adt_version": [
+    "Version 9.0"
+  ],
+  "hursat_version_used_by_adt": [
+    "V07b"
+  ],
+  "n_records": 1727,
+  "mean_records_per_storm": 55.7,
+  "scene_field": {
+    "name": "Scene",
+    "dtype": "string",
+    "derivation": "combination of EyeScene and CloudScene integer codes",
+    "eye_scene_codes": {
+      "0": "Eye",
+      "1": "Pinhole Eye",
+      "2": "Large Eye",
+      "3": "No Eye"
+    },
+    "cloud_scene_codes": {
+      "0": "CDO",
+      "1": "Embedded Center",
+      "2": "Irregular CDO",
+      "3": "Curved Band",
+      "4": "Shear"
+    }
+  },
+  "scene_distribution": {
+    "counts": {
+      "CurvedBand": 536,
+      "Shear": 477,
+      "CDO": 296,
+      "Land": 223,
+      "Eye": 104,
+      "IrrCDO": 40,
+      "EmbCenter": 33,
+      "LargeEye": 13,
+      "PinholeEye": 5
+    },
+    "pct": {
+      "CurvedBand": 31.04,
+      "Shear": 27.62,
+      "CDO": 17.14,
+      "Land": 12.91,
+      "Eye": 6.02,
+      "IrrCDO": 2.32,
+      "EmbCenter": 1.91,
+      "LargeEye": 0.75,
+      "PinholeEye": 0.29
+    },
+    "n_classes": 9,
+    "imbalance_ratio_max_over_min": 107.2,
+    "classes_under_200_samples": [
+      "Eye",
+      "IrrCDO",
+      "EmbCenter",
+      "LargeEye",
+      "PinholeEye"
+    ],
+    "land_records": 223,
+    "pct_land_records": 12.91
+  },
+  "scene_distribution_excluding_land": {
+    "CurvedBand": 35.64,
+    "Shear": 31.72,
+    "CDO": 19.68,
+    "Eye": 6.91,
+    "IrrCDO": 2.66,
+    "EmbCenter": 2.19,
+    "LargeEye": 0.86,
+    "PinholeEye": 0.33
+  },
+  "eye_scene_distribution": {
+    "Eye": 327,
+    "Pinhole Eye": 5,
+    "Large Eye": 13,
+    "No Eye": 1382
+  },
+  "cloud_scene_distribution": {
+    "CDO": 589,
+    "Embedded Center": 85,
+    "Irregular CDO": 40,
+    "Curved Band": 536,
+    "Shear": 477
+  },
+  "adt_time_structure": {
+    "minute_distribution_top": {
+      "45": 1424,
+      "30": 238,
+      "0": 65
+    },
+    "pct_on_the_hour": 3.76,
+    "hour_distribution": {
+      "0": 18,
+      "2": 211,
+      "3": 1,
+      "5": 175,
+      "6": 40,
+      "8": 210,
+      "11": 218,
+      "12": 1,
+      "14": 212,
+      "16": 1,
+      "17": 222,
+      "20": 211,
+      "21": 5,
+      "23": 202
+    },
+    "note": "ADT reports true satellite scan times, not nominal synoptic slots"
+  },
+  "join_to_ibtracs_by_tolerance": {
+    "+/-15min": {
+      "attempted": 1727,
+      "matched": 1488,
+      "pct": 86.16
+    },
+    "+/-30min": {
+      "attempted": 1727,
+      "matched": 1726,
+      "pct": 99.94
+    },
+    "+/-90min": {
+      "attempted": 1727,
+      "matched": 1727,
+      "pct": 100.0
+    },
+    "+/-180min": {
+      "attempted": 1727,
+      "matched": 1727,
+      "pct": 100.0
+    }
+  },
+  "adt_ibtracs_dt_minutes": {
+    "n": 1727,
+    "min": 0.0,
+    "max": 75.0,
+    "mean": 16.53,
+    "median": 15.0,
+    "p95": 30.0,
+    "pct_exact_zero": 1.04,
+    "pct_le_90": 100.0
+  },
+  "adt_vs_besttrack_wind": {
+    "n": 1504,
+    "mean_bias_kt": -6.24,
+    "mae_kt": 11.3,
+    "rmse_kt": 14.82,
+    "corr": 0.8723,
+    "note": "ADT is an algorithm estimate; best track remains ground truth"
+  }
+}

@@ -1,0 +1,17 @@
+# Phase 2 (Forecasting Baselines) — exact environment used to produce the
+# committed benchmark results in ml/reports/. Pinned to the versions
+# actually verified working, not floor/ceiling ranges.
+#
+# Install: pip install -r ml/requirements.txt
+#
+# Phase 1 dependencies (xarray, netCDF4, h5netcdf, requests, pypdf) are not
+# required for Phase 2, which is IBTrACS-only and touches no NetCDF/HDF data.
+
+pandas==2.3.3
+numpy==2.4.6
+scikit-learn==1.9.0
+lightgbm==4.7.0
+matplotlib==3.11.0
+pyarrow==24.0.0
+pytest==9.1.1
+tabulate==0.10.0
