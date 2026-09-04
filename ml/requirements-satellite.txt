@@ -1,0 +1,13 @@
+# Phase 4 (Satellite Data Pipeline) — additional dependencies on top of
+# ml/requirements.txt. Pinned to the versions actually verified working in
+# this environment, not floor/ceiling ranges (same convention as
+# ml/requirements.txt).
+#
+# Install: pip install -r ml/requirements.txt -r ml/requirements-satellite.txt
+
+xarray==2026.7.0
+netCDF4==1.7.4
+h5netcdf==1.8.1
+requests==2.34.2
+zarr==3.1.6
+numcodecs==0.16.5

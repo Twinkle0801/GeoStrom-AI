@@ -1,0 +1,402 @@
+{
+  "MEASURED": "Every number below comes from a real NCEI directory listing fetch, not extrapolation.",
+  "basin": "NA",
+  "seasons": [
+    1980,
+    1981,
+    1982,
+    1983,
+    1984,
+    1985,
+    1986,
+    1987,
+    1988,
+    1989,
+    1990,
+    1991,
+    1992,
+    1993,
+    1994,
+    1995,
+    1996,
+    1997,
+    1998,
+    1999,
+    2000,
+    2001,
+    2002,
+    2003,
+    2004,
+    2005,
+    2006,
+    2007,
+    2008,
+    2009,
+    2010,
+    2011,
+    2012,
+    2013,
+    2014,
+    2015
+  ],
+  "splits_source": "C:\\Users\\Twinkle\\OneDrive\\Desktop\\GeoStrom AI\\ml\\manifests\\splits_v1.json",
+  "per_season": {
+    "1980": {
+      "hursat_archives_in_listing": 58,
+      "frozen_split_storms_expected": 18,
+      "frozen_split_storms_covered": 18,
+      "pct_covered": 100.0,
+      "missing_sids": [],
+      "total_gb_all_listed_archives": 0.203,
+      "expected_storm_gb": 0.088
+    },
+    "1981": {
+      "hursat_archives_in_listing": 103,
+      "frozen_split_storms_expected": 22,
+      "frozen_split_storms_covered": 22,
+      "pct_covered": 100.0,
+      "missing_sids": [],
+      "total_gb_all_listed_archives": 0.493,
+      "expected_storm_gb": 0.094
+    },
+    "1982": {
+      "hursat_archives_in_listing": 101,
+      "frozen_split_storms_expected": 8,
+      "frozen_split_storms_covered": 8,
+      "pct_covered": 100.0,
+      "missing_sids": [],
+      "total_gb_all_listed_archives": 0.589,
+      "expected_storm_gb": 0.045
+    },
+    "1983": {
+      "hursat_archives_in_listing": 96,
+      "frozen_split_storms_expected": 6,
+      "frozen_split_storms_covered": 6,
+      "pct_covered": 100.0,
+      "missing_sids": [],
+      "total_gb_all_listed_archives": 0.7,
+      "expected_storm_gb": 0.054
+    },
+    "1984": {
+      "hursat_archives_in_listing": 116,
+      "frozen_split_storms_expected": 20,
+      "frozen_split_storms_covered": 19,
+      "pct_covered": 95.0,
+      "missing_sids": [
+        "1984171N20266"
+      ],
+      "total_gb_all_listed_archives": 0.768,
+      "expected_storm_gb": 0.121
+    },
+    "1985": {
+      "hursat_archives_in_listing": 114,
+      "frozen_split_storms_expected": 14,
+      "frozen_split_storms_covered": 13,
+      "pct_covered": 92.86,
+      "missing_sids": [
+        "1985224N18279"
+      ],
+      "total_gb_all_listed_archives": 0.743,
+      "expected_storm_gb": 0.083
+    },
+    "1986": {
+      "hursat_archives_in_listing": 108,
+      "frozen_split_storms_expected": 10,
+      "frozen_split_storms_covered": 10,
+      "pct_covered": 100.0,
+      "missing_sids": [],
+      "total_gb_all_listed_archives": 0.68,
+      "expected_storm_gb": 0.064
+    },
+    "1987": {
+      "hursat_archives_in_listing": 103,
+      "frozen_split_storms_expected": 14,
+      "frozen_split_storms_covered": 14,
+      "pct_covered": 100.0,
+      "missing_sids": [],
+      "total_gb_all_listed_archives": 0.718,
+      "expected_storm_gb": 0.112
+    },
+    "1988": {
+      "hursat_archives_in_listing": 102,
+      "frozen_split_storms_expected": 19,
+      "frozen_split_storms_covered": 19,
+      "pct_covered": 100.0,
+      "missing_sids": [],
+      "total_gb_all_listed_archives": 0.736,
+      "expected_storm_gb": 0.15
+    },
+    "1989": {
+      "hursat_archives_in_listing": 124,
+      "frozen_split_storms_expected": 15,
+      "frozen_split_storms_covered": 15,
+      "pct_covered": 100.0,
+      "missing_sids": [],
+      "total_gb_all_listed_archives": 0.771,
+      "expected_storm_gb": 0.13
+    },
+    "1990": {
+      "hursat_archives_in_listing": 120,
+      "frozen_split_storms_expected": 16,
+      "frozen_split_storms_covered": 16,
+      "pct_covered": 100.0,
+      "missing_sids": [],
+      "total_gb_all_listed_archives": 0.835,
+      "expected_storm_gb": 0.174
+    },
+    "1991": {
+      "hursat_archives_in_listing": 102,
+      "frozen_split_storms_expected": 12,
+      "frozen_split_storms_covered": 12,
+      "pct_covered": 100.0,
+      "missing_sids": [],
+      "total_gb_all_listed_archives": 0.698,
+      "expected_storm_gb": 0.067
+    },
+    "1992": {
+      "hursat_archives_in_listing": 128,
+      "frozen_split_storms_expected": 10,
+      "frozen_split_storms_covered": 10,
+      "pct_covered": 100.0,
+      "missing_sids": [],
+      "total_gb_all_listed_archives": 0.931,
+      "expected_storm_gb": 0.112
+    },
+    "1993": {
+      "hursat_archives_in_listing": 100,
+      "frozen_split_storms_expected": 10,
+      "frozen_split_storms_covered": 10,
+      "pct_covered": 100.0,
+      "missing_sids": [],
+      "total_gb_all_listed_archives": 0.868,
+      "expected_storm_gb": 0.115
+    },
+    "1994": {
+      "hursat_archives_in_listing": 115,
+      "frozen_split_storms_expected": 12,
+      "frozen_split_storms_covered": 10,
+      "pct_covered": 83.33,
+      "missing_sids": [
+        "1994242N20267",
+        "1994272N20274"
+      ],
+      "total_gb_all_listed_archives": 0.993,
+      "expected_storm_gb": 0.11
+    },
+    "1995": {
+      "hursat_archives_in_listing": 97,
+      "frozen_split_storms_expected": 21,
+      "frozen_split_storms_covered": 20,
+      "pct_covered": 95.24,
+      "missing_sids": [
+        "1995241N11333"
+      ],
+      "total_gb_all_listed_archives": 1.245,
+      "expected_storm_gb": 0.379
+    },
+    "1996": {
+      "hursat_archives_in_listing": 123,
+      "frozen_split_storms_expected": 13,
+      "frozen_split_storms_covered": 13,
+      "pct_covered": 100.0,
+      "missing_sids": [],
+      "total_gb_all_listed_archives": 1.956,
+      "expected_storm_gb": 0.362
+    },
+    "1997": {
+      "hursat_archives_in_listing": 110,
+      "frozen_split_storms_expected": 9,
+      "frozen_split_storms_covered": 9,
+      "pct_covered": 100.0,
+      "missing_sids": [],
+      "total_gb_all_listed_archives": 2.227,
+      "expected_storm_gb": 0.142
+    },
+    "1998": {
+      "hursat_archives_in_listing": 107,
+      "frozen_split_storms_expected": 14,
+      "frozen_split_storms_covered": 14,
+      "pct_covered": 100.0,
+      "missing_sids": [],
+      "total_gb_all_listed_archives": 1.825,
+      "expected_storm_gb": 0.366
+    },
+    "1999": {
+      "hursat_archives_in_listing": 104,
+      "frozen_split_storms_expected": 16,
+      "frozen_split_storms_covered": 16,
+      "pct_covered": 100.0,
+      "missing_sids": [],
+      "total_gb_all_listed_archives": 1.757,
+      "expected_storm_gb": 0.343
+    },
+    "2000": {
+      "hursat_archives_in_listing": 112,
+      "frozen_split_storms_expected": 19,
+      "frozen_split_storms_covered": 18,
+      "pct_covered": 94.74,
+      "missing_sids": [
+        "2000175N09340"
+      ],
+      "total_gb_all_listed_archives": 2.038,
+      "expected_storm_gb": 0.318
+    },
+    "2001": {
+      "hursat_archives_in_listing": 100,
+      "frozen_split_storms_expected": 17,
+      "frozen_split_storms_covered": 17,
+      "pct_covered": 100.0,
+      "missing_sids": [],
+      "total_gb_all_listed_archives": 1.738,
+      "expected_storm_gb": 0.348
+    },
+    "2002": {
+      "hursat_archives_in_listing": 95,
+      "frozen_split_storms_expected": 14,
+      "frozen_split_storms_covered": 14,
+      "pct_covered": 100.0,
+      "missing_sids": [],
+      "total_gb_all_listed_archives": 1.813,
+      "expected_storm_gb": 0.293
+    },
+    "2003": {
+      "hursat_archives_in_listing": 104,
+      "frozen_split_storms_expected": 21,
+      "frozen_split_storms_covered": 19,
+      "pct_covered": 90.48,
+      "missing_sids": [
+        "2003271N18275",
+        "2003286N09323"
+      ],
+      "total_gb_all_listed_archives": 2.389,
+      "expected_storm_gb": 0.314
+    },
+    "2004": {
+      "hursat_archives_in_listing": 101,
+      "frozen_split_storms_expected": 16,
+      "frozen_split_storms_covered": 16,
+      "pct_covered": 100.0,
+      "missing_sids": [],
+      "total_gb_all_listed_archives": 1.955,
+      "expected_storm_gb": 0.415
+    },
+    "2005": {
+      "hursat_archives_in_listing": 113,
+      "frozen_split_storms_expected": 31,
+      "frozen_split_storms_covered": 30,
+      "pct_covered": 96.77,
+      "missing_sids": [
+        "2005281N26303"
+      ],
+      "total_gb_all_listed_archives": 3.267,
+      "expected_storm_gb": 0.953
+    },
+    "2006": {
+      "hursat_archives_in_listing": 100,
+      "frozen_split_storms_expected": 10,
+      "frozen_split_storms_covered": 10,
+      "pct_covered": 100.0,
+      "missing_sids": [],
+      "total_gb_all_listed_archives": 4.188,
+      "expected_storm_gb": 0.325
+    },
+    "2007": {
+      "hursat_archives_in_listing": 92,
+      "frozen_split_storms_expected": 17,
+      "frozen_split_storms_covered": 17,
+      "pct_covered": 100.0,
+      "missing_sids": [],
+      "total_gb_all_listed_archives": 3.681,
+      "expected_storm_gb": 0.377
+    },
+    "2008": {
+      "hursat_archives_in_listing": 96,
+      "frozen_split_storms_expected": 17,
+      "frozen_split_storms_covered": 13,
+      "pct_covered": 76.47,
+      "missing_sids": [
+        "2008238N13293",
+        "2008269N21290",
+        "2008280N18268",
+        "2008289N15277"
+      ],
+      "total_gb_all_listed_archives": 3.912,
+      "expected_storm_gb": 0.547
+    },
+    "2009": {
+      "hursat_archives_in_listing": 98,
+      "frozen_split_storms_expected": 11,
+      "frozen_split_storms_covered": 10,
+      "pct_covered": 90.91,
+      "missing_sids": [
+        "2009238N24290"
+      ],
+      "total_gb_all_listed_archives": 4.04,
+      "expected_storm_gb": 0.416
+    },
+    "2010": {
+      "hursat_archives_in_listing": 89,
+      "frozen_split_storms_expected": 20,
+      "frozen_split_storms_covered": 19,
+      "pct_covered": 95.0,
+      "missing_sids": [
+        "2010188N21269"
+      ],
+      "total_gb_all_listed_archives": 3.783,
+      "expected_storm_gb": 1.063
+    },
+    "2011": {
+      "hursat_archives_in_listing": 93,
+      "frozen_split_storms_expected": 20,
+      "frozen_split_storms_covered": 20,
+      "pct_covered": 100.0,
+      "missing_sids": [],
+      "total_gb_all_listed_archives": 3.761,
+      "expected_storm_gb": 0.905
+    },
+    "2012": {
+      "hursat_archives_in_listing": 91,
+      "frozen_split_storms_expected": 19,
+      "frozen_split_storms_covered": 19,
+      "pct_covered": 100.0,
+      "missing_sids": [],
+      "total_gb_all_listed_archives": 4.192,
+      "expected_storm_gb": 1.04
+    },
+    "2013": {
+      "hursat_archives_in_listing": 100,
+      "frozen_split_storms_expected": 15,
+      "frozen_split_storms_covered": 14,
+      "pct_covered": 93.33,
+      "missing_sids": [
+        "2013276N21273"
+      ],
+      "total_gb_all_listed_archives": 3.856,
+      "expected_storm_gb": 0.475
+    },
+    "2014": {
+      "hursat_archives_in_listing": 86,
+      "frozen_split_storms_expected": 9,
+      "frozen_split_storms_covered": 9,
+      "pct_covered": 100.0,
+      "missing_sids": [],
+      "total_gb_all_listed_archives": 3.465,
+      "expected_storm_gb": 0.308
+    },
+    "2015": {
+      "hursat_archives_in_listing": 100,
+      "frozen_split_storms_expected": 12,
+      "frozen_split_storms_covered": 12,
+      "pct_covered": 100.0,
+      "missing_sids": [],
+      "total_gb_all_listed_archives": 4.958,
+      "expected_storm_gb": 0.395
+    }
+  },
+  "totals": {
+    "storms_expected_in_frozen_split": 547,
+    "storms_with_hursat_archive": 531,
+    "pct_covered": 97.07,
+    "estimated_download_gb_for_full_coverage": 11.6
+  }
+}

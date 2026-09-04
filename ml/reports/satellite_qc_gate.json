@@ -1,0 +1,116 @@
+{
+  "gate": "phase4_satellite",
+  "counts": {
+    "1_total_files_discovered": 1097,
+    "2_files_successfully_parsed": 1097,
+    "3_files_rejected": 0,
+    "4_frames_discovered": 1097,
+    "5_frames_with_valid_irwin": 1097,
+    "6_duplicate_frames": 443,
+    "7_unique_frames": 627,
+    "8_successful_ibtracs_joins": 627,
+    "9_failed_ibtracs_joins": 0,
+    "10_spatial_qc_failures": 0,
+    "11_temporal_qc_failures": 0,
+    "12_adt_matches": 627,
+    "13_adt_unmatched_samples": 0,
+    "14_final_fused_samples": 627,
+    "15_scene_class_distribution": {
+      "CDO": 177,
+      "CurvedBand": 154,
+      "Land": 89,
+      "Shear": 83,
+      "Eye": 82,
+      "EmbCenter": 17,
+      "LargeEye": 14,
+      "IrrCDO": 11
+    },
+    "16_missing_value_statistics": {
+      "scene_label": 0,
+      "usa_wind": 0,
+      "pressure_if_valid": 19,
+      "vza": 0
+    },
+    "17_per_season_counts": {
+      "1980": 43,
+      "1984": 19,
+      "1988": 110,
+      "1989": 110,
+      "1995": 19,
+      "2002": 103,
+      "2005": 128,
+      "2010": 27,
+      "2015": 68
+    },
+    "18_per_storm_counts": {
+      "1989243N12339": 110,
+      "2002265N10315": 103,
+      "1988264N13328": 87,
+      "2005261N21290": 67,
+      "2005236N23285": 61,
+      "1980265N15283": 43,
+      "2015313N22289": 39,
+      "2015193N35285": 29,
+      "2010267N14285": 27,
+      "1988221N30270": 23,
+      "1984220N37292": 19,
+      "1995222N24265": 19
+    }
+  },
+  "checks": [
+    {
+      "id": "Q1",
+      "name": "No duplicate (storm_id, satellite_timestamp) in final index",
+      "blocking": true,
+      "threshold": "== 0",
+      "passed": true,
+      "value": 0,
+      "detail": {}
+    },
+    {
+      "id": "Q2",
+      "name": "Every fused sample's storm belongs to the frozen split manifest",
+      "blocking": true,
+      "threshold": "== 0 unknown storms",
+      "passed": true,
+      "value": 0,
+      "detail": {
+        "unknown_storms": []
+      }
+    },
+    {
+      "id": "Q3",
+      "name": "No fused sample exceeds the 50 km spatial QC gate",
+      "blocking": true,
+      "threshold": "== 0",
+      "passed": true,
+      "value": 0,
+      "detail": {}
+    },
+    {
+      "id": "Q4",
+      "name": "Every row in the final index has qc_status == 'ok'",
+      "blocking": true,
+      "threshold": "== 0 non-ok rows",
+      "passed": true,
+      "value": 0,
+      "detail": {}
+    },
+    {
+      "id": "Q5",
+      "name": "No open/parse errors among discovered frames",
+      "blocking": false,
+      "threshold": "== 0",
+      "passed": true,
+      "value": 0,
+      "detail": {}
+    }
+  ],
+  "summary": {
+    "total_checks": 5,
+    "passed": 5,
+    "failed": 0,
+    "blocking_failures": [],
+    "gate_status": "PASS"
+  }
+}

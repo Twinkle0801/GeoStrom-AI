@@ -173,15 +173,22 @@ Phase 5.
 **DECISION:** convert once from NetCDF into a consolidated store; never read raw NetCDF during
 training.
 
-- **Imagery → a single chunked array store** (Zarr, or HDF5 with one dataset per storm), keyed by
-  `(sid, timestamp)`.
-  - Resample to a fixed square grid — **target 224×224**, matching standard pretrained-CNN input and
-    fitting comfortably in 6 GB VRAM.
-  - Store infrared brightness temperature **quantised to `uint8`** over a fixed physical range
-    (roughly 180–310 K, exact range **TO VERIFY** from the data histogram). This is a **4× size
-    reduction versus float32** and the quantisation step is far finer than sensor noise, so no
-    meaningful information is lost. The mapping constants are stored as array attributes so the
-    physical values are always recoverable.
+- **Imagery → a single chunked array store** (Zarr), keyed by `(sid, timestamp)`.
+  - **Update (Phase 4, resolved):** the canonical store keeps HURSAT-B1's **native 301×301
+    grid, unresized**, reversing this section's original 224×224 target. Reason: any resize
+    (interpolation alters pixel values; crop discards field-of-view) is a transformation Phase
+    4's task explicitly says does not belong in canonicalization ("preserve raw/physical values
+    in the canonical dataset"). A 224×224 (or other) crop/resize remains available as a
+    deterministic, documented, later model-input-pipeline step applied FROM this canonical
+    grid — this is a refinement of a placeholder this section explicitly deferred to Phase 4,
+    not a re-opened architecture decision. See docs/PHASE_4_SATELLITE_PIPELINE.md §9.
+  - Store infrared brightness temperature **quantised to `uint8`** over the physically verified
+    range **150–350 K** (Phase 1's IRWIN validity floor/ceiling, reused verbatim — not the
+    180–310 K placeholder originally guessed here). This is a companion copy alongside a
+    canonical float32 Kelvin array (invalid pixels NaN, governed by a separate boolean
+    `valid_mask`); the quantised array is never the sole source of truth. The mapping constants
+    are stored as array attributes so the physical values are always recoverable
+    (`ml/geostrom_ml/satellite/imagery.py::dequantize_irwin`).
 - **Tabular → Parquet**, partitioned by season, with a snappy-compressed columnar layout that DuckDB
   and pandas both read natively.
 - **Manifests → JSON/CSV**, version-controlled: the split assignment, the dedup decisions, and the
@@ -391,7 +398,7 @@ storms/1,727 records). Full methodology, evidence, and raw report JSON are in
 | # | Question | Status | Finding |
 |---|---|---|---|
 | 8 | ⛔ Storm identifier exposed, clean IBTrACS crosswalk | ✅ **VERIFIED — the single most important result of Phase 1** | The IBTrACS SID is embedded **three times per file** (filename token, global attribute `TC_serial_number`, and a `sid` data variable) and all three agree on **100%** of 195 sampled frames. Across a 7-season, 745-archive listing scan, **100% of HURSAT filenames carry a well-formed IBTrACS SID**, zero malformed, zero duplicates. The crosswalk is not a heuristic — it is a direct, exact key. |
-| 9 | ⛔ On-disk size of the chosen basin/period subset | ✅ **VERIFIED (measured + extrapolated)** | Measured NA archive sizes (7 sampled seasons): mean **26.3 MB/storm** (compressed), rising from ~6 MB/storm (1985) to ~56 MB/storm (2010) as channel coverage improved. **Estimated NA 1980–2015 full subset: ~13.8 GB compressed download, ~24 GB peak extracted, collapsing to well under 1 GB after conversion to quantised Zarr** (raw deleted post-conversion). Comfortably fits the 639 GB free disk. |
+| 9 | ⛔ On-disk size of the chosen basin/period subset | ✅ **VERIFIED (measured + extrapolated; re-measured directly in Phase 4)** | Measured NA archive sizes (7 sampled seasons): mean **26.3 MB/storm** (compressed), rising from ~6 MB/storm (1985) to ~56 MB/storm (2010) as channel coverage improved. **Estimated NA 1980–2015 full subset: ~13.8 GB compressed download.** **Phase 4 update:** `ml/scripts/discover_hursat_archive.py` fetched the REAL NCEI directory listing for all 36 seasons (not a 7-season sample) and cross-referenced every listed archive against the frozen split manifest: **531/547 (97.07%) frozen-split storms actually have a HURSAT-B1 archive, totalling ~11.6 GB** — confirms this estimate was directionally correct and, if anything, slightly conservative. See `ml/reports/hursat_archive_discovery.json`. |
 | 10 | ⛔ Field to choose between simultaneous satellite views | ✅ **VERIFIED** | `VZA` (view zenith angle) is present on **100%** of sampled frames. **78.9%** of (storm, timestamp) pairs in the sample had 2 simultaneous satellite views (max observed: 2); the documented dedup rule (`min(VZA)`) resolved every case (195 → 109 frames after dedup, 0 remaining collisions). |
 | 11 | Exact channel names, grid size, resolution, projection | ✅ **VERIFIED** | Grid is **301×301** on **100%** of sampled frames, projection = Mercator. Channels confirmed: `IRWIN` (10.3–11.0 µm, **100%** of frames), `IRWVP` (6.45–7.02 µm), `IRNIR` (3.79–4.04 µm), `IRSPL` (11.6–12.5 µm), `VSCHN` (0.53–0.77 µm visible), plus variability channels. **Channel completeness varies by era/satellite**: only 58% of sampled frames carry the full 7-channel set; older satellites (GOES-7/8) carry as few as `IRWIN` alone. MVP's IR-window-only decision is therefore also the *safest* choice for coverage, not only for the day/night-artefact reason in §3.1. |
 | 12 | Brightness-temperature range and units | ✅ **VERIFIED** | Units = Kelvin (confirmed via variable metadata). Documented fill value −1.0 was never observed exactly in the sample (0.0000%); **~0.05% of pixels fall in an unphysical 0–150 K band** (edge/interpolation artefacts) — these must be masked by a `<150 K` physical floor, not by fill-value equality alone. Physical range measured: p0=190.5 K … p100=318.0 K. **Native data is already quantised at a ~0.4–0.7 K step** (118–180 distinct values per frame) — confirms the planned `uint8` over [180, 320] K (0.549 K/level) is lossless relative to source precision. |

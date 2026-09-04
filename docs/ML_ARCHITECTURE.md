@@ -72,10 +72,14 @@ is only attempted if Tier 2 is complete and time remains.**
 ### 4.1 Flow
 
 ```
- Satellite IR frame (uint8, 224×224, from Zarr)
+ Satellite IR frame (from Zarr; canonical grid is 301×301 as of Phase 4 -- see
+ docs/PHASE_4_SATELLITE_PIPELINE.md §9. Resize/crop to 224×224 happens HERE,
+ in preprocessing, not in the canonical store -- the store keeps native-resolution
+ physical values so this transform stays reproducible and swappable.)
         │
         ▼  PREPROCESSING
-   dequantise to brightness temperature (K)
+   dequantise to brightness temperature (K) [or read irwin_k directly -- see Phase 4 doc]
+   resize/crop 301×301 -> 224×224 (deterministic, documented; not yet implemented)
    clip to physical range, normalise to zero mean / unit variance (train stats only)
    fill masked pixels with the per-image median
    augment (train only): rotation 0–360°, horizontal/vertical flip, small scale jitter

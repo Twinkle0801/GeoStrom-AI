@@ -159,27 +159,45 @@ the original exit criterion is deferred, not met. Full detail:
 
 ---
 
-### P4 — Satellite Pipeline: Preprocessing & Fusion
+### P4 — Satellite Pipeline: Preprocessing & Fusion — ✅ **PIPELINE COMPLETE** (MVP-scale processing partial)
 **Depends on:** P1 (verification) · parallelisable with P3
 
-1. Full HURSAT subset download for the chosen basin and seasons
-2. NetCDF → resample 224² → uint8 quantisation → **Zarr**; satellite deduplication
-3. Fusion join (identity + ±90 min); attach IR scalar features (L1 fusion)
-4. **Run the 8-assertion QC gate; publish `qc_report.json`**
-5. Pre-render IR thumbnails for serving
-6. Dataset manifest with build version
+1. ✅ Configurable, idempotent HURSAT downloader (`ml/scripts/download_hursat_sample.py`) +
+   real archive discovery (`ml/scripts/discover_hursat_archive.py`, measured 531/547 = 97.07%
+   frozen-split-storm coverage, ~11.6 GB for full NA 1980–2015 coverage — refines, not just
+   matches, Phase 1's 96%/13.8 GB extrapolation). **Full-archive download NOT executed** — see
+   docs/PHASE_4_SATELLITE_PIPELINE.md §16/§19 for the measured reason and resume command.
+2. ✅ NetCDF → **native 301×301 grid preserved** (not resampled to 224²; a Phase 0 placeholder
+   this phase explicitly revised with documented reason — see DATA_STRATEGY.md §4.5) →
+   physically-ranged (150–350 K) uint8 quantisation alongside a canonical float32 Kelvin array →
+   **Zarr**; deterministic VZA-based satellite deduplication
+3. ✅ Fusion join (identity + ±90 min, configurable); observed/interpolated/missing preserved;
+   ADT-HURSAT Scene join (never intensity ground truth)
+4. ✅ **18-point QC gate implemented** (`ml/geostrom_ml/satellite/qc.py`) — supersedes the
+   preliminary 8/19-check Phase 1 gate with the Phase 4 task's full required report; publishes
+   `ml/reports/satellite_qc_gate.json`
+5. ⏳ Pre-render IR thumbnails for serving — deferred (frontend/API changes are explicitly out
+   of Phase 4's scope)
+6. ✅ Dataset manifest with build version (`ml/manifests/satellite_dataset_v1_manifest.json`)
 
-**Exit:** the QC gate passes (a preliminary 19-check version already passes 19/19 on the Phase 1
-sample — the production gate re-runs the same assertions at full scale); the fused dataset's sample
-count per task is known and recorded; a random sample of fused rows is visually inspected (image
-centre matches the plotted position).
+**Exit:** the QC gate passes on real data at two scales (docs/PHASE_4_SATELLITE_PIPELINE.md §16):
+the original 3-storm/109-sample Phase 1 set, and a real downloaded 12-storm/**627-fused-sample**
+build spanning all three frozen splits (train 404 / val 128 / test 95) with 100% IBTrACS join,
+0 spatial/temporal QC failures (max separation observed: 48.9 km, under the 50 km gate), and
+100% ADT-HURSAT Scene coverage — QC gate **PASS (5/5)** both times. A random sample of fused
+rows was inspected (rendered thumbnails + pixel-value histogram in
+`ml/reports/figures/`). **Full MVP-scale (531-storm) processing was NOT completed** in this
+phase — pipeline correctness is proven on real, measured, multi-storm, multi-split, multi-decade
+data (1980–2015); see docs/PHASE_4_SATELLITE_PIPELINE.md for the exact resume command.
 
-> **Decision point — pre-resolved by Phase 1 (TO-VERIFY #20).** The estimated surviving count for
-> NA 1980–2015 is **~14,500 fused frames / ~9,000 sequence windows with imagery**, comfortably
-> above the threshold that would force an all-GBM fallback. **Proceed with the pretrained-CNN plan
-> (ResNet-18) as scoped in ML_ARCHITECTURE.md** — the fallback path stays documented as a
-> contingency but is not the expected outcome. Re-verify the exact count once the full P4 join
-> runs; Phase 1's number is an estimate extrapolated from a 3-storm sample.
+> **Decision point — pre-resolved by Phase 1 (TO-VERIFY #20), still pending full re-verification.**
+> The estimated surviving count for NA 1980–2015 remains **~14,500 fused frames / ~9,000 sequence
+> windows with imagery** (Phase 1's extrapolation; Phase 4's real discovery step refined the
+> storm-coverage and byte-size inputs to that estimate but did not re-run the full join at scale).
+> **Proceed with the pretrained-CNN plan (ResNet-18) as scoped in ML_ARCHITECTURE.md** — the
+> fallback path stays documented as a contingency but is not the expected outcome. Re-verify the
+> exact count once the full P4 join actually runs (resume command in
+> docs/PHASE_4_SATELLITE_PIPELINE.md §19).
 
 ---
 

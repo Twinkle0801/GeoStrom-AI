@@ -1,0 +1,101 @@
+{
+  "dry_run": false,
+  "seed": 42,
+  "n_requested": 9,
+  "status_counts": {
+    "downloaded": 9
+  },
+  "total_mb_downloaded": 159.69,
+  "results": [
+    {
+      "sid": "1980265N15283",
+      "season": 1980,
+      "split": "train",
+      "status": "downloaded",
+      "bytes": 5390952,
+      "detail": null,
+      "n_frames_extracted": 58,
+      "adt_status": "downloaded"
+    },
+    {
+      "sid": "1984220N37292",
+      "season": 1984,
+      "split": "train",
+      "status": "downloaded",
+      "bytes": 1716990,
+      "detail": null,
+      "n_frames_extracted": 21,
+      "adt_status": "downloaded"
+    },
+    {
+      "sid": "1988221N30270",
+      "season": 1988,
+      "split": "train",
+      "status": "downloaded",
+      "bytes": 4175689,
+      "detail": null,
+      "n_frames_extracted": 40,
+      "adt_status": "downloaded"
+    },
+    {
+      "sid": "1988264N13328",
+      "season": 1988,
+      "split": "train",
+      "status": "downloaded",
+      "bytes": 13352302,
+      "detail": null,
+      "n_frames_extracted": 130,
+      "adt_status": "downloaded"
+    },
+    {
+      "sid": "1989243N12339",
+      "season": 1989,
+      "split": "train",
+      "status": "downloaded",
+      "bytes": 20282011,
+      "detail": null,
+      "n_frames_extracted": 183,
+      "adt_status": "downloaded"
+    },
+    {
+      "sid": "2002265N10315",
+      "season": 2002,
+      "split": "train",
+      "status": "downloaded",
+      "bytes": 45629004,
+      "detail": null,
+      "n_frames_extracted": 203,
+      "adt_status": "downloaded"
+    },
+    {
+      "sid": "2005261N21290",
+      "season": 2005,
+      "split": "val",
+      "status": "downloaded",
+      "bytes": 25462603,
+      "detail": null,
+      "n_frames_extracted": 118,
+      "adt_status": "cached"
+    },
+    {
+      "sid": "2010267N14285",
+      "season": 2010,
+      "split": "test",
+      "status": "downloaded",
+      "bytes": 23688585,
+      "detail": null,
+      "n_frames_extracted": 72,
+      "adt_status": "downloaded"
+    },
+    {
+      "sid": "2015313N22289",
+      "season": 2015,
+      "split": "test",
+      "status": "downloaded",
+      "bytes": 19987902,
+      "detail": null,
+      "n_frames_extracted": 77,
+      "adt_status": "downloaded"
+    }
+  ]
+}

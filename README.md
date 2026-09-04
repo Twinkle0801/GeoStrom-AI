@@ -2,7 +2,23 @@
 
 **AI/ML-based identification, classification, and prediction of tropical cyclone patterns from multi-source satellite and best-track data.**
 
-> **Status: Phase 3 — Vertical Slice. COMPLETE.**
+> **Status: Phase 4 — Satellite Data Pipeline. PIPELINE COMPLETE; MVP-scale processing PARTIAL.**
+> The full HURSAT-B1 → IRWIN QC → dedup → IBTrACS/ADT-HURSAT fusion → Zarr + Parquet pipeline is
+> implemented and verified end-to-end on real data at two scales. First, against the Phase 1
+> verification sample (195 frames/3 storms), reproducing Phase 1's own numbers exactly
+> (195 → 109 frames after VZA dedup, 100% IBTrACS join). Then, after a real, deterministic,
+> seeded download of 9 more storms, a full production build over **12 storms / 1,097 raw HURSAT
+> frames → 627 fused samples** spanning all three frozen splits (train 404 / val 128 / test 95),
+> with 100% IBTrACS join, 0 spatial/temporal QC failures, and 100% ADT-HURSAT Scene-label
+> coverage — QC gate **PASS (5/5)** at both scales. Real full-archive discovery (not
+> extrapolation) found 531/547 (97.07%) frozen-split storms have HURSAT-B1 coverage (~11.6 GB).
+> The remaining ~519-storm archive was **not** downloaded/processed this phase — measured
+> per-file I/O cost on this workstation projects to ~18 hours of wall-clock for full coverage,
+> reported honestly rather than faked. See
+> [docs/PHASE_4_SATELLITE_PIPELINE.md](docs/PHASE_4_SATELLITE_PIPELINE.md) for exact numbers,
+> the resume command, and what remains. No CNN/classification training — that is Phase 5.
+
+> **Phase 3 — Vertical Slice. COMPLETE.**
 > The first full, real, end-to-end path is built and verified: Phase 2 baseline predictions →
 > PostgreSQL/PostGIS → read-only FastAPI → generated OpenAPI contract → Next.js + Leaflet map,
 > with observed and predicted tracks visually distinct. 41,568 predictions / 2,084 observations /
@@ -92,6 +108,7 @@ run on free-tier CPU hosting.
 | [docs/PHASE_1_DATASET_VERIFICATION.md](docs/PHASE_1_DATASET_VERIFICATION.md) | Dataset verification against real IBTrACS/HURSAT/ADT samples |
 | [docs/PHASE_2_FORECASTING_BASELINES.md](docs/PHASE_2_FORECASTING_BASELINES.md) | IBTrACS-only baseline models, frozen split, benchmark results |
 | [docs/PHASE_3_VERTICAL_SLICE.md](docs/PHASE_3_VERTICAL_SLICE.md) | Database, API, ingestion, and frontend — the first working end-to-end slice |
+| [docs/PHASE_4_SATELLITE_PIPELINE.md](docs/PHASE_4_SATELLITE_PIPELINE.md) | HURSAT-B1/ADT-HURSAT fusion pipeline, QC gate, Zarr/Parquet dataset |
 
 ## Recommended Stack (summary)
 

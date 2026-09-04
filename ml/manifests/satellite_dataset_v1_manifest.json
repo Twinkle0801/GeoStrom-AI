@@ -1,0 +1,144 @@
+{
+  "manifest_version": 1,
+  "project": "GeoStrom AI",
+  "phase": "Phase 4 - Satellite Data Pipeline",
+  "dataset_version": "satellite_v1",
+  "preprocessing_version": "v1",
+  "generated_utc": "2026-09-04T07:53:33+00:00",
+  "code_version": "270f39a",
+  "source_datasets": [
+    {
+      "name": "IBTrACS",
+      "version": "v04r01",
+      "role": "best-track spine; wind=USA_WIND (1-min convention)"
+    },
+    {
+      "name": "HURSAT-B1",
+      "version": "v06",
+      "role": "storm-centric IR imagery, IRWIN channel"
+    },
+    {
+      "name": "ADT-HURSAT",
+      "version": "ADT v9.0 over HURSAT V07b (NCEI Accession 0307249, v1.1)",
+      "role": "Scene classification label only -- NEVER intensity ground truth"
+    }
+  ],
+  "selection": {
+    "basin": "NA",
+    "seasons_covered": [
+      1980,
+      1981,
+      1982,
+      1983,
+      1984,
+      1985,
+      1986,
+      1987,
+      1988,
+      1989,
+      1990,
+      1991,
+      1992,
+      1993,
+      1994,
+      1995,
+      1996,
+      1997,
+      1998,
+      1999,
+      2000,
+      2001,
+      2002,
+      2003,
+      2004,
+      2005,
+      2006,
+      2007,
+      2008,
+      2009,
+      2010,
+      2011,
+      2012,
+      2013,
+      2014,
+      2015
+    ],
+    "storms_requested": 12
+  },
+  "counts": {
+    "1_total_files_discovered": 1097,
+    "2_files_successfully_parsed": 1097,
+    "3_files_rejected": 0,
+    "4_frames_discovered": 1097,
+    "5_frames_with_valid_irwin": 1097,
+    "6_duplicate_frames": 443,
+    "7_unique_frames": 627,
+    "8_successful_ibtracs_joins": 627,
+    "9_failed_ibtracs_joins": 0,
+    "10_spatial_qc_failures": 0,
+    "11_temporal_qc_failures": 0,
+    "12_adt_matches": 627,
+    "13_adt_unmatched_samples": 0,
+    "14_final_fused_samples": 627,
+    "15_scene_class_distribution": {
+      "CDO": 177,
+      "CurvedBand": 154,
+      "Land": 89,
+      "Shear": 83,
+      "Eye": 82,
+      "EmbCenter": 17,
+      "LargeEye": 14,
+      "IrrCDO": 11
+    },
+    "16_missing_value_statistics": {
+      "scene_label": 0,
+      "usa_wind": 0,
+      "pressure_if_valid": 19,
+      "vza": 0
+    },
+    "17_per_season_counts": {
+      "1980": 43,
+      "1984": 19,
+      "1988": 110,
+      "1989": 110,
+      "1995": 19,
+      "2002": 103,
+      "2005": 128,
+      "2010": 27,
+      "2015": 68
+    },
+    "18_per_storm_counts": {
+      "1989243N12339": 110,
+      "2002265N10315": 103,
+      "1988264N13328": 87,
+      "2005261N21290": 67,
+      "2005236N23285": 61,
+      "1980265N15283": 43,
+      "2015313N22289": 39,
+      "2015193N35285": 29,
+      "2010267N14285": 27,
+      "1988221N30270": 23,
+      "1984220N37292": 19,
+      "1995222N24265": 19
+    }
+  },
+  "qc_thresholds": {
+    "irwin_valid_range_k": [
+      150.0,
+      350.0
+    ],
+    "spatial_qc_km": 50.0,
+    "temporal_tolerance_min": 90
+  },
+  "scene_labeled_samples": 627,
+  "gate_status": "PASS",
+  "storage": {
+    "zarr_path_relative_to_data_root": "processed/satellite/satellite_v1/images.zarr",
+    "sample_index_path_relative_to_data_root": "processed/satellite/satellite_v1/sample_index.parquet"
+  },
+  "split_source": {
+    "manifest": "ml/manifests/splits_v1.json",
+    "note": "Storm-level split reused verbatim from Phase 2; no new split was created."
+  },
+  "data_root_note": "Data lives outside the Git repository and outside OneDrive. Only this manifest, the QC report, and the small figures are version-controlled."
+}
