@@ -16,6 +16,20 @@
 > limitation (only 3 test storms), not hidden. 10 adversarial leakage tests pass. See
 > [docs/PHASE_5_CLASSIFICATION_LABEL_ANALYSIS.md](docs/PHASE_5_CLASSIFICATION_LABEL_ANALYSIS.md).
 
+> **Phase 7 — Intensity Prediction: GRU (Sequence Model). COMPLETE — baseline retained.**
+> Trained a GRU (1 layer, hidden 64) → shared 4-horizon dense head on the same frozen Phase 2
+> split/features (no new split, no new download), per `docs/ML_ARCHITECTURE.md` §6's pre-existing
+> spec: absolute-wind (deliverable) and Δwind (diagnostic) variants, Huber loss. **Neither variant
+> beats the Phase 2 LightGBM baseline at any of the four horizons** — GRU (abs) scores 8.826 kt MAE
+> at 24h vs. LightGBM's 8.535 kt (3.4% worse), and the gap is far larger at short horizons (46%
+> worse at 6h) where LightGBM's direct access to the current wind value dominates. RI (rapid
+> intensification) recall is 0.0 at every horizon with true RI cases — a genuine, honestly reported
+> diagnostic limitation, not a new capability claim. Reproducibility verified bit-identical across
+> two independent full training runs. 22 new tests pass (8 leakage/scientific-validation vectors +
+> model/determinism tests). **Recommendation: keep shipping the Phase 2 LightGBM baseline for
+> intensity.** See
+> [docs/PHASE_7_INTENSITY_PREDICTION.md](docs/PHASE_7_INTENSITY_PREDICTION.md).
+
 > **Phase 6 — Deep-Learning Cyclone Pattern Classification. COMPLETE — baseline retained.**
 > Trained and evaluated a from-scratch small CNN and a grayscale-adapted, ImageNet-pretrained,
 > mostly-frozen ResNet-18 (per `docs/ML_ARCHITECTURE.md`'s pre-existing recommendation) on the
@@ -140,6 +154,7 @@ run on free-tier CPU hosting.
 | [docs/PHASE_4_SATELLITE_PIPELINE.md](docs/PHASE_4_SATELLITE_PIPELINE.md) | HURSAT-B1/ADT-HURSAT fusion pipeline, QC gate, Zarr/Parquet dataset |
 | [docs/PHASE_5_CLASSIFICATION_LABEL_ANALYSIS.md](docs/PHASE_5_CLASSIFICATION_LABEL_ANALYSIS.md) | Scene-label audit, `scene_taxonomy_v1`, classification dataset, non-deep-learning baselines |
 | [docs/PHASE_6_DEEP_LEARNING_CLASSIFICATION.md](docs/PHASE_6_DEEP_LEARNING_CLASSIFICATION.md) | CNN + transfer-learning training/evaluation, overfitting analysis, comparison against the Phase 5 baseline |
+| [docs/PHASE_7_INTENSITY_PREDICTION.md](docs/PHASE_7_INTENSITY_PREDICTION.md) | GRU sequence model (absolute + Δwind), leakage validation, honest comparison against the Phase 2 LightGBM baseline |
 
 ## Recommended Stack (summary)
 

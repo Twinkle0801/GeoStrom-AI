@@ -46,6 +46,27 @@ def skill_vs_baseline(model_mae: float, baseline_mae: float) -> float:
     return float(100.0 * (baseline_mae - model_mae) / baseline_mae)
 
 
+def ri_recall(y_true_delta: np.ndarray, y_pred_delta: np.ndarray,
+              threshold_kt: float = 30.0) -> dict:
+    """Rapid-intensification recall: of the storms that truly intensified by
+    >= `threshold_kt` over the horizon (NHC's standard 30 kt/24h RI
+    definition), what fraction did the model also predict as RI?
+
+    A diagnostic metric only, per docs/ML_ARCHITECTURE.md §6.5 ("Do not
+    build a separate RI model for MVP. Instead, report recall on RI cases
+    as a diagnostic metric of the main model.") -- never the primary metric,
+    and undefined (reported as such, not silently zeroed) when there are no
+    true RI cases in the evaluated sample.
+    """
+    true_ri = y_true_delta >= threshold_kt
+    pred_ri = y_pred_delta >= threshold_kt
+    n_true_ri = int(true_ri.sum())
+    if n_true_ri == 0:
+        return {"threshold_kt": threshold_kt, "n_true_ri_cases": 0, "recall": None}
+    recall = float((true_ri & pred_ri).sum() / n_true_ri)
+    return {"threshold_kt": threshold_kt, "n_true_ri_cases": n_true_ri, "recall": recall}
+
+
 def intensity_metrics(y_true: np.ndarray, y_pred: np.ndarray) -> dict:
     return {
         "n": int(len(y_true)),

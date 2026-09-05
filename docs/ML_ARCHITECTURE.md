@@ -318,6 +318,16 @@ build a separate RI model for MVP.** Instead, **report recall on RI cases as a d
 the main model. This is honest, costs nothing, and surfaces the limitation rather than hiding it.
 A dedicated RI classifier is Advanced scope.
 
+> **Update ("Phase 7"): the Tier-2 GRU specified above was implemented and evaluated** (1 layer,
+> hidden 64, dropout 0.2, Huber loss, absolute + Δwind variants, exactly per §6.1/§6.4 above — no
+> spec deviation). **Result: it does not beat Tier-1 LightGBM's MAE at any horizon**, confirming
+> this section's own prior expectation ("LightGBM is expected to be a strong contender, possibly
+> beating the deep models on this tabular problem"). RI recall (§6.5) was computed as prescribed —
+> a diagnostic only — and is 0.0 at every horizon with true RI cases in the test set. LightGBM
+> remains the model shipped for intensity. Full results, error analysis, and honest comparison
+> table: [PHASE_7_INTENSITY_PREDICTION.md](PHASE_7_INTENSITY_PREDICTION.md). This specification
+> itself was not changed.
+
 ---
 
 ## 7. Track Prediction Architecture
