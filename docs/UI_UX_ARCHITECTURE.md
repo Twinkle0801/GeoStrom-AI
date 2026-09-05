@@ -245,6 +245,19 @@ nice-to-have.
    /methodology  ── linked from every page footer and from every ModelBadge
 ```
 
+> **Update ("Phase 10"): the implemented information architecture consolidates this Phase 0
+> sketch**, per that phase's own explicit, more concrete task instruction (five pages, not
+> seven): `/` (landing), `/storms` (this section's `/explorer`, renamed), `/predict/[sid]` (this
+> section's `/monitor` + `/analysis/[sid]` + `/predict/[sid]` combined into one flagship
+> workspace — a real-time "Monitor" concept does not fit a retrospective system, and splitting
+> "Analysis" from "Prediction" into two routes for the same storm added navigation friction
+> without a real benefit at this data scale), `/models` (this section's live-benchmark-table
+> portion of `/methodology`, promoted to its own page since it grew substantial: intensity,
+> track, *and* classification comparisons), and `/methodology` (unchanged in spirit, its
+> benchmark-table content moved to `/models` and linked from it). Satellite Intelligence and
+> Classification are PANELS within `/predict/[sid]`, per Phase 10's own task brief, not separate
+> routes. Full detail: [PHASE_10_FRONTEND_DASHBOARD.md](PHASE_10_FRONTEND_DASHBOARD.md).
+
 ---
 
 ## 6. Motion Specification

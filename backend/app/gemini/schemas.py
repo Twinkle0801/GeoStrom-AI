@@ -202,6 +202,10 @@ class ExplainResponse(BaseModel):
                                           "source='gemini' or when Gemini was never called")
 
     explanation: GeminiStructuredResponse
+    evidence: EvidencePacket = Field(
+        description="The exact evidence packet used to generate this explanation -- Phase 10's "
+                    "EvidenceDrawer renders this directly, so a viewer can inspect precisely what "
+                    "grounds the explanation. Contains no credentials or internal prompt text.")
 
     disclaimer: str = (
         "Retrospective research-prototype model output. Not an operational forecast, "

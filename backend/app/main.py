@@ -13,7 +13,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from app.api.v1 import cyclones, explain, prediction, system, tracks
+from app.api.v1 import analytics, cyclones, explain, prediction, system, tracks
 from app.core.config import get_settings
 from app.schemas.common import ProblemDetail
 
@@ -64,3 +64,4 @@ app.include_router(cyclones.router)
 app.include_router(tracks.router)
 app.include_router(prediction.router)
 app.include_router(explain.router)
+app.include_router(analytics.router)

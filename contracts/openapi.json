@@ -3,7 +3,7 @@
   "info": {
     "title": "GeoStrom AI",
     "description": "Retrospective tropical cyclone research prototype. Serves precomputed Phase 2 baseline model predictions. Not an operational forecasting system.",
-    "version": "0.3.0"
+    "version": "0.4.0"
   },
   "paths": {
     "/health": {
@@ -658,10 +658,445 @@
           }
         }
       }
+    },
+    "/api/v1/explain/forecast": {
+      "post": {
+        "tags": [
+          "explain"
+        ],
+        "summary": "Explain Forecast",
+        "operationId": "explain_forecast_api_v1_explain_forecast_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExplainRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExplainResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/analytics/model-performance": {
+      "get": {
+        "tags": [
+          "analytics"
+        ],
+        "summary": "Model Performance",
+        "operationId": "model_performance_api_v1_analytics_model_performance_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelPerformanceResponse"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "ClassificationEvidence": {
+        "properties": {
+          "class_label": {
+            "type": "string",
+            "title": "Class Label"
+          },
+          "confidence": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Confidence"
+          },
+          "model_name": {
+            "type": "string",
+            "title": "Model Name"
+          },
+          "model_version": {
+            "type": "string",
+            "title": "Model Version"
+          }
+        },
+        "type": "object",
+        "required": [
+          "class_label",
+          "confidence",
+          "model_name",
+          "model_version"
+        ],
+        "title": "ClassificationEvidence",
+        "description": "Structurally supported per docs/API_ARCHITECTURE.md \u00a77's evidence\npacket design and the task's evidence-field list. NOT wired to a\nper-storm production data source in Phase 9: `db/models.py` documents\nthat no `classifications` table exists yet (Phase 5/6 introduced a\nclassification model, but never a production per-storm classification\nrecord) -- adding one would be a database migration, which is out of\nPhase 9's explicitly minimal scope. The evidence builder therefore\nalways leaves this `None` today; the field, the validator's grounding\nchecks for it, and the fallback template's handling of it are all fully\nimplemented and tested against a directly-constructed `EvidencePacket`,\nso wiring a real source later is a data-plumbing change, not a\nGemini-integration change. Documented in\ndocs/PHASE_9_GEMINI_INTEGRATION.md as a known limitation."
+      },
+      "CurrentStateEvidence": {
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Timestamp"
+          },
+          "lat": {
+            "type": "number",
+            "title": "Lat"
+          },
+          "lon": {
+            "type": "number",
+            "title": "Lon"
+          },
+          "wind_kt": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Wind Kt"
+          },
+          "pressure_hpa": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pressure Hpa"
+          },
+          "category": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Category"
+          },
+          "storm_speed_kt": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Storm Speed Kt"
+          },
+          "storm_dir_deg": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Storm Dir Deg"
+          },
+          "dist2land_km": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dist2Land Km"
+          }
+        },
+        "type": "object",
+        "required": [
+          "timestamp",
+          "lat",
+          "lon",
+          "wind_kt",
+          "pressure_hpa",
+          "category",
+          "storm_speed_kt",
+          "storm_dir_deg",
+          "dist2land_km"
+        ],
+        "title": "CurrentStateEvidence",
+        "description": "The most recent OBSERVED state at or before the forecast origin time\n-- never a future/predicted value (this field must never be confused\nwith `IntensityEvidence`/`TrackEvidence`'s `forecasts`, which are model\noutput)."
+      },
+      "EvidencePacket": {
+        "properties": {
+          "evidence_schema_version": {
+            "type": "string",
+            "const": "v1",
+            "title": "Evidence Schema Version",
+            "default": "v1"
+          },
+          "generated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Generated At"
+          },
+          "storm": {
+            "$ref": "#/components/schemas/StormEvidence"
+          },
+          "current_state": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CurrentStateEvidence"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "recent_history": {
+            "items": {
+              "$ref": "#/components/schemas/HistoryPoint"
+            },
+            "type": "array",
+            "title": "Recent History"
+          },
+          "intensity": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/IntensityEvidence"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "track": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TrackEvidence"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "classification": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ClassificationEvidence"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "known_limitations": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Known Limitations"
+          },
+          "forbidden_claims": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Forbidden Claims"
+          }
+        },
+        "type": "object",
+        "required": [
+          "generated_at",
+          "storm",
+          "current_state",
+          "recent_history",
+          "intensity",
+          "track",
+          "known_limitations",
+          "forbidden_claims"
+        ],
+        "title": "EvidencePacket",
+        "description": "The ENTIRE universe of facts available to Gemini for one call, per\ndocs/API_ARCHITECTURE.md \u00a77. Gemini receives nothing else -- no database\naccess, no tool, no retrieval (docs/API_ARCHITECTURE.md \u00a76.1/\u00a78 Layer 1)."
+      },
+      "ExplainRequest": {
+        "properties": {
+          "sid": {
+            "type": "string",
+            "title": "Sid"
+          },
+          "intensity_model_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Intensity Model Version",
+            "description": "Defaults to the recommended production intensity model (LightGBM v1)"
+          },
+          "track_model_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Track Model Version",
+            "description": "Defaults to the recommended production track model (CLIPER-style Ridge v1)"
+          }
+        },
+        "type": "object",
+        "required": [
+          "sid"
+        ],
+        "title": "ExplainRequest",
+        "description": "`sid` is this project's established per-storm identifier, used by\nevery other endpoint since Phase 3 (`/api/v1/prediction/{sid}`,\n`/api/v1/tracks/{sid}`) -- used here instead of the task prompt's\nillustrative `session_id`, per the task's own instruction to follow the\nrepository's existing naming conventions."
+      },
+      "ExplainResponse": {
+        "properties": {
+          "sid": {
+            "type": "string",
+            "title": "Sid"
+          },
+          "generated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Generated At"
+          },
+          "evidence_schema_version": {
+            "type": "string",
+            "title": "Evidence Schema Version"
+          },
+          "intensity_model": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ModelRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "track_model": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ModelRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "classification_model": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ModelRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "gemini",
+              "fallback"
+            ],
+            "title": "Source",
+            "description": "Whether the explanation came from Gemini or the deterministic fallback template -- the frontend must never have to guess this"
+          },
+          "fallback_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fallback Reason",
+            "description": "Set only when source='fallback': e.g. 'not_configured', 'timeout', 'malformed_json', 'ungrounded_claim'"
+          },
+          "validation_violations": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Validation Violations",
+            "description": "Grounding-validator violation categories found in Gemini's (rejected) response, if any -- empty when source='gemini' or when Gemini was never called"
+          },
+          "explanation": {
+            "$ref": "#/components/schemas/GeminiStructuredResponse"
+          },
+          "evidence": {
+            "$ref": "#/components/schemas/EvidencePacket",
+            "description": "The exact evidence packet used to generate this explanation -- Phase 10's EvidenceDrawer renders this directly, so a viewer can inspect precisely what grounds the explanation. Contains no credentials or internal prompt text."
+          },
+          "disclaimer": {
+            "type": "string",
+            "title": "Disclaimer",
+            "default": "Retrospective research-prototype model output. Not an operational forecast, weather warning, or safety advisory."
+          }
+        },
+        "type": "object",
+        "required": [
+          "sid",
+          "generated_at",
+          "evidence_schema_version",
+          "intensity_model",
+          "track_model",
+          "source",
+          "explanation",
+          "evidence"
+        ],
+        "title": "ExplainResponse"
+      },
       "Feature": {
         "properties": {
           "type": {
@@ -715,6 +1150,40 @@
         ],
         "title": "FeatureCollection"
       },
+      "GeminiStructuredResponse": {
+        "properties": {
+          "summary": {
+            "type": "string",
+            "title": "Summary"
+          },
+          "intensity_explanation": {
+            "type": "string",
+            "title": "Intensity Explanation"
+          },
+          "track_explanation": {
+            "type": "string",
+            "title": "Track Explanation"
+          },
+          "classification_explanation": {
+            "type": "string",
+            "title": "Classification Explanation"
+          },
+          "limitations": {
+            "type": "string",
+            "title": "Limitations"
+          }
+        },
+        "type": "object",
+        "required": [
+          "summary",
+          "intensity_explanation",
+          "track_explanation",
+          "classification_explanation",
+          "limitations"
+        ],
+        "title": "GeminiStructuredResponse",
+        "description": "The constrained response schema Gemini must produce (task \u00a710 /\ndocs/API_ARCHITECTURE.md \u00a78 Layer 3: structured output narrows the space\nin which invention can occur)."
+      },
       "HTTPValidationError": {
         "properties": {
           "detail": {
@@ -751,6 +1220,117 @@
           "database"
         ],
         "title": "HealthStatus"
+      },
+      "HistoryPoint": {
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Timestamp"
+          },
+          "lat": {
+            "type": "number",
+            "title": "Lat"
+          },
+          "lon": {
+            "type": "number",
+            "title": "Lon"
+          },
+          "wind_kt": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Wind Kt"
+          }
+        },
+        "type": "object",
+        "required": [
+          "timestamp",
+          "lat",
+          "lon",
+          "wind_kt"
+        ],
+        "title": "HistoryPoint"
+      },
+      "IntensityEvidence": {
+        "properties": {
+          "origin_ts": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Origin Ts"
+          },
+          "forecasts": {
+            "items": {
+              "$ref": "#/components/schemas/IntensityForecastPoint"
+            },
+            "type": "array",
+            "title": "Forecasts"
+          },
+          "context": {
+            "$ref": "#/components/schemas/ModelContext"
+          }
+        },
+        "type": "object",
+        "required": [
+          "origin_ts",
+          "forecasts",
+          "context"
+        ],
+        "title": "IntensityEvidence"
+      },
+      "IntensityForecastPoint": {
+        "properties": {
+          "lead_hours": {
+            "type": "integer",
+            "title": "Lead Hours"
+          },
+          "pred_wind_kt": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pred Wind Kt"
+          },
+          "true_wind_kt": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "True Wind Kt",
+            "description": "OBSERVED verification value, if the forecast is old enough to verify"
+          },
+          "wind_error_kt": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Wind Error Kt",
+            "description": "pred - observed (DERIVED, stored)"
+          }
+        },
+        "type": "object",
+        "required": [
+          "lead_hours",
+          "pred_wind_kt"
+        ],
+        "title": "IntensityForecastPoint"
       },
       "LineStringGeometry": {
         "properties": {
@@ -815,6 +1395,192 @@
           "active_models"
         ],
         "title": "MetaResponse"
+      },
+      "ModelContext": {
+        "properties": {
+          "model_name": {
+            "type": "string",
+            "title": "Model Name"
+          },
+          "display_name": {
+            "type": "string",
+            "title": "Display Name",
+            "description": "Human-readable model name as this project's own docs describe it (e.g. 'CLIPER-style Ridge' for 'track_cliper'), computed by a fixed, deterministic lookup in the evidence builder -- never invented by Gemini"
+          },
+          "model_version": {
+            "type": "string",
+            "title": "Model Version"
+          },
+          "dataset_version": {
+            "type": "string",
+            "title": "Dataset Version"
+          },
+          "metrics_by_horizon": {
+            "additionalProperties": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "object",
+            "title": "Metrics By Horizon",
+            "description": "Verbatim ModelVersion.metrics, keyed by horizon string"
+          },
+          "skill_vs_persistence_pct": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Skill Vs Persistence Pct",
+            "description": "Precomputed in the evidence builder from two ALREADY-STORED metric values (this model's error vs. the stored persistence model's error) -- never invented, never computed by Gemini"
+          }
+        },
+        "type": "object",
+        "required": [
+          "model_name",
+          "display_name",
+          "model_version",
+          "dataset_version",
+          "metrics_by_horizon"
+        ],
+        "title": "ModelContext",
+        "description": "The model's MEASURED skill, verbatim from the committed benchmark\nreport a `ModelVersion` row already carries -- never recomputed here.\nPer API_ARCHITECTURE.md \u00a77: without this, an explanation describes a\nforecast as though certain; with it, Gemini can honestly say how good\nthe model actually is."
+      },
+      "ModelMetricEntry": {
+        "properties": {
+          "model_name": {
+            "type": "string",
+            "title": "Model Name",
+            "description": "Internal model identifier, e.g. 'intensity_lightgbm'"
+          },
+          "display_name": {
+            "type": "string",
+            "title": "Display Name",
+            "description": "Human-readable name, e.g. 'LightGBM'"
+          },
+          "model_version": {
+            "type": "string",
+            "title": "Model Version"
+          },
+          "tier": {
+            "type": "string",
+            "enum": [
+              "floor",
+              "baseline",
+              "exploratory"
+            ],
+            "title": "Tier",
+            "description": "'floor' = trivial reference (majority-class/persistence context), 'baseline' = a Tier-1 production-eligible model, 'exploratory' = a research model NOT recommended for production"
+          },
+          "is_recommended": {
+            "type": "boolean",
+            "title": "Is Recommended",
+            "description": "True for exactly one model per task -- the current production baseline"
+          },
+          "metrics_by_horizon": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "additionalProperties": {
+                    "type": "number"
+                  },
+                  "type": "object"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Metrics By Horizon",
+            "description": "Intensity/track only: {'6': {...}, '12': {...}, '18': {...}, '24': {...}}"
+          },
+          "metrics": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "number"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Metrics",
+            "description": "Classification only: flat metrics (accuracy, macro_f1, ...)"
+          }
+        },
+        "type": "object",
+        "required": [
+          "model_name",
+          "display_name",
+          "model_version",
+          "tier",
+          "is_recommended"
+        ],
+        "title": "ModelMetricEntry"
+      },
+      "ModelPerformanceResponse": {
+        "properties": {
+          "generated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Generated At"
+          },
+          "dataset_version": {
+            "type": "string",
+            "title": "Dataset Version"
+          },
+          "split_version": {
+            "type": "string",
+            "title": "Split Version"
+          },
+          "intensity": {
+            "$ref": "#/components/schemas/TaskComparison"
+          },
+          "track": {
+            "$ref": "#/components/schemas/TaskComparison"
+          },
+          "classification": {
+            "$ref": "#/components/schemas/TaskComparison"
+          },
+          "disclaimer": {
+            "type": "string",
+            "title": "Disclaimer",
+            "default": "Metrics are calculated on storm-disjoint held-out test data, per the project's frozen split. Retrospective evaluation only -- not a claim of operational forecasting skill."
+          }
+        },
+        "type": "object",
+        "required": [
+          "generated_at",
+          "dataset_version",
+          "split_version",
+          "intensity",
+          "track",
+          "classification"
+        ],
+        "title": "ModelPerformanceResponse"
+      },
+      "ModelRef": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "version": {
+            "type": "string",
+            "title": "Version"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "version"
+        ],
+        "title": "ModelRef"
       },
       "ModelVersionOut": {
         "properties": {
@@ -1409,6 +2175,58 @@
         ],
         "title": "StormDetail"
       },
+      "StormEvidence": {
+        "properties": {
+          "sid": {
+            "type": "string",
+            "title": "Sid"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "season": {
+            "type": "integer",
+            "title": "Season"
+          },
+          "basin": {
+            "type": "string",
+            "title": "Basin"
+          },
+          "start_time": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Start Time"
+          },
+          "end_time": {
+            "type": "string",
+            "format": "date-time",
+            "title": "End Time"
+          },
+          "n_observations": {
+            "type": "integer",
+            "title": "N Observations"
+          }
+        },
+        "type": "object",
+        "required": [
+          "sid",
+          "name",
+          "season",
+          "basin",
+          "start_time",
+          "end_time",
+          "n_observations"
+        ],
+        "title": "StormEvidence"
+      },
       "StormSummary": {
         "properties": {
           "sid": {
@@ -1520,6 +2338,167 @@
           "made_landfall"
         ],
         "title": "StormSummary"
+      },
+      "TaskComparison": {
+        "properties": {
+          "task": {
+            "type": "string",
+            "enum": [
+              "intensity",
+              "track",
+              "classification"
+            ],
+            "title": "Task"
+          },
+          "horizons_h": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "integer"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Horizons H"
+          },
+          "models": {
+            "items": {
+              "$ref": "#/components/schemas/ModelMetricEntry"
+            },
+            "type": "array",
+            "title": "Models"
+          },
+          "recommended_model": {
+            "type": "string",
+            "title": "Recommended Model",
+            "description": "display_name of the recommended production model"
+          },
+          "methodology_note": {
+            "type": "string",
+            "title": "Methodology Note"
+          }
+        },
+        "type": "object",
+        "required": [
+          "task",
+          "horizons_h",
+          "models",
+          "recommended_model",
+          "methodology_note"
+        ],
+        "title": "TaskComparison"
+      },
+      "TrackEvidence": {
+        "properties": {
+          "origin_ts": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Origin Ts"
+          },
+          "forecasts": {
+            "items": {
+              "$ref": "#/components/schemas/TrackForecastPoint"
+            },
+            "type": "array",
+            "title": "Forecasts"
+          },
+          "context": {
+            "$ref": "#/components/schemas/ModelContext"
+          }
+        },
+        "type": "object",
+        "required": [
+          "origin_ts",
+          "forecasts",
+          "context"
+        ],
+        "title": "TrackEvidence"
+      },
+      "TrackForecastPoint": {
+        "properties": {
+          "lead_hours": {
+            "type": "integer",
+            "title": "Lead Hours"
+          },
+          "pred_lat": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pred Lat"
+          },
+          "pred_lon": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pred Lon"
+          },
+          "error_radius_km": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error Radius Km",
+            "description": "Model's own historical error radius at this horizon (uncertainty cone)"
+          },
+          "true_lat": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "True Lat"
+          },
+          "true_lon": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "True Lon"
+          },
+          "track_error_km": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Track Error Km",
+            "description": "Great-circle, pred vs observed (DERIVED, stored)"
+          }
+        },
+        "type": "object",
+        "required": [
+          "lead_hours",
+          "pred_lat",
+          "pred_lon"
+        ],
+        "title": "TrackForecastPoint"
       },
       "ValidationError": {
         "properties": {

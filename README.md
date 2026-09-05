@@ -16,6 +16,24 @@
 > limitation (only 3 test storms), not hidden. 10 adversarial leakage tests pass. See
 > [docs/PHASE_5_CLASSIFICATION_LABEL_ANALYSIS.md](docs/PHASE_5_CLASSIFICATION_LABEL_ANALYSIS.md).
 
+> **Phase 10 — Premium Frontend Dashboard & Scientific Visualization. COMPLETE**, with two
+> panels explicitly **blocked by the existing data/API contract** (satellite imagery,
+> classification — no serving endpoint or database table exists for either; both show honest
+> empty states, never fabricated data). Rebuilt the Phase 3 vertical slice into a five-page
+> product (`/`, `/storms`, `/predict/[sid]`, `/models`, `/methodology`) with a real TimeScrubber
+> (scrubs only real observation timestamps), observed-vs-predicted charts that never merge
+> series, a Model Selector that only offers models with real per-storm data (GRU is correctly
+> absent there, shown only as "Exploratory" on the aggregate Model Performance page), and a
+> GeminiPanel/EvidenceDrawer wired to the real Phase 9 backend endpoint — never Gemini directly
+> from the browser. One small additive backend endpoint was added
+> (`GET /api/v1/analytics/model-performance`, reading already-committed benchmark JSON, itself
+> pre-planned in `docs/API_ARCHITECTURE.md` §3.6) plus one additive field on the existing Phase 9
+> explain response. Two real bugs were found and fixed along the way: Recharts crashing inside a
+> React Server Component, and a missing `afterEach(cleanup)` in the Vitest setup that had been
+> silently letting every prior test's DOM accumulate since Phase 3. 41 frontend + 9 new backend
+> tests pass; TypeScript and ESLint both clean. See
+> [docs/PHASE_10_FRONTEND_DASHBOARD.md](docs/PHASE_10_FRONTEND_DASHBOARD.md).
+
 > **Phase 9 — Gemini AI Explanation Integration. COMPLETE.**
 > Integrated Gemini as a strictly backend-only, evidence-grounded natural-language explanation
 > layer (`backend/app/gemini/`), exactly per `docs/API_ARCHITECTURE.md` §6-8's pre-existing design.
@@ -185,6 +203,7 @@ run on free-tier CPU hosting.
 | [docs/PHASE_7_INTENSITY_PREDICTION.md](docs/PHASE_7_INTENSITY_PREDICTION.md) | GRU sequence model (absolute + Δwind), leakage validation, honest comparison against the Phase 2 LightGBM baseline |
 | [docs/PHASE_8_TRACK_PREDICTION.md](docs/PHASE_8_TRACK_PREDICTION.md) | GRU sequence model for track (cos-latitude-weighted loss), leakage/antimeridian validation, honest comparison against the Phase 2 CLIPER baseline |
 | [docs/PHASE_9_GEMINI_INTEGRATION.md](docs/PHASE_9_GEMINI_INTEGRATION.md) | Backend-only Gemini explanation layer: evidence packet, grounding validator, deterministic fallback, prompt-injection defense |
+| [docs/PHASE_10_FRONTEND_DASHBOARD.md](docs/PHASE_10_FRONTEND_DASHBOARD.md) | Premium dashboard: design system, TimeScrubber, charts, map, Gemini/EvidenceDrawer integration, honest empty states |
 
 ## Recommended Stack (summary)
 

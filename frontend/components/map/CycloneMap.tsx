@@ -32,15 +32,32 @@ function FitBounds({ points }: { points: LonLat[] }) {
   return null;
 }
 
-export default function CycloneMap({ track }: { track: TrackFeatureCollection }) {
+export default function CycloneMap({
+  track, currentPosition, selectedModelName,
+}: {
+  track: TrackFeatureCollection;
+  /** The TimeScrubber's current real observation position -- a distinct,
+   * accent-coloured marker, never confused with observed (teal) or
+   * predicted (amber) styling. */
+  currentPosition?: { lat: number; lon: number } | null;
+  /** When set, only this model's predicted track/points are drawn (the
+   * ModelSelector's live selection) -- when omitted, every model present
+   * in the GeoJSON is drawn, matching the original Phase 3 behaviour. */
+  selectedModelName?: string | null;
+}) {
   const observedTracks = track.features.filter(
     (f) => f.properties?.kind === "observed_track" && f.geometry.type === "LineString",
   );
   const observedPoints = track.features.filter((f) => f.properties?.kind === "observed_point");
+  const matchesSelection = (modelName: unknown) =>
+    !selectedModelName || modelName === selectedModelName;
   const predictedTracks = track.features.filter(
-    (f) => f.properties?.kind === "predicted_track" && f.geometry.type === "LineString",
+    (f) => f.properties?.kind === "predicted_track" && f.geometry.type === "LineString"
+      && matchesSelection(f.properties?.model_name),
   );
-  const predictedPoints = track.features.filter((f) => f.properties?.kind === "predicted_point");
+  const predictedPoints = track.features.filter(
+    (f) => f.properties?.kind === "predicted_point" && matchesSelection(f.properties?.model_name),
+  );
 
   const allPoints: LonLat[] = track.features
     .filter((f) => f.geometry.type === "Point")
@@ -141,6 +158,17 @@ export default function CycloneMap({ track }: { track: TrackFeatureCollection })
           </CircleMarker>
         );
       })}
+
+      {/* CURRENT SCRUB POSITION -- a third, distinct treatment (accent
+          colour, larger ring), never reusing the observed/predicted colours
+          so it cannot be mistaken for either. */}
+      {currentPosition && (
+        <CircleMarker
+          center={[currentPosition.lat, currentPosition.lon]}
+          radius={8}
+          pathOptions={{ color: "#7FB0FF", weight: 2, fillOpacity: 0.15 }}
+        />
+      )}
     </MapContainer>
   );
 }

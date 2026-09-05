@@ -1,8 +1,9 @@
 # DEVELOPMENT ROADMAP — GeoStrom AI
 
-**Phase:** 9 (Gemini AI Explanation Integration) · **Status:** Complete.
-Full results in [PHASE_9_GEMINI_INTEGRATION.md](PHASE_9_GEMINI_INTEGRATION.md).
-Phases 0-9 are complete: Phase 3's vertical slice (Phase 2 predictions → PostgreSQL/PostGIS →
+**Phase:** 10 (Premium Frontend Dashboard & Scientific Visualization) · **Status:** Complete,
+two panels blocked by existing data/API contract (satellite imagery, classification).
+Full results in [PHASE_10_FRONTEND_DASHBOARD.md](PHASE_10_FRONTEND_DASHBOARD.md).
+Phases 0-10 are complete: Phase 3's vertical slice (Phase 2 predictions → PostgreSQL/PostGIS →
 FastAPI → generated contract → Next.js/Leaflet map); Phase 4's real satellite fusion pipeline
 (12 storms / 627 fused samples, see [PHASE_4_SATELLITE_PIPELINE.md](PHASE_4_SATELLITE_PIPELINE.md));
 Phase 5's evidence-driven `scene_taxonomy_v1` classification taxonomy plus non-deep-learning
@@ -18,11 +19,14 @@ Phase 9's Gemini explanation layer (`backend/app/gemini/`), integrated as a stri
 evidence-grounded narration service over the existing Phase 2/3 stored predictions — never a
 forecasting model itself, per §6-8's pre-existing architecture. This "Phase 6"/"Phase 7"/"Phase 8"
 numbering is informal (CNN-training deferred from Phase 5's numbering note, and the intensity/track
-sequence-model items the brief calls Phase 7/8 but this roadmap places at **P2**); "Phase 9" here
-matches the P0–P12 sequence's own **P9 (Gemini Explanation Layer)** directly (see that section
-below) — the first phase in this informal numbering to land on the same number as its formal
-roadmap slot, distinct from **P6 (Detection)** and **P7 (UI/UX Build)**, neither of which has
-started.
+sequence-model items the brief calls Phase 7/8 but this roadmap places at **P2**); "Phase 9" and
+"Phase 10" match the P0–P12 sequence's own **P9 (Gemini Explanation Layer)** and **P7 (UI/UX
+Build)** respectively in substance, though this "Phase 10" ships before the roadmap's own P8
+(Geospatial Dashboard Completion) — a deliberate, requested reordering, not a silent renumbering.
+Phase 10 rebuilt the frontend into a five-page product (landing, Storm Explorer, the flagship
+`/predict/[sid]` analysis workspace, Model Performance, Methodology) with a real TimeScrubber,
+observed-vs-predicted charts, and a GeminiPanel/EvidenceDrawer wired to Phase 9's backend
+endpoint — still distinct from **P6 (Detection)**, which has not started.
 
 ---
 
@@ -303,7 +307,7 @@ detection claim is written verbatim into the UI and methodology page.**
 
 ---
 
-### P7 — UI/UX Build
+### P7 — UI/UX Build — ✅ **DASHBOARD COMPLETE** ("Phase 10"; Lighthouse not measured)
 **Depends on:** P3 (working spine) · P5/P6 for full content
 
 Design tokens · component library · landing page with the globe · Monitor · Analysis · Prediction
@@ -311,6 +315,19 @@ Dashboard · `TimeScrubber` · charts · motion system · accessibility pass.
 
 **Exit:** all MVP pages render real data; Lighthouse targets met; `prefers-reduced-motion` honoured;
 contrast verified over actual glass backdrops; colour-blind check on the intensity ramp passed.
+
+> **Update ("Phase 10"): built, with two explicit exceptions.** Design tokens extended (`Inter`
+> font actually loaded, glass-panel/badge/metric-card primitives), a lightweight `cobe` globe on
+> the landing page, the flagship `/predict/[sid]` Analysis workspace with a real `TimeScrubber`,
+> observed-vs-predicted charts, model selector, and Gemini panel/evidence drawer, plus a new
+> Model Performance page and Methodology page. `prefers-reduced-motion` is honoured
+> (`lib/motion.ts`); observed/predicted remain colour **and** line-style distinguishable.
+> **Not measured**: Lighthouse scores (no Lighthouse run was performed this phase — performance
+> was addressed via lazy-loading and memoization, but not benchmarked numerically). **Explicitly
+> blocked by the existing data/API contract, not built**: real satellite-frame serving and
+> per-storm classification results — no backend endpoint or database table exists for either;
+> both panels show honest, correct empty states instead of fabricated data. Full detail:
+> [PHASE_10_FRONTEND_DASHBOARD.md](PHASE_10_FRONTEND_DASHBOARD.md).
 
 ---
 

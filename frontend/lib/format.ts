@@ -28,7 +28,27 @@ export function formatTimestamp(iso: string): string {
   });
 }
 
+// Mirrors backend/app/services/analytics.py's `_DISPLAY_NAMES` -- kept in
+// sync there and here since both independently render a model's name to a
+// human, both from the same underlying `model_name` strings.
+const KNOWN_DISPLAY_NAMES: Record<string, string> = {
+  intensity_persistence: "Persistence", intensity_ridge: "Ridge", intensity_lightgbm: "LightGBM",
+  intensity_gru: "GRU (absolute)", intensity_gru_delta: "GRU (Δwind)",
+  track_persistence: "Persistence", track_cliper: "CLIPER-style Ridge", track_lightgbm: "LightGBM",
+  track_gru: "GRU",
+};
+
+/**
+ * Human-readable model name. Found via a real test failure (Phase 10,
+ * ModelSelector.test.tsx) that a naive strip-prefix-and-capitalise approach
+ * renders brand/acronym names wrong ("Lightgbm", "Cliper" instead of
+ * "LightGBM", "CLIPER-style Ridge") -- a real, user-visible bug in a
+ * "premium" UI. Falls back to the original capitalisation behaviour only
+ * for a name not in the known table, so this never throws for an
+ * unanticipated model name.
+ */
 export function modelDisplayName(name: string): string {
+  if (name in KNOWN_DISPLAY_NAMES) return KNOWN_DISPLAY_NAMES[name];
   return name
     .replace(/^intensity_/, "")
     .replace(/^track_/, "")

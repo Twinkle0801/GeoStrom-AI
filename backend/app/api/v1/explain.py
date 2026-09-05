@@ -91,4 +91,5 @@ def explain_forecast(
         fallback_reason=result.fallback_reason,
         validation_violations=result.violations,
         explanation=result.explanation,
+        evidence=evidence,
     )

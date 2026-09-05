@@ -161,10 +161,191 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/explain/forecast": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Explain Forecast */
+        post: operations["explain_forecast_api_v1_explain_forecast_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/analytics/model-performance": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Model Performance */
+        get: operations["model_performance_api_v1_analytics_model_performance_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /**
+         * ClassificationEvidence
+         * @description Structurally supported per docs/API_ARCHITECTURE.md §7's evidence
+         *     packet design and the task's evidence-field list. NOT wired to a
+         *     per-storm production data source in Phase 9: `db/models.py` documents
+         *     that no `classifications` table exists yet (Phase 5/6 introduced a
+         *     classification model, but never a production per-storm classification
+         *     record) -- adding one would be a database migration, which is out of
+         *     Phase 9's explicitly minimal scope. The evidence builder therefore
+         *     always leaves this `None` today; the field, the validator's grounding
+         *     checks for it, and the fallback template's handling of it are all fully
+         *     implemented and tested against a directly-constructed `EvidencePacket`,
+         *     so wiring a real source later is a data-plumbing change, not a
+         *     Gemini-integration change. Documented in
+         *     docs/PHASE_9_GEMINI_INTEGRATION.md as a known limitation.
+         */
+        ClassificationEvidence: {
+            /** Class Label */
+            class_label: string;
+            /** Confidence */
+            confidence: number | null;
+            /** Model Name */
+            model_name: string;
+            /** Model Version */
+            model_version: string;
+        };
+        /**
+         * CurrentStateEvidence
+         * @description The most recent OBSERVED state at or before the forecast origin time
+         *     -- never a future/predicted value (this field must never be confused
+         *     with `IntensityEvidence`/`TrackEvidence`'s `forecasts`, which are model
+         *     output).
+         */
+        CurrentStateEvidence: {
+            /**
+             * Timestamp
+             * Format: date-time
+             */
+            timestamp: string;
+            /** Lat */
+            lat: number;
+            /** Lon */
+            lon: number;
+            /** Wind Kt */
+            wind_kt: number | null;
+            /** Pressure Hpa */
+            pressure_hpa: number | null;
+            /** Category */
+            category: number | null;
+            /** Storm Speed Kt */
+            storm_speed_kt: number | null;
+            /** Storm Dir Deg */
+            storm_dir_deg: number | null;
+            /** Dist2Land Km */
+            dist2land_km: number | null;
+        };
+        /**
+         * EvidencePacket
+         * @description The ENTIRE universe of facts available to Gemini for one call, per
+         *     docs/API_ARCHITECTURE.md §7. Gemini receives nothing else -- no database
+         *     access, no tool, no retrieval (docs/API_ARCHITECTURE.md §6.1/§8 Layer 1).
+         */
+        EvidencePacket: {
+            /**
+             * Evidence Schema Version
+             * @default v1
+             * @constant
+             */
+            evidence_schema_version: "v1";
+            /**
+             * Generated At
+             * Format: date-time
+             */
+            generated_at: string;
+            storm: components["schemas"]["StormEvidence"];
+            current_state: components["schemas"]["CurrentStateEvidence"] | null;
+            /** Recent History */
+            recent_history: components["schemas"]["HistoryPoint"][];
+            intensity: components["schemas"]["IntensityEvidence"] | null;
+            track: components["schemas"]["TrackEvidence"] | null;
+            classification?: components["schemas"]["ClassificationEvidence"] | null;
+            /** Known Limitations */
+            known_limitations: string[];
+            /** Forbidden Claims */
+            forbidden_claims: string[];
+        };
+        /**
+         * ExplainRequest
+         * @description `sid` is this project's established per-storm identifier, used by
+         *     every other endpoint since Phase 3 (`/api/v1/prediction/{sid}`,
+         *     `/api/v1/tracks/{sid}`) -- used here instead of the task prompt's
+         *     illustrative `session_id`, per the task's own instruction to follow the
+         *     repository's existing naming conventions.
+         */
+        ExplainRequest: {
+            /** Sid */
+            sid: string;
+            /**
+             * Intensity Model Version
+             * @description Defaults to the recommended production intensity model (LightGBM v1)
+             */
+            intensity_model_version?: string | null;
+            /**
+             * Track Model Version
+             * @description Defaults to the recommended production track model (CLIPER-style Ridge v1)
+             */
+            track_model_version?: string | null;
+        };
+        /** ExplainResponse */
+        ExplainResponse: {
+            /** Sid */
+            sid: string;
+            /**
+             * Generated At
+             * Format: date-time
+             */
+            generated_at: string;
+            /** Evidence Schema Version */
+            evidence_schema_version: string;
+            intensity_model: components["schemas"]["ModelRef"] | null;
+            track_model: components["schemas"]["ModelRef"] | null;
+            classification_model?: components["schemas"]["ModelRef"] | null;
+            /**
+             * Source
+             * @description Whether the explanation came from Gemini or the deterministic fallback template -- the frontend must never have to guess this
+             * @enum {string}
+             */
+            source: "gemini" | "fallback";
+            /**
+             * Fallback Reason
+             * @description Set only when source='fallback': e.g. 'not_configured', 'timeout', 'malformed_json', 'ungrounded_claim'
+             */
+            fallback_reason?: string | null;
+            /**
+             * Validation Violations
+             * @description Grounding-validator violation categories found in Gemini's (rejected) response, if any -- empty when source='gemini' or when Gemini was never called
+             */
+            validation_violations?: string[];
+            explanation: components["schemas"]["GeminiStructuredResponse"];
+            /** @description The exact evidence packet used to generate this explanation -- Phase 10's EvidenceDrawer renders this directly, so a viewer can inspect precisely what grounds the explanation. Contains no credentials or internal prompt text. */
+            evidence: components["schemas"]["EvidencePacket"];
+            /**
+             * Disclaimer
+             * @default Retrospective research-prototype model output. Not an operational forecast, weather warning, or safety advisory.
+             */
+            disclaimer: string;
+        };
         /** Feature */
         Feature: {
             /**
@@ -191,6 +372,24 @@ export interface components {
             /** Features */
             features: components["schemas"]["Feature"][];
         };
+        /**
+         * GeminiStructuredResponse
+         * @description The constrained response schema Gemini must produce (task §10 /
+         *     docs/API_ARCHITECTURE.md §8 Layer 3: structured output narrows the space
+         *     in which invention can occur).
+         */
+        GeminiStructuredResponse: {
+            /** Summary */
+            summary: string;
+            /** Intensity Explanation */
+            intensity_explanation: string;
+            /** Track Explanation */
+            track_explanation: string;
+            /** Classification Explanation */
+            classification_explanation: string;
+            /** Limitations */
+            limitations: string;
+        };
         /** HTTPValidationError */
         HTTPValidationError: {
             /** Detail */
@@ -202,6 +401,48 @@ export interface components {
             status: string;
             /** Database */
             database: string;
+        };
+        /** HistoryPoint */
+        HistoryPoint: {
+            /**
+             * Timestamp
+             * Format: date-time
+             */
+            timestamp: string;
+            /** Lat */
+            lat: number;
+            /** Lon */
+            lon: number;
+            /** Wind Kt */
+            wind_kt: number | null;
+        };
+        /** IntensityEvidence */
+        IntensityEvidence: {
+            /**
+             * Origin Ts
+             * Format: date-time
+             */
+            origin_ts: string;
+            /** Forecasts */
+            forecasts: components["schemas"]["IntensityForecastPoint"][];
+            context: components["schemas"]["ModelContext"];
+        };
+        /** IntensityForecastPoint */
+        IntensityForecastPoint: {
+            /** Lead Hours */
+            lead_hours: number;
+            /** Pred Wind Kt */
+            pred_wind_kt: number | null;
+            /**
+             * True Wind Kt
+             * @description OBSERVED verification value, if the forecast is old enough to verify
+             */
+            true_wind_kt?: number | null;
+            /**
+             * Wind Error Kt
+             * @description pred - observed (DERIVED, stored)
+             */
+            wind_error_kt?: number | null;
         };
         /** LineStringGeometry */
         LineStringGeometry: {
@@ -233,6 +474,110 @@ export interface components {
              * @default Retrospective research prototype. Predictions are historical baseline model output, not operational forecasts.
              */
             note: string;
+        };
+        /**
+         * ModelContext
+         * @description The model's MEASURED skill, verbatim from the committed benchmark
+         *     report a `ModelVersion` row already carries -- never recomputed here.
+         *     Per API_ARCHITECTURE.md §7: without this, an explanation describes a
+         *     forecast as though certain; with it, Gemini can honestly say how good
+         *     the model actually is.
+         */
+        ModelContext: {
+            /** Model Name */
+            model_name: string;
+            /**
+             * Display Name
+             * @description Human-readable model name as this project's own docs describe it (e.g. 'CLIPER-style Ridge' for 'track_cliper'), computed by a fixed, deterministic lookup in the evidence builder -- never invented by Gemini
+             */
+            display_name: string;
+            /** Model Version */
+            model_version: string;
+            /** Dataset Version */
+            dataset_version: string;
+            /**
+             * Metrics By Horizon
+             * @description Verbatim ModelVersion.metrics, keyed by horizon string
+             */
+            metrics_by_horizon: {
+                [key: string]: {
+                    [key: string]: unknown;
+                };
+            };
+            /**
+             * Skill Vs Persistence Pct
+             * @description Precomputed in the evidence builder from two ALREADY-STORED metric values (this model's error vs. the stored persistence model's error) -- never invented, never computed by Gemini
+             */
+            skill_vs_persistence_pct?: number | null;
+        };
+        /** ModelMetricEntry */
+        ModelMetricEntry: {
+            /**
+             * Model Name
+             * @description Internal model identifier, e.g. 'intensity_lightgbm'
+             */
+            model_name: string;
+            /**
+             * Display Name
+             * @description Human-readable name, e.g. 'LightGBM'
+             */
+            display_name: string;
+            /** Model Version */
+            model_version: string;
+            /**
+             * Tier
+             * @description 'floor' = trivial reference (majority-class/persistence context), 'baseline' = a Tier-1 production-eligible model, 'exploratory' = a research model NOT recommended for production
+             * @enum {string}
+             */
+            tier: "floor" | "baseline" | "exploratory";
+            /**
+             * Is Recommended
+             * @description True for exactly one model per task -- the current production baseline
+             */
+            is_recommended: boolean;
+            /**
+             * Metrics By Horizon
+             * @description Intensity/track only: {'6': {...}, '12': {...}, '18': {...}, '24': {...}}
+             */
+            metrics_by_horizon?: {
+                [key: string]: {
+                    [key: string]: number;
+                };
+            } | null;
+            /**
+             * Metrics
+             * @description Classification only: flat metrics (accuracy, macro_f1, ...)
+             */
+            metrics?: {
+                [key: string]: number;
+            } | null;
+        };
+        /** ModelPerformanceResponse */
+        ModelPerformanceResponse: {
+            /**
+             * Generated At
+             * Format: date-time
+             */
+            generated_at: string;
+            /** Dataset Version */
+            dataset_version: string;
+            /** Split Version */
+            split_version: string;
+            intensity: components["schemas"]["TaskComparison"];
+            track: components["schemas"]["TaskComparison"];
+            classification: components["schemas"]["TaskComparison"];
+            /**
+             * Disclaimer
+             * @default Metrics are calculated on storm-disjoint held-out test data, per the project's frozen split. Retrospective evaluation only -- not a claim of operational forecasting skill.
+             */
+            disclaimer: string;
+        };
+        /** ModelRef */
+        ModelRef: {
+            /** Name */
+            name: string;
+            /** Version */
+            version: string;
         };
         /** ModelVersionOut */
         ModelVersionOut: {
@@ -456,6 +801,29 @@ export interface components {
              */
             bbox?: number[] | null;
         };
+        /** StormEvidence */
+        StormEvidence: {
+            /** Sid */
+            sid: string;
+            /** Name */
+            name: string | null;
+            /** Season */
+            season: number;
+            /** Basin */
+            basin: string;
+            /**
+             * Start Time
+             * Format: date-time
+             */
+            start_time: string;
+            /**
+             * End Time
+             * Format: date-time
+             */
+            end_time: string;
+            /** N Observations */
+            n_observations: number;
+        };
         /** StormSummary */
         StormSummary: {
             /** Sid */
@@ -494,6 +862,59 @@ export interface components {
              * @description train | val | test (Phase 2 frozen split)
              */
             split?: string | null;
+        };
+        /** TaskComparison */
+        TaskComparison: {
+            /**
+             * Task
+             * @enum {string}
+             */
+            task: "intensity" | "track" | "classification";
+            /** Horizons H */
+            horizons_h: number[] | null;
+            /** Models */
+            models: components["schemas"]["ModelMetricEntry"][];
+            /**
+             * Recommended Model
+             * @description display_name of the recommended production model
+             */
+            recommended_model: string;
+            /** Methodology Note */
+            methodology_note: string;
+        };
+        /** TrackEvidence */
+        TrackEvidence: {
+            /**
+             * Origin Ts
+             * Format: date-time
+             */
+            origin_ts: string;
+            /** Forecasts */
+            forecasts: components["schemas"]["TrackForecastPoint"][];
+            context: components["schemas"]["ModelContext"];
+        };
+        /** TrackForecastPoint */
+        TrackForecastPoint: {
+            /** Lead Hours */
+            lead_hours: number;
+            /** Pred Lat */
+            pred_lat: number | null;
+            /** Pred Lon */
+            pred_lon: number | null;
+            /**
+             * Error Radius Km
+             * @description Model's own historical error radius at this horizon (uncertainty cone)
+             */
+            error_radius_km?: number | null;
+            /** True Lat */
+            true_lat?: number | null;
+            /** True Lon */
+            true_lon?: number | null;
+            /**
+             * Track Error Km
+             * @description Great-circle, pred vs observed (DERIVED, stored)
+             */
+            track_error_km?: number | null;
         };
         /** ValidationError */
         ValidationError: {
@@ -827,6 +1248,68 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    explain_forecast_api_v1_explain_forecast_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExplainRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExplainResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    model_performance_api_v1_analytics_model_performance_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ModelPerformanceResponse"];
                 };
             };
         };

@@ -15,9 +15,15 @@ describe("categoryLabel", () => {
 });
 
 describe("modelDisplayName", () => {
-  it("strips task prefix and capitalises", () => {
-    expect(modelDisplayName("track_cliper")).toBe("Cliper");
-    expect(modelDisplayName("intensity_lightgbm")).toBe("Lightgbm");
+  it("uses the correct, established name for every known model", () => {
+    expect(modelDisplayName("track_cliper")).toBe("CLIPER-style Ridge");
+    expect(modelDisplayName("intensity_lightgbm")).toBe("LightGBM");
+    expect(modelDisplayName("intensity_persistence")).toBe("Persistence");
+    expect(modelDisplayName("track_gru")).toBe("GRU");
+  });
+
+  it("falls back to strip-prefix-and-capitalise for an unknown model name", () => {
+    expect(modelDisplayName("intensity_newmodel")).toBe("Newmodel");
   });
 });
 

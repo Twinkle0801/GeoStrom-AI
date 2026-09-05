@@ -17,6 +17,14 @@ const CycloneMap = dynamic(() => import("./CycloneMap"), {
   ),
 });
 
-export default function CycloneMapClient({ track }: { track: TrackFeatureCollection }) {
-  return <CycloneMap track={track} />;
+export default function CycloneMapClient({
+  track, currentPosition, selectedModelName,
+}: {
+  track: TrackFeatureCollection;
+  currentPosition?: { lat: number; lon: number } | null;
+  selectedModelName?: string | null;
+}) {
+  return (
+    <CycloneMap track={track} currentPosition={currentPosition} selectedModelName={selectedModelName} />
+  );
 }
