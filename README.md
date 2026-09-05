@@ -16,6 +16,19 @@
 > limitation (only 3 test storms), not hidden. 10 adversarial leakage tests pass. See
 > [docs/PHASE_5_CLASSIFICATION_LABEL_ANALYSIS.md](docs/PHASE_5_CLASSIFICATION_LABEL_ANALYSIS.md).
 
+> **Phase 8 — Track Prediction: GRU (Sequence Model). COMPLETE — baseline retained.**
+> Trained a GRU (1 layer, hidden 64) → dense 8-output (Δlat,Δlon)×4-horizon head on the same frozen
+> Phase 2 split/features (no new split, no new download), with the longitude component of the
+> training loss weighted by cos(reference latitude) per `docs/ML_ARCHITECTURE.md` §7.2. **The GRU
+> does not beat the Phase 2 CLIPER-style Ridge baseline (the best Phase 2 track model) at any
+> horizon** — 209.505 km vs. CLIPER's 200.445 km at 24h (4.5% worse), though it does beat plain
+> Persistence at the two longer horizons (18h/24h). Antimeridian handling and the cos(latitude)
+> loss weighting were both directly tested, not assumed. Reproducibility verified bit-identical
+> across two independent full training runs. 19 new tests pass (10 leakage/scientific-validation
+> vectors + model/geospatial/determinism tests). **Recommendation: keep shipping the Phase 2
+> CLIPER-style Ridge baseline for track.** See
+> [docs/PHASE_8_TRACK_PREDICTION.md](docs/PHASE_8_TRACK_PREDICTION.md).
+
 > **Phase 7 — Intensity Prediction: GRU (Sequence Model). COMPLETE — baseline retained.**
 > Trained a GRU (1 layer, hidden 64) → shared 4-horizon dense head on the same frozen Phase 2
 > split/features (no new split, no new download), per `docs/ML_ARCHITECTURE.md` §6's pre-existing
@@ -155,6 +168,7 @@ run on free-tier CPU hosting.
 | [docs/PHASE_5_CLASSIFICATION_LABEL_ANALYSIS.md](docs/PHASE_5_CLASSIFICATION_LABEL_ANALYSIS.md) | Scene-label audit, `scene_taxonomy_v1`, classification dataset, non-deep-learning baselines |
 | [docs/PHASE_6_DEEP_LEARNING_CLASSIFICATION.md](docs/PHASE_6_DEEP_LEARNING_CLASSIFICATION.md) | CNN + transfer-learning training/evaluation, overfitting analysis, comparison against the Phase 5 baseline |
 | [docs/PHASE_7_INTENSITY_PREDICTION.md](docs/PHASE_7_INTENSITY_PREDICTION.md) | GRU sequence model (absolute + Δwind), leakage validation, honest comparison against the Phase 2 LightGBM baseline |
+| [docs/PHASE_8_TRACK_PREDICTION.md](docs/PHASE_8_TRACK_PREDICTION.md) | GRU sequence model for track (cos-latitude-weighted loss), leakage/antimeridian validation, honest comparison against the Phase 2 CLIPER baseline |
 
 ## Recommended Stack (summary)
 

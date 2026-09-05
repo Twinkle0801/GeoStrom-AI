@@ -407,6 +407,16 @@ predicted point and hull them into a cone.
 loss, both giving per-storm rather than per-horizon-average uncertainty. MC-dropout is noted but is
 generally poorly calibrated and is not recommended as the primary path.
 
+> **Update ("Phase 8"): the Tier-2 GRU specified above (§7.4) was implemented and evaluated** (1
+> layer, hidden 64, dropout 0.2, cos(latitude)-weighted Huber loss on displacement, exactly per
+> §7.2 above — no spec deviation). **Result: it does not beat Tier-1 CLIPER-style Ridge's (or
+> LightGBM's) mean track error at any horizon**, though it does beat plain Persistence at 18h/24h —
+> confirming this section's own §7.3 prior expectation that baselines should come first and a deep
+> model must clear the persistence bar to have "learned" anything. CLIPER-style Ridge remains the
+> model shipped for track. Full results, error analysis, and honest comparison table:
+> [PHASE_8_TRACK_PREDICTION.md](PHASE_8_TRACK_PREDICTION.md). This specification itself was not
+> changed.
+
 ### 7.6 Honest expectations
 
 Modern operational agency track forecasts achieve errors on the order of tens of km at 24 h,

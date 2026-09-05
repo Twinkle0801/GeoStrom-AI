@@ -1,20 +1,23 @@
 # DEVELOPMENT ROADMAP — GeoStrom AI
 
-**Phase:** 7 (Intensity Prediction — GRU Sequence Model) · **Status:** Complete, baseline retained.
-Full results in [PHASE_7_INTENSITY_PREDICTION.md](PHASE_7_INTENSITY_PREDICTION.md).
-Phases 0-7 are complete: Phase 3's vertical slice (Phase 2 predictions → PostgreSQL/PostGIS →
+**Phase:** 8 (Track Prediction — GRU Sequence Model) · **Status:** Complete, baseline retained.
+Full results in [PHASE_8_TRACK_PREDICTION.md](PHASE_8_TRACK_PREDICTION.md).
+Phases 0-8 are complete: Phase 3's vertical slice (Phase 2 predictions → PostgreSQL/PostGIS →
 FastAPI → generated contract → Next.js/Leaflet map); Phase 4's real satellite fusion pipeline
 (12 storms / 627 fused samples, see [PHASE_4_SATELLITE_PIPELINE.md](PHASE_4_SATELLITE_PIPELINE.md));
 Phase 5's evidence-driven `scene_taxonomy_v1` classification taxonomy plus non-deep-learning
 baseline (test macro-F1 0.559); Phase 6's CNN training (small CNN + ResNet-18, both evaluated,
 neither beating the Phase 5 baseline at the current 353-image scale — the baseline ships, per the
-roadmap's own "ship the honest winner" principle); and Phase 7's GRU intensity model (absolute +
+roadmap's own "ship the honest winner" principle); Phase 7's GRU intensity model (absolute +
 Δwind variants, per §5.2/§6's pre-existing spec), which likewise does not beat the Phase 2
-LightGBM baseline at any horizon — the LightGBM baseline ships, same principle. This "Phase 6" and
-"Phase 7" numbering is informal (CNN-training deferred from Phase 5's numbering note, and the
-intensity-sequence-model item the brief calls Phase 7 but this roadmap places at **P2**), distinct
-from the P0–P12 sequence's own **P6 (Detection)** and **P7 (UI/UX Build)** below, neither of which
-has started.
+LightGBM baseline at any horizon; and Phase 8's GRU track model (cos-latitude-weighted
+displacement loss, per §5.2/§7's pre-existing spec), which does not beat the Phase 2 CLIPER-style
+Ridge baseline at any horizon either (though it does beat plain Persistence at 18h/24h) — the
+Phase 2 baselines ship for both intensity and track, same "ship the honest winner" principle. This
+"Phase 6"/"Phase 7"/"Phase 8" numbering is informal (CNN-training deferred from Phase 5's numbering
+note, and the intensity/track sequence-model items the brief calls Phase 7/8 but this roadmap
+places at **P2**), distinct from the P0–P12 sequence's own **P6 (Detection)** and **P7 (UI/UX
+Build)** below, neither of which has started.
 
 ---
 
@@ -142,6 +145,16 @@ Phase 2 task specified verbatim. Full results: `docs/PHASE_2_FORECASTING_BASELIN
 > RI recall is 0.0 at every horizon with true RI cases — reported as a diagnostic, not concealed.
 > LightGBM remains the model to ship. Reproducibility verified bit-identical across two independent
 > runs; 22 new tests pass. Full detail: [PHASE_7_INTENSITY_PREDICTION.md](PHASE_7_INTENSITY_PREDICTION.md).
+
+> **Update ("Phase 8"): track extended with the §5.2/§7-specified GRU (1 layer, hidden 64 — within
+> §7.4's "1–2 layers, hidden 64–128" range; 8-output displacement head), cos(latitude)-weighted
+> Huber loss on displacement exactly per §7.2.** Trained and evaluated on the identical frozen
+> split/features above — no new split, no re-derivation of Phase 2's numbers. **Honest finding:
+> the GRU does not beat CLIPER-style Ridge (or LightGBM) at any of the four horizons** (24h:
+> 209.505 km GRU vs. 200.445 km CLIPER, a 4.5% gap that widens sharply at shorter horizons), though
+> it does beat plain Persistence at 18h/24h. Antimeridian handling and the cos(latitude) weighting
+> were both directly tested. Reproducibility verified bit-identical across two independent runs; 19
+> new tests pass. Full detail: [PHASE_8_TRACK_PREDICTION.md](PHASE_8_TRACK_PREDICTION.md).
 
 ---
 

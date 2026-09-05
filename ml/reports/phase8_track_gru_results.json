@@ -1,0 +1,468 @@
+{
+  "phase": 8,
+  "model_family": "track_gru",
+  "config": {
+    "hidden_size": 64,
+    "num_layers": 1,
+    "dropout": 0.2,
+    "huber_delta": 1.0,
+    "learning_rate": 0.001,
+    "weight_decay": 1e-05,
+    "batch_size": 256,
+    "max_epochs": 200,
+    "early_stopping_patience": 15,
+    "early_stopping_min_delta": 0.0,
+    "seed": 42,
+    "device": "auto"
+  },
+  "dataset_version": "v1",
+  "split_version": "v1",
+  "feature_version": "v1",
+  "horizons_h": [
+    6,
+    12,
+    18,
+    24
+  ],
+  "models": {
+    "track_gru_v1": {
+      "best_epoch": 39,
+      "n_epochs_ran": 55,
+      "training_history": [
+        {
+          "epoch": 0,
+          "train_weighted_huber_loss": 2.7849502005384292,
+          "val_mean_track_error_km": 294.1859796684495
+        },
+        {
+          "epoch": 1,
+          "train_weighted_huber_loss": 2.163940101115554,
+          "val_mean_track_error_km": 229.28910636017073
+        },
+        {
+          "epoch": 2,
+          "train_weighted_huber_loss": 1.6723599663185087,
+          "val_mean_track_error_km": 195.30181123830886
+        },
+        {
+          "epoch": 3,
+          "train_weighted_huber_loss": 1.4561611137641473,
+          "val_mean_track_error_km": 181.73397583282883
+        },
+        {
+          "epoch": 4,
+          "train_weighted_huber_loss": 1.3311004164293445,
+          "val_mean_track_error_km": 172.1752024999229
+        },
+        {
+          "epoch": 5,
+          "train_weighted_huber_loss": 1.2475774653279113,
+          "val_mean_track_error_km": 164.8541755128311
+        },
+        {
+          "epoch": 6,
+          "train_weighted_huber_loss": 1.1776328859986445,
+          "val_mean_track_error_km": 158.14284646445248
+        },
+        {
+          "epoch": 7,
+          "train_weighted_huber_loss": 1.1145798357209395,
+          "val_mean_track_error_km": 154.14744439688826
+        },
+        {
+          "epoch": 8,
+          "train_weighted_huber_loss": 1.0685861544477158,
+          "val_mean_track_error_km": 149.23111849367424
+        },
+        {
+          "epoch": 9,
+          "train_weighted_huber_loss": 1.0277847661619237,
+          "val_mean_track_error_km": 145.86460505352647
+        },
+        {
+          "epoch": 10,
+          "train_weighted_huber_loss": 1.0030875088618652,
+          "val_mean_track_error_km": 143.65441186439006
+        },
+        {
+          "epoch": 11,
+          "train_weighted_huber_loss": 0.9743985337308745,
+          "val_mean_track_error_km": 140.70425072183474
+        },
+        {
+          "epoch": 12,
+          "train_weighted_huber_loss": 0.9611210414441874,
+          "val_mean_track_error_km": 141.22462360758414
+        },
+        {
+          "epoch": 13,
+          "train_weighted_huber_loss": 0.939615830079021,
+          "val_mean_track_error_km": 137.5092308993049
+        },
+        {
+          "epoch": 14,
+          "train_weighted_huber_loss": 0.9143638649086726,
+          "val_mean_track_error_km": 136.54552221749194
+        },
+        {
+          "epoch": 15,
+          "train_weighted_huber_loss": 0.8948693094949789,
+          "val_mean_track_error_km": 134.54791212342803
+        },
+        {
+          "epoch": 16,
+          "train_weighted_huber_loss": 0.8908308754382537,
+          "val_mean_track_error_km": 135.0827110711802
+        },
+        {
+          "epoch": 17,
+          "train_weighted_huber_loss": 0.87856598371842,
+          "val_mean_track_error_km": 134.91517868205636
+        },
+        {
+          "epoch": 18,
+          "train_weighted_huber_loss": 0.8626105824397304,
+          "val_mean_track_error_km": 133.99257651221544
+        },
+        {
+          "epoch": 19,
+          "train_weighted_huber_loss": 0.8525404551158386,
+          "val_mean_track_error_km": 133.4789055165518
+        },
+        {
+          "epoch": 20,
+          "train_weighted_huber_loss": 0.8499831258421308,
+          "val_mean_track_error_km": 132.9132118451493
+        },
+        {
+          "epoch": 21,
+          "train_weighted_huber_loss": 0.8369543539617198,
+          "val_mean_track_error_km": 132.38393869039385
+        },
+        {
+          "epoch": 22,
+          "train_weighted_huber_loss": 0.8214745609357131,
+          "val_mean_track_error_km": 131.6404353127501
+        },
+        {
+          "epoch": 23,
+          "train_weighted_huber_loss": 0.8182712351657263,
+          "val_mean_track_error_km": 131.42451745162435
+        },
+        {
+          "epoch": 24,
+          "train_weighted_huber_loss": 0.8104507990253403,
+          "val_mean_track_error_km": 132.17018919363016
+        },
+        {
+          "epoch": 25,
+          "train_weighted_huber_loss": 0.8049524217370801,
+          "val_mean_track_error_km": 130.55545082361084
+        },
+        {
+          "epoch": 26,
+          "train_weighted_huber_loss": 0.8016508301144674,
+          "val_mean_track_error_km": 131.6827100002625
+        },
+        {
+          "epoch": 27,
+          "train_weighted_huber_loss": 0.7961723356829238,
+          "val_mean_track_error_km": 131.3197629714928
+        },
+        {
+          "epoch": 28,
+          "train_weighted_huber_loss": 0.786738863746904,
+          "val_mean_track_error_km": 129.6736059455513
+        },
+        {
+          "epoch": 29,
+          "train_weighted_huber_loss": 0.7855429278007017,
+          "val_mean_track_error_km": 131.69464348430125
+        },
+        {
+          "epoch": 30,
+          "train_weighted_huber_loss": 0.7853789730828373,
+          "val_mean_track_error_km": 131.29008935293703
+        },
+        {
+          "epoch": 31,
+          "train_weighted_huber_loss": 0.7667722819108662,
+          "val_mean_track_error_km": 130.44511870227677
+        },
+        {
+          "epoch": 32,
+          "train_weighted_huber_loss": 0.7671184888505023,
+          "val_mean_track_error_km": 129.45988329265248
+        },
+        {
+          "epoch": 33,
+          "train_weighted_huber_loss": 0.7631666867642067,
+          "val_mean_track_error_km": 129.6011341547532
+        },
+        {
+          "epoch": 34,
+          "train_weighted_huber_loss": 0.7508973087240386,
+          "val_mean_track_error_km": 129.7992732431563
+        },
+        {
+          "epoch": 35,
+          "train_weighted_huber_loss": 0.7494264636868676,
+          "val_mean_track_error_km": 128.5971278266291
+        },
+        {
+          "epoch": 36,
+          "train_weighted_huber_loss": 0.7398800986900835,
+          "val_mean_track_error_km": 128.7799729867743
+        },
+        {
+          "epoch": 37,
+          "train_weighted_huber_loss": 0.747811399108748,
+          "val_mean_track_error_km": 129.42726101582554
+        },
+        {
+          "epoch": 38,
+          "train_weighted_huber_loss": 0.7342606183549428,
+          "val_mean_track_error_km": 130.18363634625615
+        },
+        {
+          "epoch": 39,
+          "train_weighted_huber_loss": 0.7332992266664179,
+          "val_mean_track_error_km": 128.32244693301408
+        },
+        {
+          "epoch": 40,
+          "train_weighted_huber_loss": 0.7266482789966435,
+          "val_mean_track_error_km": 131.34564946513268
+        },
+        {
+          "epoch": 41,
+          "train_weighted_huber_loss": 0.7286195408636428,
+          "val_mean_track_error_km": 129.13569331155725
+        },
+        {
+          "epoch": 42,
+          "train_weighted_huber_loss": 0.7143009236312026,
+          "val_mean_track_error_km": 129.55067453638162
+        },
+        {
+          "epoch": 43,
+          "train_weighted_huber_loss": 0.7167495568736444,
+          "val_mean_track_error_km": 130.4334692262551
+        },
+        {
+          "epoch": 44,
+          "train_weighted_huber_loss": 0.7059097267793426,
+          "val_mean_track_error_km": 130.0318843804718
+        },
+        {
+          "epoch": 45,
+          "train_weighted_huber_loss": 0.6996872226234582,
+          "val_mean_track_error_km": 129.6041625893028
+        },
+        {
+          "epoch": 46,
+          "train_weighted_huber_loss": 0.6982326651384444,
+          "val_mean_track_error_km": 129.3613752569982
+        },
+        {
+          "epoch": 47,
+          "train_weighted_huber_loss": 0.6958532645398339,
+          "val_mean_track_error_km": 129.39986587983424
+        },
+        {
+          "epoch": 48,
+          "train_weighted_huber_loss": 0.6995565938489061,
+          "val_mean_track_error_km": 129.62642000459394
+        },
+        {
+          "epoch": 49,
+          "train_weighted_huber_loss": 0.6830868174624259,
+          "val_mean_track_error_km": 129.66431797059414
+        },
+        {
+          "epoch": 50,
+          "train_weighted_huber_loss": 0.680779788825453,
+          "val_mean_track_error_km": 130.78126104165102
+        },
+        {
+          "epoch": 51,
+          "train_weighted_huber_loss": 0.676425170071056,
+          "val_mean_track_error_km": 129.54733261456673
+        },
+        {
+          "epoch": 52,
+          "train_weighted_huber_loss": 0.6733175477101109,
+          "val_mean_track_error_km": 130.8563790264577
+        },
+        {
+          "epoch": 53,
+          "train_weighted_huber_loss": 0.6654749139667747,
+          "val_mean_track_error_km": 131.37984266078178
+        },
+        {
+          "epoch": 54,
+          "train_weighted_huber_loss": 0.6688434896384817,
+          "val_mean_track_error_km": 130.0930150826299
+        }
+      ],
+      "test_metrics_by_horizon": {
+        "6": {
+          "n": 1732,
+          "mean_lat_error_deg": 0.009352535152631467,
+          "mean_lon_error_deg": -0.037869496791844745,
+          "mean_track_error_km": 37.00748963962835,
+          "median_track_error_km": 28.293274339614296,
+          "p90_track_error_km": 70.63142886134224,
+          "max_track_error_km": 420.3263380847474,
+          "rmse_track_error_km": 50.00515508062002,
+          "mean_along_track_km": -9.467920932478306,
+          "mean_cross_track_km": -5.773130769365781,
+          "mean_abs_along_track_km": 24.09661271534759,
+          "mean_abs_cross_track_km": 23.003601113008248
+        },
+        "12": {
+          "n": 1732,
+          "mean_lat_error_deg": 0.0018477970650355076,
+          "mean_lon_error_deg": -0.07760321979752909,
+          "mean_track_error_km": 85.0015630355777,
+          "median_track_error_km": 65.58941072495242,
+          "p90_track_error_km": 159.78084208304273,
+          "max_track_error_km": 773.7906857567378,
+          "rmse_track_error_km": 112.14071946944686,
+          "mean_along_track_km": -26.95463278780017,
+          "mean_cross_track_km": -9.419581656365294,
+          "mean_abs_along_track_km": 56.32368351081781,
+          "mean_abs_cross_track_km": 51.948321861224656
+        },
+        "18": {
+          "n": 1732,
+          "mean_lat_error_deg": 0.008240169663666209,
+          "mean_lon_error_deg": -0.1065934673799138,
+          "mean_track_error_km": 142.78243481651197,
+          "median_track_error_km": 109.52245101966204,
+          "p90_track_error_km": 273.92075922851217,
+          "max_track_error_km": 1122.3659519413156,
+          "rmse_track_error_km": 184.88083798539827,
+          "mean_along_track_km": -49.473292857253824,
+          "mean_cross_track_km": -12.577281237742612,
+          "mean_abs_along_track_km": 95.09751364828601,
+          "mean_abs_cross_track_km": 86.45616181563443
+        },
+        "24": {
+          "n": 1732,
+          "mean_lat_error_deg": -0.01161642168792649,
+          "mean_lon_error_deg": -0.13620522491608106,
+          "mean_track_error_km": 209.5047108362327,
+          "median_track_error_km": 164.2525031756737,
+          "p90_track_error_km": 399.3352072932343,
+          "max_track_error_km": 1386.7847779008048,
+          "rmse_track_error_km": 267.61196571423716,
+          "mean_along_track_km": -79.04683508884038,
+          "mean_cross_track_km": -17.74498177909723,
+          "mean_abs_along_track_km": 141.47019209158984,
+          "mean_abs_cross_track_km": 125.39899440904018
+        }
+      }
+    }
+  },
+  "comparison_vs_phase2": {
+    "6": {
+      "track_persistence_v1": {
+        "mean_track_error_km": 30.54221939420201,
+        "median_track_error_km": 23.437319009255305,
+        "rmse_track_error_km": 41.845771924490336
+      },
+      "track_cliper_v1": {
+        "mean_track_error_km": 29.975273399291464,
+        "median_track_error_km": 22.701010096894226,
+        "rmse_track_error_km": 39.97135627527707
+      },
+      "track_lightgbm_v1": {
+        "mean_track_error_km": 30.72672198738852,
+        "median_track_error_km": 23.826177712659117,
+        "rmse_track_error_km": 40.369376713665865
+      },
+      "track_gru_v1": {
+        "mean_track_error_km": 37.00748963962835,
+        "median_track_error_km": 28.293274339614296,
+        "rmse_track_error_km": 50.00515508062002
+      }
+    },
+    "12": {
+      "track_persistence_v1": {
+        "mean_track_error_km": 80.61019308976172,
+        "median_track_error_km": 61.57671627486094,
+        "rmse_track_error_km": 107.73640757130268
+      },
+      "track_cliper_v1": {
+        "mean_track_error_km": 75.46256164278648,
+        "median_track_error_km": 57.83060673715444,
+        "rmse_track_error_km": 99.34781790136918
+      },
+      "track_lightgbm_v1": {
+        "mean_track_error_km": 76.51001940784835,
+        "median_track_error_km": 59.11658451355049,
+        "rmse_track_error_km": 99.03810168870912
+      },
+      "track_gru_v1": {
+        "mean_track_error_km": 85.0015630355777,
+        "median_track_error_km": 65.58941072495242,
+        "rmse_track_error_km": 112.14071946944686
+      }
+    },
+    "18": {
+      "track_persistence_v1": {
+        "mean_track_error_km": 146.67196145792136,
+        "median_track_error_km": 114.0087552762401,
+        "rmse_track_error_km": 193.22736916668183
+      },
+      "track_cliper_v1": {
+        "mean_track_error_km": 133.28956351686162,
+        "median_track_error_km": 102.11878872458715,
+        "rmse_track_error_km": 173.3600502871315
+      },
+      "track_lightgbm_v1": {
+        "mean_track_error_km": 134.9424263665248,
+        "median_track_error_km": 104.4946697662478,
+        "rmse_track_error_km": 173.24538350156814
+      },
+      "track_gru_v1": {
+        "mean_track_error_km": 142.78243481651197,
+        "median_track_error_km": 109.52245101966204,
+        "rmse_track_error_km": 184.88083798539827
+      }
+    },
+    "24": {
+      "track_persistence_v1": {
+        "mean_track_error_km": 226.24332766372007,
+        "median_track_error_km": 176.02995620308963,
+        "rmse_track_error_km": 293.35896150392887
+      },
+      "track_cliper_v1": {
+        "mean_track_error_km": 200.44494033935555,
+        "median_track_error_km": 153.90400088793746,
+        "rmse_track_error_km": 257.1629176869192
+      },
+      "track_lightgbm_v1": {
+        "mean_track_error_km": 203.34091443573482,
+        "median_track_error_km": 158.40823404743068,
+        "rmse_track_error_km": 260.14607206239486
+      },
+      "track_gru_v1": {
+        "mean_track_error_km": 209.5047108362327,
+        "median_track_error_km": 164.2525031756737,
+        "rmse_track_error_km": 267.61196571423716
+      }
+    }
+  },
+  "headline_24h": {
+    "persistence_mean_track_error_km": 226.24332766372007,
+    "phase2_cliper_mean_track_error_km": 200.44494033935555,
+    "phase2_lightgbm_mean_track_error_km": 203.34091443573482,
+    "phase8_gru_mean_track_error_km": 209.5047108362327,
+    "best_phase2_baseline": "track_cliper_v1",
+    "best_phase2_mean_track_error_km": 200.44494033935555,
+    "pct_change_vs_best_phase2_baseline": -4.519829975023992,
+    "beats_best_phase2_baseline": false
+  }
+}
