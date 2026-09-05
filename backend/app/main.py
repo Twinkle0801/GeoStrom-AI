@@ -13,7 +13,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from app.api.v1 import cyclones, prediction, system, tracks
+from app.api.v1 import cyclones, explain, prediction, system, tracks
 from app.core.config import get_settings
 from app.schemas.common import ProblemDetail
 
@@ -31,7 +31,7 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.allowed_origins,
-    allow_methods=["GET"],
+    allow_methods=["GET", "POST"],  # POST added in Phase 9, for /api/v1/explain/* only
     allow_headers=["*"],
 )
 
@@ -63,3 +63,4 @@ app.include_router(system.router)
 app.include_router(cyclones.router)
 app.include_router(tracks.router)
 app.include_router(prediction.router)
+app.include_router(explain.router)

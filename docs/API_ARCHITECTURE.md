@@ -331,3 +331,29 @@ breaking the page. Gemini becomes an enhancement layer, not a dependency.
 Each of these would be defensible in a production system with different requirements. **None of them
 solves a problem this system has**, and the brief explicitly asked that no technology be introduced
 for the sake of complexity.
+
+---
+
+## 10. Update (Phase 9): Gemini Implementation Status
+
+§6-8 above were written at Phase 0, before any model existed to explain — they were the plan.
+Phase 9 implemented them; this section records what shipped exactly as specified vs. what remains
+deliberately deferred, without editing the historical design above.
+
+**Built, matching §6-8 exactly:** the evidence packet (`backend/app/gemini/schemas.py::
+EvidencePacket`, versioned `"v1"`, the same field groups §7 sketched), the system prompt (§8 Layer
+2, verbatim rule-for-rule), structured output via the SDK's native schema support (§8 Layer 3), the
+Guardrail Validator (§8 Layer 4 — every numeric/categorical/model-identity claim checked, forbidden
+claims scanned), the deterministic template fallback (§8's "why the template fallback matters"),
+backend-only execution with the API key confined to `backend/app/gemini/` (§6.2/§6.3), and only one
+endpoint, `POST /api/v1/explain/forecast` (§3.7's first row).
+
+**Deliberately deferred, not silently dropped:** response streaming, the `(sid, t, scope,
+model_version, audience)` response cache, per-IP/global rate limiting (§4/§8.1), and
+`/explain/storm`/`/explain/compare`/`/explain/ask` (§3.7's other rows) — all out of the task's
+explicitly minimal Phase 9 contract. `Layer 5` (UI transparency: the "Grounded in stored model
+output" indicator, the "View the data behind this" panel) is a frontend concern and was not built,
+per Phase 9's explicit no-frontend-work instruction.
+
+Full detail, exact test counts, and three real bugs found via a live-API smoke test:
+[PHASE_9_GEMINI_INTEGRATION.md](PHASE_9_GEMINI_INTEGRATION.md).

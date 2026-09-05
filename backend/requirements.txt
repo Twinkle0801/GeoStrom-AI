@@ -15,3 +15,6 @@ httpx==0.28.1
 pytest==9.1.1
 pandas==2.3.3
 pyarrow==24.0.0
+
+# Phase 9 -- Gemini explanation layer (backend-only, see app/gemini/).
+google-genai==2.20.0

@@ -16,6 +16,21 @@
 > limitation (only 3 test storms), not hidden. 10 adversarial leakage tests pass. See
 > [docs/PHASE_5_CLASSIFICATION_LABEL_ANALYSIS.md](docs/PHASE_5_CLASSIFICATION_LABEL_ANALYSIS.md).
 
+> **Phase 9 — Gemini AI Explanation Integration. COMPLETE.**
+> Integrated Gemini as a strictly backend-only, evidence-grounded natural-language explanation
+> layer (`backend/app/gemini/`), exactly per `docs/API_ARCHITECTURE.md` §6-8's pre-existing design.
+> Gemini never forecasts, classifies, or computes a number — it narrates an `EvidencePacket`
+> (Pydantic, versioned) built entirely from stored Phase 2/3 rows, and every claim it makes is
+> checked by a deterministic grounding validator before being returned; anything unsupported
+> triggers a bounded retry, then a deterministic, template-generated fallback built from the same
+> evidence. New endpoint: `POST /api/v1/explain/forecast`. 132 backend tests pass (61 pre-existing
+> + 71 new), none making a real API call. **Three real bugs were found and fixed via a manual smoke
+> test against the live Gemini API** (a negative-coordinate sign silently dropped by a regex, a
+> negation-detection window too narrow for real disclaimer phrasing, and a classification-label
+> check colliding with ordinary words like "land" and "shear") — the mocked tests alone did not
+> catch them; after fixing, 5/5 real calls passed grounding validation cleanly. See
+> [docs/PHASE_9_GEMINI_INTEGRATION.md](docs/PHASE_9_GEMINI_INTEGRATION.md).
+
 > **Phase 8 — Track Prediction: GRU (Sequence Model). COMPLETE — baseline retained.**
 > Trained a GRU (1 layer, hidden 64) → dense 8-output (Δlat,Δlon)×4-horizon head on the same frozen
 > Phase 2 split/features (no new split, no new download), with the longitude component of the
@@ -169,6 +184,7 @@ run on free-tier CPU hosting.
 | [docs/PHASE_6_DEEP_LEARNING_CLASSIFICATION.md](docs/PHASE_6_DEEP_LEARNING_CLASSIFICATION.md) | CNN + transfer-learning training/evaluation, overfitting analysis, comparison against the Phase 5 baseline |
 | [docs/PHASE_7_INTENSITY_PREDICTION.md](docs/PHASE_7_INTENSITY_PREDICTION.md) | GRU sequence model (absolute + Δwind), leakage validation, honest comparison against the Phase 2 LightGBM baseline |
 | [docs/PHASE_8_TRACK_PREDICTION.md](docs/PHASE_8_TRACK_PREDICTION.md) | GRU sequence model for track (cos-latitude-weighted loss), leakage/antimeridian validation, honest comparison against the Phase 2 CLIPER baseline |
+| [docs/PHASE_9_GEMINI_INTEGRATION.md](docs/PHASE_9_GEMINI_INTEGRATION.md) | Backend-only Gemini explanation layer: evidence packet, grounding validator, deterministic fallback, prompt-injection defense |
 
 ## Recommended Stack (summary)
 

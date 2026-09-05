@@ -1,8 +1,8 @@
 # DEVELOPMENT ROADMAP — GeoStrom AI
 
-**Phase:** 8 (Track Prediction — GRU Sequence Model) · **Status:** Complete, baseline retained.
-Full results in [PHASE_8_TRACK_PREDICTION.md](PHASE_8_TRACK_PREDICTION.md).
-Phases 0-8 are complete: Phase 3's vertical slice (Phase 2 predictions → PostgreSQL/PostGIS →
+**Phase:** 9 (Gemini AI Explanation Integration) · **Status:** Complete.
+Full results in [PHASE_9_GEMINI_INTEGRATION.md](PHASE_9_GEMINI_INTEGRATION.md).
+Phases 0-9 are complete: Phase 3's vertical slice (Phase 2 predictions → PostgreSQL/PostGIS →
 FastAPI → generated contract → Next.js/Leaflet map); Phase 4's real satellite fusion pipeline
 (12 storms / 627 fused samples, see [PHASE_4_SATELLITE_PIPELINE.md](PHASE_4_SATELLITE_PIPELINE.md));
 Phase 5's evidence-driven `scene_taxonomy_v1` classification taxonomy plus non-deep-learning
@@ -13,11 +13,16 @@ roadmap's own "ship the honest winner" principle); Phase 7's GRU intensity model
 LightGBM baseline at any horizon; and Phase 8's GRU track model (cos-latitude-weighted
 displacement loss, per §5.2/§7's pre-existing spec), which does not beat the Phase 2 CLIPER-style
 Ridge baseline at any horizon either (though it does beat plain Persistence at 18h/24h) — the
-Phase 2 baselines ship for both intensity and track, same "ship the honest winner" principle. This
-"Phase 6"/"Phase 7"/"Phase 8" numbering is informal (CNN-training deferred from Phase 5's numbering
-note, and the intensity/track sequence-model items the brief calls Phase 7/8 but this roadmap
-places at **P2**), distinct from the P0–P12 sequence's own **P6 (Detection)** and **P7 (UI/UX
-Build)** below, neither of which has started.
+Phase 2 baselines ship for both intensity and track, same "ship the honest winner" principle; and
+Phase 9's Gemini explanation layer (`backend/app/gemini/`), integrated as a strictly backend-only,
+evidence-grounded narration service over the existing Phase 2/3 stored predictions — never a
+forecasting model itself, per §6-8's pre-existing architecture. This "Phase 6"/"Phase 7"/"Phase 8"
+numbering is informal (CNN-training deferred from Phase 5's numbering note, and the intensity/track
+sequence-model items the brief calls Phase 7/8 but this roadmap places at **P2**); "Phase 9" here
+matches the P0–P12 sequence's own **P9 (Gemini Explanation Layer)** directly (see that section
+below) — the first phase in this informal numbering to land on the same number as its formal
+roadmap slot, distinct from **P6 (Detection)** and **P7 (UI/UX Build)**, neither of which has
+started.
 
 ---
 
@@ -320,7 +325,7 @@ the cone visibly widens with lead time.
 
 ---
 
-### P9 — Gemini Explanation Layer
+### P9 — Gemini Explanation Layer — ✅ **BACKEND INTEGRATION COMPLETE** (`GeminiPanel`/`EvidenceDrawer` UI NOT built)
 **Depends on:** P5–P8 (there must be real outputs to explain)
 
 Evidence Packet Builder · system prompt · structured output schema · streaming ·
@@ -332,6 +337,17 @@ fallback path is exercised and verified; the API key is provably absent from the
 
 > **Late by design.** Gemini explains model outputs. Building it before the models exist means
 > building against fabricated inputs — which trains the wrong instincts and hides grounding bugs.
+
+> **Update: backend done, per the task's explicit minimal-scope instruction.** Evidence Packet
+> Builder, system prompt, structured output schema, and the Guardrail Validator are implemented and
+> tested (132 backend tests, 71 new) — `docs/PHASE_9_GEMINI_INTEGRATION.md`. **Not built this
+> phase, deliberately deferred**: streaming, response caching, rate limiting, and the frontend
+> `GeminiPanel`/`EvidenceDrawer` components (frontend work is explicitly out of Phase 9's scope;
+> UI/UX build is a later phase). The exit bar's spirit — zero unvalidated claims reaching the
+> caller — is met on a smaller, representative adversarial set (the task's own ~24 named
+> scenarios, not a full 50-case sweep) plus 5/5 real Gemini calls passing grounding cleanly after
+> fixing 3 real bugs found via the manual smoke test; expanding to the roadmap's full 50-case bar is
+> noted as a legitimate next step, not claimed as already met.
 
 ---
 
