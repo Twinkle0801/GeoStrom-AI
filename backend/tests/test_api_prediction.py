@@ -97,3 +97,26 @@ def test_models_list_task_filter(client, sample_model, sample_intensity_model):
     body = r.json()
     assert all(m["task"] == "track" for m in body)
     assert len(body) == 1
+
+
+# ---------------------------------------------------------------------------
+# Phase 12 -- API robustness audit (task §11).
+# ---------------------------------------------------------------------------
+
+def test_non_numeric_lead_hours_returns_422_not_500(client, sample_storm, sample_observations):
+    r = client.get(f"/api/v1/prediction/{sample_storm.sid}/series?lead_hours=not-a-number")
+    assert r.status_code == 422
+
+
+def test_series_with_unmatched_model_filter_is_an_empty_list_not_404(
+    client, sample_storm, sample_observations, sample_prediction,
+):
+    """Unlike `/prediction/{sid}` (which 404s when a specific origin/task/
+    model combination matches nothing), `/prediction/{sid}/series` has no
+    single "the one forecast" expectation -- an unmatched filter is simply
+    an empty series, and this distinction is deliberate, not an
+    inconsistency: documented here so it is not "fixed" into a 404 later
+    under the mistaken assumption the two routes should behave identically."""
+    r = client.get(f"/api/v1/prediction/{sample_storm.sid}/series?model=nonexistent_model_xyz")
+    assert r.status_code == 200
+    assert r.json() == []

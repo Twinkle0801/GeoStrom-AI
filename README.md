@@ -16,6 +16,22 @@
 > limitation (only 3 test storms), not hidden. 10 adversarial leakage tests pass. See
 > [docs/PHASE_5_CLASSIFICATION_LABEL_ANALYSIS.md](docs/PHASE_5_CLASSIFICATION_LABEL_ANALYSIS.md).
 
+> **Phase 12 — Final Hardening, Performance, Security & Release Readiness. COMPLETE.**
+> Audited the fully-integrated Phase 11 system for release readiness and made a small number of
+> narrow, measured-evidence fixes — no ML code, model, dataset, split, seed, or metric was touched,
+> and the frontend was not redesigned. Added a bounded, thread-safe, in-process TTL cache
+> (`backend/app/gemini/cache.py`) and a per-IP rate limiter (`backend/app/gemini/ratelimit.py`) for
+> the one Gemini-backed endpoint — a cache hit never touches the rate limiter or Gemini at all, and
+> only validated (`source="gemini"`) responses are ever cached, never a fallback. Measured a real
+> cold Gemini call (6.5s) vs. an immediate cache hit (1.3s, byte-identical explanation text). Found
+> and fixed two genuine bugs via live testing: a naive-vs-timezone-aware datetime crash in
+> `GET /cyclones/{sid}/observations`, and a real duplicate client-side network request on every
+> `/predict/[sid]` page load (caught via a live Lighthouse network trace, not guesswork — before/after
+> Lighthouse performance score 0.65 → 0.70 on that route). A real `lighthouse@13.4.1` CLI audit ran
+> against the production build for all five routes. 28 new backend tests + 3 new frontend tests, all
+> passing; full regression (backend/frontend/ML/satellite) green. See
+> [docs/PHASE_12_RELEASE_AUDIT.md](docs/PHASE_12_RELEASE_AUDIT.md).
+
 > **Phase 11 — End-to-End Integration & System Consolidation. COMPLETE.**
 > Audited the full chain — data → offline ML → predictions → database → FastAPI → frontend →
 > EvidencePacket → Gemini → EvidenceDrawer — against the actual repository contracts, not assumed
@@ -224,6 +240,7 @@ run on free-tier CPU hosting.
 | [docs/PHASE_10_FRONTEND_DASHBOARD.md](docs/PHASE_10_FRONTEND_DASHBOARD.md) | Premium dashboard: design system, TimeScrubber, charts, map, Gemini/EvidenceDrawer integration, honest empty states |
 | [docs/PHASE_11_INTEGRATION_MATRIX.md](docs/PHASE_11_INTEGRATION_MATRIX.md) | Layer-by-layer contract audit: producer/consumer/contract/status for the full data→Gemini chain |
 | [docs/PHASE_11_END_TO_END_TEST.md](docs/PHASE_11_END_TO_END_TEST.md) | Real-storm end-to-end test log: environment, API checks, frontend journey, Gemini test, regression totals |
+| [docs/PHASE_12_RELEASE_AUDIT.md](docs/PHASE_12_RELEASE_AUDIT.md) | Release-readiness audit: Gemini caching/rate-limiting design, real Lighthouse results, security/DB/scientific-integrity audits, before/after performance evidence |
 
 ## Recommended Stack (summary)
 

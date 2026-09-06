@@ -24,6 +24,17 @@ from app.schemas.storm import ObservationOut, StormDetail, StormSummary
 router = APIRouter(prefix="/api/v1/cyclones", tags=["cyclones"])
 
 
+def _assume_utc(ts: dt.datetime) -> dt.datetime:
+    """A `from`/`to` query value given without a UTC offset (e.g.
+    `2099-01-01`, which Pydantic parses as a naive `datetime`) must be
+    interpreted as UTC, per this project's UTC-only timestamp convention
+    (Phase 11 §5) -- not left naive, which crashes the comparison below
+    against `o.ts` (always timezone-aware) with `TypeError: can't compare
+    offset-naive and offset-aware datetimes`. Found via the Phase 12 API
+    robustness audit (task §11's "invalid date ranges")."""
+    return ts if ts.tzinfo is not None else ts.replace(tzinfo=dt.timezone.utc)
+
+
 @router.get("", response_model=Page[StormSummary])
 def list_cyclones(
     season: int | None = None,
@@ -82,9 +93,9 @@ def get_cyclone_observations(
         raise HTTPException(status_code=404, detail=f"Storm '{sid}' not found")
     obs = repo.list_observations(db, sid)
     if from_ is not None:
-        obs = [o for o in obs if o.ts >= from_]
+        obs = [o for o in obs if o.ts >= _assume_utc(from_)]
     if to is not None:
-        obs = [o for o in obs if o.ts <= to]
+        obs = [o for o in obs if o.ts <= _assume_utc(to)]
     if synoptic_only:
         obs = [o for o in obs if o.is_synoptic]
     return [ObservationOut.model_validate(o) for o in obs]

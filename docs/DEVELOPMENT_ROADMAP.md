@@ -1,9 +1,10 @@
 # DEVELOPMENT ROADMAP — GeoStrom AI
 
-**Phase:** 11 (End-to-End Integration & System Consolidation) · **Status:** Complete.
-Full results in [PHASE_11_INTEGRATION_MATRIX.md](PHASE_11_INTEGRATION_MATRIX.md) and
+**Phase:** 12 (Final Hardening, Performance, Security & Release Readiness) · **Status:** Complete.
+Full results in [PHASE_12_RELEASE_AUDIT.md](PHASE_12_RELEASE_AUDIT.md); Phase 11's own results
+remain in [PHASE_11_INTEGRATION_MATRIX.md](PHASE_11_INTEGRATION_MATRIX.md) and
 [PHASE_11_END_TO_END_TEST.md](PHASE_11_END_TO_END_TEST.md).
-Phases 0-11 are complete: Phase 3's vertical slice (Phase 2 predictions → PostgreSQL/PostGIS →
+Phases 0-12 are complete: Phase 3's vertical slice (Phase 2 predictions → PostgreSQL/PostGIS →
 FastAPI → generated contract → Next.js/Leaflet map); Phase 4's real satellite fusion pipeline
 (12 storms / 627 fused samples, see [PHASE_4_SATELLITE_PIPELINE.md](PHASE_4_SATELLITE_PIPELINE.md));
 Phase 5's evidence-driven `scene_taxonomy_v1` classification taxonomy plus non-deep-learning
@@ -30,7 +31,12 @@ endpoint; and Phase 11 audited the complete data→ML→DB→API→frontend→Ge
 against the actual repository contracts (not assumed documentation), fixing one real,
 previously-untested gap (the backend's own claim that its geo-math functions are byte-for-byte
 identical to `ml/geostrom_ml/features/geo.py` had never actually been verified; 30 new parity
-tests confirm it is true) and adding 37 new cross-layer integration tests — still distinct from
+tests confirm it is true) and adding 37 new cross-layer integration tests; Phase 12 then hardened
+that integrated system for release — a bounded, process-local Gemini response cache and per-IP
+rate limiter (measured 6.5s cold call vs. 1.3s cache hit), a real `lighthouse@13.4.1` CLI audit of
+all five routes against the production build, and two genuine bugs found and fixed via live
+testing (a naive-datetime crash in the observations endpoint; a duplicate client-side track
+re-fetch on every `/predict/[sid]` load, caught via a live network trace) — still distinct from
 **P6 (Detection)**, which has not started.
 
 ---

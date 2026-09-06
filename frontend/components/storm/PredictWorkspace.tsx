@@ -10,7 +10,7 @@
  * the user scrubs to a different real forecast origin) happens client-side,
  * via the same typed `getStormTrack` function the Phase 3 page always used.
  */
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import ClassificationPanel from "@/components/classification/ClassificationPanel";
 import IntensityChart from "@/components/charts/IntensityChart";
@@ -70,8 +70,23 @@ export default function PredictWorkspace({
   const [track, setTrack] = useState<TrackFeatureCollection>(initialTrack);
   const [trackLoading, setTrackLoading] = useState(false);
 
+  // Phase 12 performance audit (measured via Lighthouse + a network-request
+  // trace on /predict/[sid]): the server component above already fetches
+  // the track for the initial origin (`initialTrack`) and hands it to us as
+  // a prop. Without this guard, this effect's very first run -- which
+  // always corresponds to that SAME initial origin, since `index` is never
+  // changed before mount -- fired an identical, wholly redundant
+  // `getStormTrack` call on every single page load, before the user ever
+  // touched the TimeScrubber. Skipping exactly the first run removes that
+  // duplicate request while leaving every real, user-driven scrub-to-a-
+  // different-origin refetch untouched.
+  const isFirstTrackEffectRun = useRef(true);
   useEffect(() => {
     if (!isOrigin) return;
+    if (isFirstTrackEffectRun.current) {
+      isFirstTrackEffectRun.current = false;
+      return;
+    }
     let cancelled = false;
     setTrackLoading(true);
     getStormTrack(storm.sid, currentTs)

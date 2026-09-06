@@ -44,7 +44,7 @@ async def http_exception_handler(request: Request, exc: HTTPException) -> JSONRe
         status=exc.status_code, detail=str(exc.detail), instance=str(request.url.path),
     )
     return JSONResponse(status_code=exc.status_code, content=problem.model_dump(),
-                        media_type="application/problem+json")
+                        media_type="application/problem+json", headers=exc.headers)
 
 
 @app.exception_handler(RequestValidationError)

@@ -40,6 +40,14 @@ class Settings(BaseSettings):
     gemini_temperature: float = 0.2
     gemini_max_retries: int = 1  # bounded; see app/gemini/service.py's retry-policy docstring
 
+    # Phase 12 -- process-local hardening for the one Gemini-backed endpoint.
+    # See app/gemini/cache.py and app/gemini/ratelimit.py module docstrings
+    # for the "in-memory, single-process" limitation this implies.
+    gemini_cache_maxsize: int = 128
+    gemini_cache_ttl_seconds: float = 3600.0
+    gemini_rate_limit_max_requests: int = 20
+    gemini_rate_limit_window_seconds: float = 60.0
+
 
 @lru_cache
 def get_settings() -> Settings:

@@ -32,6 +32,9 @@ from app.db.base import Base  # noqa: E402
 from app.db.models import ModelVersion, Observation, Prediction, Storm  # noqa: E402
 from app.main import app  # noqa: E402
 from app.db.base import get_db  # noqa: E402
+from app.api.v1.explain import get_explain_cache, get_rate_limiter  # noqa: E402
+from app.gemini.cache import ExplainCache  # noqa: E402
+from app.gemini.ratelimit import RateLimiter  # noqa: E402
 
 
 @pytest.fixture(scope="session")
@@ -60,9 +63,26 @@ def db_session(engine):
 
 @pytest.fixture
 def client(db_session):
+    """Every test gets its OWN fresh `ExplainCache`/`RateLimiter` instance,
+    with generous bounds -- otherwise the module-level singletons in
+    `app.api.v1.explain` would persist Gemini-explanation cache entries and
+    rate-limit counters across unrelated tests (and files), since they live
+    for the whole pytest process. Tests that specifically exercise caching
+    or rate-limiting override these again, with tighter bounds, inside the
+    test body -- `dependency_overrides` is just a dict, so a later
+    assignment simply replaces this one for that test only."""
     def _override_get_db():
         yield db_session
     app.dependency_overrides[get_db] = _override_get_db
+    # NOTE: each override must return the SAME instance on every call -- a
+    # lambda that constructs a fresh ExplainCache()/RateLimiter() inline
+    # would build a brand-new, empty one on every dependency resolution
+    # (i.e. every request), silently defeating caching/rate-limiting
+    # entirely. Construct once here, close over it.
+    test_cache = ExplainCache(maxsize=100, ttl_seconds=3600.0)
+    test_limiter = RateLimiter(max_requests=1000, window_seconds=60.0)
+    app.dependency_overrides[get_explain_cache] = lambda: test_cache
+    app.dependency_overrides[get_rate_limiter] = lambda: test_limiter
     from fastapi.testclient import TestClient
     with TestClient(app) as c:
         yield c

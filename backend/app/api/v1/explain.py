@@ -12,21 +12,38 @@ module-level invariant.
 
 from __future__ import annotations
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
 
 from app.core.config import Settings, get_settings
 from app.db.base import get_db
+from app.gemini.cache import ExplainCache, explain_cache_key
 from app.gemini.client import GeminiClientProtocol, build_gemini_client
 from app.gemini.evidence_builder import (
     DEFAULT_INTENSITY_MODEL, DEFAULT_TRACK_MODEL, build_evidence_packet,
 )
+from app.gemini.ratelimit import RateLimiter
 from app.gemini.schemas import EVIDENCE_SCHEMA_VERSION, ExplainRequest, ExplainResponse, ModelRef
-from app.gemini.service import GeminiExplanationService
+from app.gemini.service import ExplainResult, GeminiExplanationService
 from app.repositories import storms as repo
 from app.schemas.common import ProblemDetail
 
 router = APIRouter(prefix="/api/v1/explain", tags=["explain"])
+
+_settings_for_singletons = get_settings()
+# Process-local singletons (Phase 12) -- see cache.py/ratelimit.py module
+# docstrings for what "process-local" means here. Exposed as FastAPI
+# dependencies, not plain module globals, specifically so tests can swap in
+# an isolated fresh instance via `app.dependency_overrides`, the same
+# pattern `get_gemini_client` already established in Phase 9.
+_explain_cache = ExplainCache(
+    maxsize=_settings_for_singletons.gemini_cache_maxsize,
+    ttl_seconds=_settings_for_singletons.gemini_cache_ttl_seconds,
+)
+_rate_limiter = RateLimiter(
+    max_requests=_settings_for_singletons.gemini_rate_limit_max_requests,
+    window_seconds=_settings_for_singletons.gemini_rate_limit_window_seconds,
+)
 
 
 def get_gemini_client(
@@ -40,15 +57,26 @@ def get_gemini_client(
     return build_gemini_client(settings)
 
 
+def get_explain_cache() -> ExplainCache:
+    return _explain_cache
+
+
+def get_rate_limiter() -> RateLimiter:
+    return _rate_limiter
+
+
 @router.post(
     "/forecast", response_model=ExplainResponse,
-    responses={404: {"model": ProblemDetail}},
+    responses={404: {"model": ProblemDetail}, 429: {"model": ProblemDetail}},
 )
 def explain_forecast(
     body: ExplainRequest,
+    request: Request,
     db: Session = Depends(get_db),
     settings: Settings = Depends(get_settings),
     client: GeminiClientProtocol | None = Depends(get_gemini_client),
+    cache: ExplainCache = Depends(get_explain_cache),
+    limiter: RateLimiter = Depends(get_rate_limiter),
 ) -> ExplainResponse:
     if repo.get_storm(db, body.sid) is None:
         raise HTTPException(status_code=404, detail=f"Storm '{body.sid}' not found")
@@ -66,7 +94,32 @@ def explain_forecast(
         db, body.sid, intensity_model=intensity_model, track_model=track_model,
     )
 
-    result = GeminiExplanationService(client, settings).explain(evidence)
+    # Cache lookup first: a hit makes no Gemini call at all, so it is never
+    # rate-limited and costs no quota (Phase 12 §9's "do not break normal
+    # frontend usage" -- repeated views of the same already-explained
+    # forecast must stay free). Only a genuine attempted Gemini call (cache
+    # miss) is subject to the rate limiter below.
+    cache_key = explain_cache_key(evidence)
+    cached_result: ExplainResult | None = cache.get(cache_key)  # type: ignore[assignment]
+    if cached_result is not None:
+        result = cached_result
+    else:
+        client_ip = request.client.host if request.client else "unknown"
+        allowed, retry_after = limiter.allow(client_ip)
+        if not allowed:
+            retry_after_s = int(retry_after) + 1
+            raise HTTPException(
+                status_code=429,
+                detail="Rate limit exceeded for /api/v1/explain/forecast; please retry shortly.",
+                headers={"Retry-After": str(retry_after_s)},
+            )
+        result = GeminiExplanationService(client, settings).explain(evidence)
+        # Only a validated, grounded Gemini success is cached -- never a
+        # fallback (timeout/api_error/malformed_json/ungrounded_claim/
+        # not_configured), per Phase 12 §9's "do not cache validation
+        # failures" / "do not cache transport failures".
+        if result.source == "gemini":
+            cache.set(cache_key, result)
 
     return ExplainResponse(
         sid=body.sid,
