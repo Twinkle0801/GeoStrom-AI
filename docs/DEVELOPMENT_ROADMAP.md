@@ -1,9 +1,9 @@
 # DEVELOPMENT ROADMAP — GeoStrom AI
 
-**Phase:** 10 (Premium Frontend Dashboard & Scientific Visualization) · **Status:** Complete,
-two panels blocked by existing data/API contract (satellite imagery, classification).
-Full results in [PHASE_10_FRONTEND_DASHBOARD.md](PHASE_10_FRONTEND_DASHBOARD.md).
-Phases 0-10 are complete: Phase 3's vertical slice (Phase 2 predictions → PostgreSQL/PostGIS →
+**Phase:** 11 (End-to-End Integration & System Consolidation) · **Status:** Complete.
+Full results in [PHASE_11_INTEGRATION_MATRIX.md](PHASE_11_INTEGRATION_MATRIX.md) and
+[PHASE_11_END_TO_END_TEST.md](PHASE_11_END_TO_END_TEST.md).
+Phases 0-11 are complete: Phase 3's vertical slice (Phase 2 predictions → PostgreSQL/PostGIS →
 FastAPI → generated contract → Next.js/Leaflet map); Phase 4's real satellite fusion pipeline
 (12 storms / 627 fused samples, see [PHASE_4_SATELLITE_PIPELINE.md](PHASE_4_SATELLITE_PIPELINE.md));
 Phase 5's evidence-driven `scene_taxonomy_v1` classification taxonomy plus non-deep-learning
@@ -26,7 +26,12 @@ Build)** respectively in substance, though this "Phase 10" ships before the road
 Phase 10 rebuilt the frontend into a five-page product (landing, Storm Explorer, the flagship
 `/predict/[sid]` analysis workspace, Model Performance, Methodology) with a real TimeScrubber,
 observed-vs-predicted charts, and a GeminiPanel/EvidenceDrawer wired to Phase 9's backend
-endpoint — still distinct from **P6 (Detection)**, which has not started.
+endpoint; and Phase 11 audited the complete data→ML→DB→API→frontend→Gemini chain end-to-end
+against the actual repository contracts (not assumed documentation), fixing one real,
+previously-untested gap (the backend's own claim that its geo-math functions are byte-for-byte
+identical to `ml/geostrom_ml/features/geo.py` had never actually been verified; 30 new parity
+tests confirm it is true) and adding 37 new cross-layer integration tests — still distinct from
+**P6 (Detection)**, which has not started.
 
 ---
 

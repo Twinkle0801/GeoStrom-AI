@@ -775,7 +775,10 @@ export interface components {
              * Format: date-time
              */
             end_time: string;
-            /** N Observations */
+            /**
+             * N Observations
+             * @description Count of reconstructed synoptic points for this storm's TEST-ELIGIBLE span (every window's reference point, plus the final window's future targets) -- per backend/scripts/ingest_phase2_predictions.py's design, this is NOT necessarily the storm's complete genesis-to-dissipation IBTrACS record. A short-lived storm can legitimately show fewer observations here than its raw best-track file contains, if part of its life falls outside the span the frozen L=8 windowing makes test-eligible.
+             */
             n_observations: number;
             /**
              * Max Wind Kt
@@ -844,7 +847,10 @@ export interface components {
              * Format: date-time
              */
             end_time: string;
-            /** N Observations */
+            /**
+             * N Observations
+             * @description Count of reconstructed synoptic points for this storm's TEST-ELIGIBLE span (every window's reference point, plus the final window's future targets) -- per backend/scripts/ingest_phase2_predictions.py's design, this is NOT necessarily the storm's complete genesis-to-dissipation IBTrACS record. A short-lived storm can legitimately show fewer observations here than its raw best-track file contains, if part of its life falls outside the span the frozen L=8 windowing makes test-eligible.
+             */
             n_observations: number;
             /**
              * Max Wind Kt

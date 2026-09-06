@@ -18,7 +18,14 @@ class StormSummary(BaseModel):
     basin: str
     start_time: dt.datetime
     end_time: dt.datetime
-    n_observations: int
+    n_observations: int = Field(
+        description="Count of reconstructed synoptic points for this storm's TEST-ELIGIBLE span "
+                    "(every window's reference point, plus the final window's future targets) -- "
+                    "per backend/scripts/ingest_phase2_predictions.py's design, this is NOT "
+                    "necessarily the storm's complete genesis-to-dissipation IBTrACS record. A "
+                    "short-lived storm can legitimately show fewer observations here than its raw "
+                    "best-track file contains, if part of its life falls outside the span the "
+                    "frozen L=8 windowing makes test-eligible.")
     max_wind_kt: float | None = Field(None, description="Lifetime max wind (kt). DISPLAY ONLY.")
     min_pressure_hpa: float | None
     max_category: int | None

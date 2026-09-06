@@ -2,6 +2,31 @@
 
 from __future__ import annotations
 
+import datetime as dt
+
+
+def test_wind_and_distance_units_are_never_silently_converted(
+    client, db_session, sample_storm, sample_observations, sample_intensity_model,
+):
+    """Phase 11 unit audit: seed a deliberately unusual, non-round wind
+    value (137.5 kt) -- a value that would visibly change under any
+    accidental unit conversion along the chain (e.g. kt->mph would be
+    ~158.2, kt->km/h ~254.7, kt->m/s ~70.7) -- and assert the API returns
+    the EXACT stored knot value, unconverted, with no relabelling."""
+    from app.db.models import Prediction
+
+    db_session.add(Prediction(
+        sid=sample_storm.sid, task="intensity",
+        origin_ts=dt.datetime(2010, 6, 26, 12, tzinfo=dt.timezone.utc),
+        lead_hours=24, valid_ts=dt.datetime(2010, 6, 27, 12, tzinfo=dt.timezone.utc),
+        model_id=sample_intensity_model.id, pred_wind_kt=137.5,
+    ))
+    db_session.flush()
+    r = client.get(f"/api/v1/prediction/{sample_storm.sid}?task=intensity")
+    assert r.status_code == 200
+    row = next(r_ for r_ in r.json() if r_["lead_hours"] == 24)
+    assert row["pred_wind_kt"] == 137.5
+
 
 def test_prediction_returns_seeded_row(client, sample_storm, sample_observations, sample_prediction):
     r = client.get(f"/api/v1/prediction/{sample_storm.sid}")

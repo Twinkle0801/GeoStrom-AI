@@ -16,6 +16,24 @@
 > limitation (only 3 test storms), not hidden. 10 adversarial leakage tests pass. See
 > [docs/PHASE_5_CLASSIFICATION_LABEL_ANALYSIS.md](docs/PHASE_5_CLASSIFICATION_LABEL_ANALYSIS.md).
 
+> **Phase 11 — End-to-End Integration & System Consolidation. COMPLETE.**
+> Audited the full chain — data → offline ML → predictions → database → FastAPI → frontend →
+> EvidencePacket → Gemini → EvidenceDrawer — against the actual repository contracts, not assumed
+> documentation. Verified live: DB `Storm.split` matches the frozen `splits_v1.json` manifest
+> exactly (88/88, 0 mismatches); GeoJSON coordinates are correctly `[lon, lat]`; timestamps
+> serialize UTC-explicit everywhere; the recommended-vs-exploratory model tiering
+> (LightGBM/CLIPER-style Ridge/Logistic Regression vs. GRU/CNN) is correct end-to-end through a
+> real API call; a real Gemini call against a live storm returned a fully grounded explanation.
+> **One real, previously-untested claim was verified**: `backend/app/services/geo.py`'s
+> docstring asserted it is "byte-for-byte identical" to `ml/geostrom_ml/features/geo.py` — true,
+> but never actually tested until now (30 new parity tests, including antimeridian cases, all
+> pass). Satellite-frame serving and per-storm classification remain honestly
+> **BLOCKED BY EXISTING CONTRACT** (confirmed live: no such endpoint exists in the running API) —
+> not fabricated. 37 new integration tests added (178 backend / 44 frontend / 341 ML, all
+> passing); no ML metric, split, or seed was changed; no frontend redesign was performed. See
+> [docs/PHASE_11_INTEGRATION_MATRIX.md](docs/PHASE_11_INTEGRATION_MATRIX.md) and
+> [docs/PHASE_11_END_TO_END_TEST.md](docs/PHASE_11_END_TO_END_TEST.md).
+
 > **Phase 10 — Premium Frontend Dashboard & Scientific Visualization. COMPLETE**, with two
 > panels explicitly **blocked by the existing data/API contract** (satellite imagery,
 > classification — no serving endpoint or database table exists for either; both show honest
@@ -204,6 +222,8 @@ run on free-tier CPU hosting.
 | [docs/PHASE_8_TRACK_PREDICTION.md](docs/PHASE_8_TRACK_PREDICTION.md) | GRU sequence model for track (cos-latitude-weighted loss), leakage/antimeridian validation, honest comparison against the Phase 2 CLIPER baseline |
 | [docs/PHASE_9_GEMINI_INTEGRATION.md](docs/PHASE_9_GEMINI_INTEGRATION.md) | Backend-only Gemini explanation layer: evidence packet, grounding validator, deterministic fallback, prompt-injection defense |
 | [docs/PHASE_10_FRONTEND_DASHBOARD.md](docs/PHASE_10_FRONTEND_DASHBOARD.md) | Premium dashboard: design system, TimeScrubber, charts, map, Gemini/EvidenceDrawer integration, honest empty states |
+| [docs/PHASE_11_INTEGRATION_MATRIX.md](docs/PHASE_11_INTEGRATION_MATRIX.md) | Layer-by-layer contract audit: producer/consumer/contract/status for the full data→Gemini chain |
+| [docs/PHASE_11_END_TO_END_TEST.md](docs/PHASE_11_END_TO_END_TEST.md) | Real-storm end-to-end test log: environment, API checks, frontend journey, Gemini test, regression totals |
 
 ## Recommended Stack (summary)
 
