@@ -1,10 +1,17 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import SiteFooter from "@/components/layout/SiteFooter";
 import SiteHeader from "@/components/layout/SiteHeader";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
+// Scientific/technical readouts (coordinates, timestamps, wind speed,
+// pressure, model version, storm ID) get a real monospace face rather than
+// the system fallback stack `font-mono` used before -- via `next/font`,
+// the same zero-extra-dependency mechanism already used for Inter above.
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"], variable: "--font-jetbrains-mono", display: "swap", weight: ["400", "500", "600"],
+});
 
 export const metadata: Metadata = {
   title: "GeoStrom AI — Retrospective Cyclone Intelligence",
@@ -18,14 +25,17 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
       <body className="relative min-h-screen bg-bg-base font-sans text-text-primary antialiased">
         {/* Subtle, fixed atmospheric backdrop -- restrained, per the design
             direction ("subtle gradients", never "excessive neon"). Purely
-            decorative; never carries information. */}
+            decorative; never carries information. A faint drifting grid
+            layer (motion-safe only) reinforces the "geospatial/technical
+            system" identity without ever being mistaken for real data. */}
+        <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 bg-radial-fade" />
         <div
           aria-hidden
-          className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(80%_60%_at_50%_-10%,rgba(76,141,255,0.10),transparent_60%)]"
+          className="pointer-events-none fixed inset-0 -z-10 bg-grid-fine bg-grid opacity-[0.35] motion-safe:animate-grid-drift"
         />
         <div className="flex min-h-screen flex-col">
           <SiteHeader />

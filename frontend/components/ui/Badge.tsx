@@ -1,6 +1,7 @@
 import { clsx } from "clsx";
 
-export type BadgeTone = "neutral" | "truth" | "predicted" | "recommended" | "exploratory" | "warning";
+export type BadgeTone =
+  | "neutral" | "truth" | "predicted" | "recommended" | "exploratory" | "warning" | "danger" | "accent";
 
 const toneClasses: Record<BadgeTone, string> = {
   neutral: "border-border-subtle bg-white/5 text-text-secondary",
@@ -9,6 +10,8 @@ const toneClasses: Record<BadgeTone, string> = {
   recommended: "border-emerald-400/30 bg-emerald-400/10 text-emerald-300",
   exploratory: "border-violet-400/30 bg-violet-400/10 text-violet-300",
   warning: "border-amber-500/30 bg-amber-500/10 text-amber-300",
+  danger: "border-danger/30 bg-danger/10 text-danger-soft",
+  accent: "border-accent-soft/30 bg-accent/10 text-accent-soft",
 };
 
 export default function Badge({

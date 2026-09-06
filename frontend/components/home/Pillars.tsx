@@ -1,9 +1,10 @@
-"use client";
-
-import { motion } from "framer-motion";
+/**
+ * Zero-JS server component -- see FadeIn.tsx (Phase 13 performance audit:
+ * replaced a per-card framer-motion instance with a pure-CSS entrance).
+ */
 import GlassPanel from "@/components/ui/GlassPanel";
 import SectionHeader from "@/components/ui/SectionHeader";
-import { fadeUp, reducedMotionVariants, staggerContainer, usePrefersReducedMotion } from "@/lib/motion";
+import FadeIn from "@/components/ui/FadeIn";
 
 const PILLARS = [
   {
@@ -25,7 +26,6 @@ const PILLARS = [
 ] as const;
 
 export default function Pillars() {
-  const reducedMotion = usePrefersReducedMotion();
   return (
     <section className="mx-auto max-w-7xl px-6 py-16">
       <SectionHeader
@@ -33,22 +33,16 @@ export default function Pillars() {
         title="Four kinds of information — never blended"
         description="Every panel in this product states plainly whether you're looking at an observation, a prediction, satellite-derived structure, or an AI-generated explanation."
       />
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-80px" }}
-        variants={reducedMotion ? reducedMotionVariants : staggerContainer}
-        className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
-      >
-        {PILLARS.map((p) => (
-          <motion.div key={p.title} variants={reducedMotion ? reducedMotionVariants : fadeUp}>
+      <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {PILLARS.map((p, i) => (
+          <FadeIn key={p.title} delayMs={i * 60}>
             <GlassPanel className="h-full p-5">
               <h3 className="text-sm font-semibold text-text-primary">{p.title}</h3>
               <p className="mt-2 text-sm text-text-secondary">{p.body}</p>
             </GlassPanel>
-          </motion.div>
+          </FadeIn>
         ))}
-      </motion.div>
+      </div>
     </section>
   );
 }

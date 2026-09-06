@@ -19,14 +19,17 @@ import { formatTimestamp } from "@/lib/format";
 export default function SatelliteViewer({ timestamp }: { timestamp: string | null }) {
   return (
     <div>
-      <div className="mb-3 flex aspect-square w-full items-center justify-center rounded-lg border border-dashed border-border-subtle bg-white/[0.02]">
-        <EmptyState
-          title="Satellite frame unavailable for this timestamp."
-          hint="No satellite-serving endpoint is exposed by the current backend API."
-        />
+      <div className="relative mb-3 flex aspect-square w-full items-center justify-center overflow-hidden rounded-lg border border-dashed border-border-subtle bg-white/[0.02]">
+        <div aria-hidden className="absolute inset-0 bg-grid-fine bg-grid opacity-[0.12]" />
+        <div className="relative">
+          <EmptyState
+            title="Satellite frame unavailable for this timestamp."
+            hint="No satellite-serving endpoint is exposed by the current backend API."
+          />
+        </div>
       </div>
       {timestamp && (
-        <p className="text-center text-[11px] text-text-muted">
+        <p className="text-center font-mono text-[11px] text-text-muted">
           Requested timestamp: {formatTimestamp(timestamp)}
         </p>
       )}

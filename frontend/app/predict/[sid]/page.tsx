@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import PredictWorkspace from "@/components/storm/PredictWorkspace";
+import { ArrowRightIcon } from "@/components/ui/Icons";
 import {
   ApiError, getStorm, getStormObservations, getStormPredictionSeries, getStormTrack,
 } from "@/lib/api";
@@ -34,8 +35,12 @@ export default async function PredictPage({
   return (
     <main>
       <div className="mx-auto max-w-7xl px-6 pt-4">
-        <Link href="/storms" className="text-sm text-accent hover:underline">
-          ← Storm Explorer
+        <Link
+          href="/storms"
+          className="group inline-flex items-center gap-1.5 text-sm text-text-secondary transition-colors hover:text-accent-soft"
+        >
+          <ArrowRightIcon width={14} height={14} className="rotate-180 transition-transform duration-200 group-hover:-translate-x-0.5" />
+          Storm Explorer
         </Link>
       </div>
       <PredictWorkspace

@@ -8,15 +8,16 @@ export default function SectionHeader({
   return (
     <div>
       {eyebrow && (
-        <div className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-soft">
+        <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-accent-soft">
+          <span aria-hidden className="h-px w-5 bg-accent-soft/50" />
           {eyebrow}
         </div>
       )}
-      <h2 className="mt-1 text-xl font-semibold tracking-tight text-text-primary sm:text-2xl">
+      <h2 className="mt-2 text-xl font-semibold tracking-tight text-text-primary sm:text-2xl">
         {title}
       </h2>
       {description && (
-        <p className="mt-1.5 max-w-2xl text-sm text-text-secondary">{description}</p>
+        <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-text-secondary">{description}</p>
       )}
     </div>
   );

@@ -13,6 +13,33 @@ body {
   color: #f2f5fa;
 }
 
+::selection {
+  background: rgba(76, 141, 255, 0.35);
+  color: #f2f5fa;
+}
+
+/* Thin, dark-native scrollbar -- keeps drawers/long panels feeling like part
+   of the product rather than a default OS chrome element. Firefox + WebKit
+   both covered; no behavioural effect, purely cosmetic. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.14);
+  border-radius: 9999px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.24);
+}
+
 /* tabular figures for numeric readouts, per UI_UX_ARCHITECTURE.md §1.2 --
    values should not jitter horizontally as they update */
 .tabular-nums {
@@ -21,4 +48,36 @@ body {
 
 .leaflet-container {
   background: #0b0f17;
+}
+
+/* Leaflet's own zoom-control chrome restyled to the app's dark surface --
+   presentation only, no behavioural change to the control. */
+.leaflet-control-zoom a {
+  background-color: #0b0f17 !important;
+  color: #9ba6b8 !important;
+  border-color: rgba(255, 255, 255, 0.09) !important;
+}
+.leaflet-control-zoom a:hover {
+  background-color: #10141d !important;
+  color: #f2f5fa !important;
+}
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: #0b0f17;
+  color: #f2f5fa;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+}
+.leaflet-popup-close-button {
+  color: #9ba6b8 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

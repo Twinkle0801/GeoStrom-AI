@@ -1,4 +1,6 @@
 import Badge from "@/components/ui/Badge";
+import Stat from "@/components/ui/Stat";
+import { AlertTriangleIcon } from "@/components/ui/Icons";
 import type { CycloneDetail } from "@/lib/api";
 import { categoryColorClass, categoryLabel, formatTimestamp } from "@/lib/format";
 
@@ -18,56 +20,56 @@ export default function StormHeader({
   maxForecastHorizonH?: number | null;
 }) {
   return (
-    <div className="border-b border-border-subtle pb-6">
-      <div className="flex flex-wrap items-center gap-3">
-        <Badge tone="neutral">Historical Analysis</Badge>
-        <span className="text-xs text-text-muted">{storm.sid}</span>
-      </div>
-      <div className="mt-3 flex flex-wrap items-baseline gap-3">
-        <h1 className="text-3xl font-semibold tracking-tight text-text-primary sm:text-4xl">
-          {storm.name ?? storm.sid}
-        </h1>
-        <span className={`text-lg font-medium ${categoryColorClass(storm.max_category)}`}>
-          {categoryLabel(storm.max_category)}
-        </span>
-      </div>
-      <div className="mt-1 text-sm text-text-secondary">
-        North Atlantic · Season {storm.season}
-      </div>
+    <div className="relative overflow-hidden rounded-2xl border border-border-subtle bg-gradient-to-b from-white/[0.04] to-transparent px-6 py-6 sm:px-8 sm:py-8">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-grid-fine bg-grid opacity-[0.15]"
+      />
+      <div className="relative">
+        <div className="flex flex-wrap items-center gap-3">
+          <Badge tone="neutral">Historical Analysis</Badge>
+          <span className="font-mono text-xs tracking-wide text-text-muted">{storm.sid}</span>
+        </div>
+        <div className="mt-3 flex flex-wrap items-baseline gap-3">
+          <h1 className="text-3xl font-semibold tracking-tight text-text-primary sm:text-4xl lg:text-5xl">
+            {storm.name ?? storm.sid}
+          </h1>
+          <span className={`text-lg font-medium ${categoryColorClass(storm.max_category)}`}>
+            {categoryLabel(storm.max_category)}
+          </span>
+        </div>
+        <div className="mt-1 text-sm text-text-secondary">
+          North Atlantic · Season {storm.season}
+        </div>
 
-      <div className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-4">
-        <Stat label="Observed duration">
-          {formatTimestamp(storm.start_time)} → {formatTimestamp(storm.end_time)}
-        </Stat>
-        <Stat label="Maximum observed wind">
-          {storm.max_wind_kt != null ? `${storm.max_wind_kt.toFixed(0)} kt` : "—"}
-        </Stat>
-        <Stat label="Minimum observed pressure">
-          {storm.min_pressure_hpa != null ? `${storm.min_pressure_hpa.toFixed(0)} hPa` : "—"}
-        </Stat>
-        <Stat label="Available forecast horizon">
-          {maxForecastHorizonH ? `Up to +${maxForecastHorizonH}h` : "Not available"}
-        </Stat>
-      </div>
+        <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <Stat label="Observed duration">
+            {formatTimestamp(storm.start_time)} → {formatTimestamp(storm.end_time)}
+          </Stat>
+          <Stat label="Maximum observed wind">
+            {storm.max_wind_kt != null ? `${storm.max_wind_kt.toFixed(0)} kt` : "—"}
+          </Stat>
+          <Stat label="Minimum observed pressure">
+            {storm.min_pressure_hpa != null ? `${storm.min_pressure_hpa.toFixed(0)} hPa` : "—"}
+          </Stat>
+          <Stat label="Available forecast horizon">
+            {maxForecastHorizonH ? `Up to +${maxForecastHorizonH}h` : "Not available"}
+          </Stat>
+        </div>
 
-      <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-1 text-xs text-text-muted tabular-nums">
-        <span>{storm.n_observations} observations</span>
-        <span className="rounded bg-white/5 px-2 py-0.5">{storm.split ?? "unassigned"} split</span>
-      </div>
+        <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-1 font-mono text-xs tabular-nums text-text-muted">
+          <span>{storm.n_observations} observations</span>
+          <span className="rounded bg-white/5 px-2 py-0.5">{storm.split ?? "unassigned"} split</span>
+        </div>
 
-      <div className="mt-4 rounded-md border border-amber-500/20 bg-amber-500/5 px-3 py-2 text-xs text-amber-200/80">
-        Retrospective research prototype. All predictions shown are historical baseline model
-        output, evaluated against known outcomes. Not an operational forecast.
+        <div className="mt-5 flex items-start gap-2 rounded-md border border-amber-500/20 bg-amber-500/5 px-3 py-2 text-xs text-amber-200/80">
+          <AlertTriangleIcon width={14} height={14} className="mt-0.5 shrink-0 text-amber-400" />
+          <span>
+            Retrospective research prototype. All predictions shown are historical baseline model
+            output, evaluated against known outcomes. Not an operational forecast.
+          </span>
+        </div>
       </div>
-    </div>
-  );
-}
-
-function Stat({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div>
-      <div className="text-[11px] font-medium uppercase tracking-wide text-text-muted">{label}</div>
-      <div className="mt-0.5 text-sm font-medium tabular-nums text-text-primary">{children}</div>
     </div>
   );
 }

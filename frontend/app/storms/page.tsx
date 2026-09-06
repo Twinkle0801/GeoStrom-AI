@@ -8,7 +8,11 @@ export const metadata = {
 
 export default function StormsPage() {
   return (
-    <main className="mx-auto max-w-7xl px-6 py-10">
+    <main className="relative mx-auto max-w-7xl px-6 py-10">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-72 bg-[radial-gradient(60%_60%_at_50%_0%,rgba(76,141,255,0.08),transparent_70%)]"
+      />
       <SectionHeader
         eyebrow="Storm Explorer"
         title="Historical North Atlantic storms"

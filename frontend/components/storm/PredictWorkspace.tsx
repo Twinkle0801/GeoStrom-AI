@@ -21,8 +21,10 @@ import ModelSelector, { type ModelOption } from "@/components/storm/ModelSelecto
 import StormHeader from "@/components/panels/StormHeader";
 import TimeScrubber from "@/components/timeline/TimeScrubber";
 import GlassPanel from "@/components/ui/GlassPanel";
-import LoadingSkeleton from "@/components/ui/LoadingSkeleton";
+import { ChartSkeleton, MapSkeleton } from "@/components/ui/Skeletons";
 import SectionHeader from "@/components/ui/SectionHeader";
+import { GaugeIcon, MapPinIcon, SatelliteIcon } from "@/components/ui/Icons";
+import { formatTimestamp } from "@/lib/format";
 import {
   getStormTrack, type CycloneDetail, type ObservationList, type PredictionList,
   type TrackFeatureCollection,
@@ -30,11 +32,7 @@ import {
 
 const CycloneMapClient = dynamic(() => import("@/components/map/CycloneMapClient"), {
   ssr: false,
-  loading: () => (
-    <div className="flex h-full w-full items-center justify-center text-sm text-text-muted">
-      Loading map…
-    </div>
-  ),
+  loading: () => <MapSkeleton className="h-full w-full" />,
 });
 
 function uniqueSorted(values: string[]): string[] {
@@ -151,31 +149,50 @@ export default function PredictWorkspace({
         />
       </div>
 
-      <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
-        <div className="relative h-[480px] rounded-xl border border-border-subtle lg:col-span-2">
-          <CycloneMapClient
-            track={track}
-            currentPosition={currentObservation ? { lat: currentObservation.lat, lon: currentObservation.lon } : null}
-            selectedModelName={trackModel}
-          />
-          {trackLoading && (
-            <div className="pointer-events-none absolute right-3 top-3 rounded-md bg-black/60 px-2 py-1 text-[11px] text-text-secondary">
-              Updating forecast origin…
-            </div>
-          )}
-        </div>
-        <div className="flex flex-col gap-4">
-          <TrackLegend />
-          <GlassPanel className="p-4">
-            <ModelSelector
-              label="Track model"
-              options={trackModelOptions}
-              value={trackModel}
-              onChange={setTrackModel}
+      <section className="mt-10">
+        <SectionHeader
+          eyebrow="Geospatial track"
+          title="Observed & predicted trajectory"
+          description="The map is the source of truth for position -- observed and predicted paths never share a colour or line style."
+        />
+        <div className="mt-4 grid grid-cols-1 gap-6 lg:grid-cols-3">
+          <div className="relative h-[480px] overflow-hidden rounded-xl border border-border-subtle lg:col-span-2">
+            <CycloneMapClient
+              track={track}
+              currentPosition={currentObservation ? { lat: currentObservation.lat, lon: currentObservation.lon } : null}
+              selectedModelName={trackModel}
             />
-          </GlassPanel>
+            {currentObservation && (
+              <div className="pointer-events-none absolute left-3 top-3 z-[400] rounded-lg border border-border-subtle bg-bg-base/85 px-3 py-2 font-mono text-[11px] text-text-secondary shadow-elevated backdrop-blur-sm">
+                <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-wide text-text-muted">
+                  <MapPinIcon width={11} height={11} /> Scrub position
+                </div>
+                <div className="mt-1 tabular-nums">{formatTimestamp(currentTs)}</div>
+                {currentObservation.wind_kt != null && (
+                  <div className="tabular-nums">{currentObservation.wind_kt.toFixed(0)} kt</div>
+                )}
+              </div>
+            )}
+            {trackLoading && (
+              <div className="pointer-events-none absolute right-3 top-3 z-[400] flex items-center gap-1.5 rounded-md bg-black/60 px-2 py-1 text-[11px] text-text-secondary">
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent-soft" />
+                Updating forecast origin…
+              </div>
+            )}
+          </div>
+          <div className="flex flex-col gap-4">
+            <TrackLegend />
+            <GlassPanel className="p-4">
+              <ModelSelector
+                label="Track model"
+                options={trackModelOptions}
+                value={trackModel}
+                onChange={setTrackModel}
+              />
+            </GlassPanel>
+          </div>
         </div>
-      </div>
+      </section>
 
       <section className="mt-10">
         <SectionHeader
@@ -185,13 +202,21 @@ export default function PredictWorkspace({
             ? "This forecast origin has an issued model prediction."
             : "No model prediction was issued at this exact timestamp -- showing observed history only."}
         />
-        <div className="mt-4">
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
           <ModelSelector
             label="Intensity model"
             options={intensityModelOptions}
             value={intensityModel}
             onChange={setIntensityModel}
           />
+          <div className="flex items-center gap-3 text-[11px] text-text-muted">
+            <span className="flex items-center gap-1.5">
+              <span aria-hidden className="h-0.5 w-4 rounded-full bg-truth" /> Observed
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span aria-hidden className="h-0.5 w-4 rounded-full border-t-2 border-dashed border-predicted" /> Model prediction
+            </span>
+          </div>
         </div>
         <GlassPanel className="mt-4 p-4">
           {observations.length > 0 ? (
@@ -201,7 +226,7 @@ export default function PredictWorkspace({
               originTs={isOrigin ? currentTs : null}
             />
           ) : (
-            <LoadingSkeleton lines={3} />
+            <ChartSkeleton />
           )}
         </GlassPanel>
         {isOrigin && intensityModel && (
@@ -211,15 +236,29 @@ export default function PredictWorkspace({
 
       <section className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-2">
         <GlassPanel className="p-5">
-          <h3 className="text-sm font-semibold text-text-primary">Satellite Intelligence</h3>
-          <p className="mt-1 text-xs text-text-muted">HURSAT-B1 imagery and Dvorak scene labels.</p>
+          <div className="flex items-center gap-2">
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-border-subtle bg-white/[0.04] text-accent-soft">
+              <SatelliteIcon width={15} height={15} />
+            </span>
+            <div>
+              <h3 className="text-sm font-semibold text-text-primary">Satellite Intelligence</h3>
+              <p className="text-xs text-text-muted">HURSAT-B1 imagery and Dvorak scene labels.</p>
+            </div>
+          </div>
           <div className="mt-4">
             <SatelliteViewer timestamp={currentTs} />
           </div>
         </GlassPanel>
         <GlassPanel className="p-5">
-          <h3 className="text-sm font-semibold text-text-primary">Classification</h3>
-          <p className="mt-1 text-xs text-text-muted">Cyclone pattern / scene classification.</p>
+          <div className="flex items-center gap-2">
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-border-subtle bg-white/[0.04] text-accent-soft">
+              <GaugeIcon width={15} height={15} />
+            </span>
+            <div>
+              <h3 className="text-sm font-semibold text-text-primary">Classification</h3>
+              <p className="text-xs text-text-muted">Cyclone pattern / scene classification.</p>
+            </div>
+          </div>
           <div className="mt-4">
             <ClassificationPanel />
           </div>
@@ -248,15 +287,15 @@ function IntensityHorizonTable({
       <table className="w-full min-w-[420px] text-left text-sm">
         <thead>
           <tr className="text-xs uppercase text-text-muted">
-            <th className="px-3 py-2">Horizon</th>
-            <th className="px-3 py-2 text-right">Predicted (kt)</th>
-            <th className="px-3 py-2 text-right">Observed (kt)</th>
+            <th className="px-3 py-2 font-mono">Horizon</th>
+            <th className="px-3 py-2 text-right text-predicted">Predicted (kt)</th>
+            <th className="px-3 py-2 text-right text-truth">Observed (kt)</th>
             <th className="px-3 py-2 text-right">Error (kt)</th>
           </tr>
         </thead>
-        <tbody className="tabular-nums">
+        <tbody className="font-mono tabular-nums">
           {rows.map((p, i) => (
-            <tr key={i} className="border-t border-border-subtle/60">
+            <tr key={i} className="border-t border-border-subtle/60 transition-colors hover:bg-white/[0.02]">
               <td className="px-3 py-2">+{p.lead_hours}h</td>
               <td className="px-3 py-2 text-right text-predicted">
                 {p.pred_wind_kt != null ? p.pred_wind_kt.toFixed(1) : "—"}

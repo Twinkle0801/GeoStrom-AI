@@ -36,7 +36,7 @@ export default function ClassificationPanel() {
           CDO merges IrrCDO; Eye merges LargeEye. Land and EmbCenter are excluded (not genuine
           storm-pattern classes at the current dataset scale). Production baseline: Logistic
           Regression. CNN/ResNet-18 are exploratory research results that did not beat it — see{" "}
-          <a href="/models" className="underline hover:text-text-secondary">
+          <a href="/models" className="underline decoration-text-muted/40 underline-offset-2 hover:text-text-secondary hover:decoration-text-secondary">
             Model Performance
           </a>.
         </p>

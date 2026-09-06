@@ -9,7 +9,7 @@
  * carrying its own tooltip identifying series type, units, and horizon.
  */
 import {
-  CartesianGrid, ComposedChart, Line, ReferenceLine, ResponsiveContainer, Scatter, Tooltip,
+  Area, CartesianGrid, ComposedChart, Line, ReferenceLine, ResponsiveContainer, Scatter, Tooltip,
   XAxis, YAxis,
 } from "recharts";
 import type { ObservationList, PredictionList } from "@/lib/api";
@@ -52,6 +52,12 @@ export default function IntensityChart({
     <div className="h-72 w-full">
       <ResponsiveContainer width="100%" height="100%">
         <ComposedChart margin={{ top: 8, right: 16, bottom: 0, left: -12 }}>
+          <defs>
+            <linearGradient id="observedFill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#22D3A7" stopOpacity={0.22} />
+              <stop offset="95%" stopColor="#22D3A7" stopOpacity={0} />
+            </linearGradient>
+          </defs>
           <CartesianGrid stroke="rgba(255,255,255,0.06)" vertical={false} />
           <XAxis
             dataKey="tMs"
@@ -67,12 +73,16 @@ export default function IntensityChart({
             tick={{ fill: "#9BA6B8", fontSize: 11 }}
             width={52}
           />
-          <Tooltip content={<IntensityTooltip />} />
+          <Tooltip content={<IntensityTooltip />} cursor={{ stroke: "rgba(255,255,255,0.15)" }} />
           {originMs != null && (
             <ReferenceLine x={originMs} stroke="#7FB0FF" strokeDasharray="3 3" label={{
               value: "Forecast origin", position: "insideTopRight", fill: "#7FB0FF", fontSize: 10,
             }} />
           )}
+          <Area
+            data={observed} dataKey="windKt" stroke="none" fill="url(#observedFill)"
+            isAnimationActive={false}
+          />
           <Line
             data={observed} dataKey="windKt" name="Observed"
             stroke="#22D3A7" strokeWidth={2} dot={false} isAnimationActive={false}
@@ -97,14 +107,15 @@ function IntensityTooltip({
 }) {
   if (!active || !payload || payload.length === 0) return null;
   const point = payload[0];
-  const seriesType = point.name === "Observed" ? "Observed (IBTrACS)" : "Predicted (model output)";
+  const isObserved = point.name === "Observed";
+  const seriesType = isObserved ? "Observed (IBTrACS)" : "Predicted (model output)";
   return (
-    <div className="rounded-md border border-border-subtle bg-bg-elevated px-3 py-2 text-xs shadow-lg">
+    <div className="rounded-md border border-border-subtle bg-bg-elevated px-3 py-2 text-xs shadow-elevated">
       <div className="font-medium text-text-primary">{formatTimestamp(point.payload.ts)}</div>
-      <div className="mt-0.5 text-text-secondary">{seriesType}</div>
-      <div className="tabular-nums text-text-primary">{point.payload.windKt.toFixed(1)} kt</div>
+      <div className={`mt-0.5 font-medium ${isObserved ? "text-truth" : "text-predicted"}`}>{seriesType}</div>
+      <div className="font-mono tabular-nums text-text-primary">{point.payload.windKt.toFixed(1)} kt</div>
       {point.payload.leadHours != null && (
-        <div className="text-text-muted">+{point.payload.leadHours}h horizon</div>
+        <div className="font-mono text-text-muted">+{point.payload.leadHours}h horizon</div>
       )}
     </div>
   );

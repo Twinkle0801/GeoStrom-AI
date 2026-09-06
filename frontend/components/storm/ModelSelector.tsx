@@ -44,10 +44,10 @@ export default function ModelSelector({
               role="radio"
               aria-checked={active}
               onClick={() => onChange(opt.name)}
-              className={`flex items-center gap-2 rounded-lg border px-3 py-1.5 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
+              className={`flex items-center gap-2 rounded-lg border px-3 py-1.5 text-sm font-medium transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
                 active
-                  ? "border-accent-soft/50 bg-accent/10 text-text-primary"
-                  : "border-border-subtle bg-white/[0.02] text-text-secondary hover:bg-white/5"
+                  ? "border-accent-soft/60 bg-accent/15 text-text-primary shadow-[0_0_0_1px_rgba(127,176,255,0.15)]"
+                  : "border-border-subtle bg-white/[0.02] text-text-secondary hover:border-border-strong hover:bg-white/5"
               }`}
             >
               {modelDisplayName(opt.name)}
